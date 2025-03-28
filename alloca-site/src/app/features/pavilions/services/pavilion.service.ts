@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, shareReplay } from 'rxjs';
-import { environment } from '@/environments/environment';
-import { AvailabilityResource, CheckAvailabilityRequest, Floor, FloorResources, Pavilion } from '@/app/features/pavilions/models/pavilion.model';
+import { environment } from '@env/environment';
+import { AvailabilityResource, CheckAvailabilityRequest, Floor, FloorResources, Pavilion } from '@features/pavilions/models/pavilion.model';
 
 @Injectable({ providedIn: 'root' })
 export class PavilionService {

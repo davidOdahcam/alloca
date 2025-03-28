@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { TagModule } from 'primeng/tag';
-import { ReservationStatus } from '@/app/features/reservations/models/reservation.model';
+import { ReservationStatus } from '@features/reservations/models/reservation.model';
 
 type Severity = 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast';
 

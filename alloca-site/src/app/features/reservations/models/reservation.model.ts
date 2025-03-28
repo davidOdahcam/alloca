@@ -1,4 +1,4 @@
-import { ResourceType } from '@/app/features/pavilions/models/pavilion.model';
+import { ResourceType } from '@features/pavilions/models/pavilion.model';
 
 export type ReservationStatus = 'Pending' | 'Approved' | 'Rejected' | 'CancelledByUser' | 'RevokedByManager' | 'InProgress' | 'Completed' | 'NoShow';
 

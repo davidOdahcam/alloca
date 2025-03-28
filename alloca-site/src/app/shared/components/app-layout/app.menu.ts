@@ -5,10 +5,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
 import { filter } from 'rxjs/operators';
 import { AppMenuitem } from './app.menuitem';
-import { AuthService } from '@/app/core/auth/auth.service';
-import { CountersService } from '@/app/shared/services/counters.service';
-import { LanguageService } from '@/app/core/i18n/language.service';
-import { environment } from '@/environments/environment';
+import { AuthService } from '@core/auth/auth.service';
+import { CountersService } from '@shared/services/counters.service';
+import { LanguageService } from '@core/i18n/language.service';
+import { environment } from '@env/environment';
 
 @Component({
     selector: 'app-menu',

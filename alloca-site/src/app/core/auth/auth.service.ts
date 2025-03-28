@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { environment } from '@/environments/environment';
-import { AuthUser, LoginRequest, LoginResponse, UserRole } from '@/app/core/auth/models/auth.model';
-import { StorageKeys, StorageKeysLegacy } from '@/app/core/layout/storage-keys';
+import { environment } from '@env/environment';
+import { AuthUser, LoginRequest, LoginResponse, UserRole } from '@core/auth/models/auth.model';
+import { StorageKeys, StorageKeysLegacy } from '@core/layout/storage-keys';
 
 const STORAGE_KEY = StorageKeys.auth;
 

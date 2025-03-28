@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanMatchFn, Router } from '@angular/router';
-import { environment } from '@/environments/environment';
+import { environment } from '@env/environment';
 
 type FeatureKey = keyof typeof environment.features;
 

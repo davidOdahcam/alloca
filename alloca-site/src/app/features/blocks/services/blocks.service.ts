@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '@/environments/environment';
-import { BlockListItem, CreateBlockRequest, CreateBlockResponse } from '@/app/features/blocks/models/block.model';
+import { environment } from '@env/environment';
+import { BlockListItem, CreateBlockRequest, CreateBlockResponse } from '@features/blocks/models/block.model';
 
 @Injectable({ providedIn: 'root' })
 export class BlocksService {

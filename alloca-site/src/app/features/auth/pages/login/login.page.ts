@@ -7,7 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
-import { AuthService } from '@/app/core/auth/auth.service';
+import { AuthService } from '@core/auth/auth.service';
 
 @Component({
     selector: 'app-login',

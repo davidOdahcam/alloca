@@ -6,14 +6,14 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TooltipModule } from 'primeng/tooltip';
-import { ApprovalsService } from '@/app/features/approvals/services/approvals.service';
-import { PavilionService } from '@/app/features/pavilions/services/pavilion.service';
-import { AuthService } from '@/app/core/auth/auth.service';
-import { LanguageService } from '@/app/core/i18n/language.service';
-import { Reservation } from '@/app/features/reservations/models/reservation.model';
-import { PageHero } from '@/app/shared/components/page-hero/page-hero';
-import { EmptyState } from '@/app/shared/components/empty-state/empty-state';
-import { ReservationStatusTag } from '@/app/features/reservations/components/reservation-status-tag/reservation-status-tag';
+import { ApprovalsService } from '@features/approvals/services/approvals.service';
+import { PavilionService } from '@features/pavilions/services/pavilion.service';
+import { AuthService } from '@core/auth/auth.service';
+import { LanguageService } from '@core/i18n/language.service';
+import { Reservation } from '@features/reservations/models/reservation.model';
+import { PageHero } from '@shared/components/page-hero/page-hero';
+import { EmptyState } from '@shared/components/empty-state/empty-state';
+import { ReservationStatusTag } from '@features/reservations/components/reservation-status-tag/reservation-status-tag';
 
 @Component({
     selector: 'app-manager-dashboard',

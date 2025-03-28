@@ -11,12 +11,12 @@ import { MessageModule } from 'primeng/message';
 import { MessageService } from 'primeng/api';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
-import { BlockTargetType } from '@/app/features/blocks/models/block.model';
-import { Floor, FloorRoomResource, Pavilion } from '@/app/features/pavilions/models/pavilion.model';
-import { BlocksService } from '@/app/features/blocks/services/blocks.service';
-import { PavilionService } from '@/app/features/pavilions/services/pavilion.service';
-import { LanguageService } from '@/app/core/i18n/language.service';
-import { PageHero } from '@/app/shared/components/page-hero/page-hero';
+import { BlockTargetType } from '@features/blocks/models/block.model';
+import { Floor, FloorRoomResource, Pavilion } from '@features/pavilions/models/pavilion.model';
+import { BlocksService } from '@features/blocks/services/blocks.service';
+import { PavilionService } from '@features/pavilions/services/pavilion.service';
+import { LanguageService } from '@core/i18n/language.service';
+import { PageHero } from '@shared/components/page-hero/page-hero';
 
 interface OpcaoTipo {
     value: BlockTargetType;

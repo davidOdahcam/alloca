@@ -15,12 +15,12 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TextareaModule } from 'primeng/textarea';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
-import { PavilionService } from '@/app/features/pavilions/services/pavilion.service';
-import { ReservationService } from '@/app/features/reservations/services/reservation.service';
-import { LanguageService } from '@/app/core/i18n/language.service';
-import { AvailabilityResource, Floor, Pavilion, ResourceType } from '@/app/features/pavilions/models/pavilion.model';
-import { PageHero } from '@/app/shared/components/page-hero/page-hero';
-import { FloorMapComponent } from '@/app/shared/components/floor-map/floor-map.component';
+import { PavilionService } from '@features/pavilions/services/pavilion.service';
+import { ReservationService } from '@features/reservations/services/reservation.service';
+import { LanguageService } from '@core/i18n/language.service';
+import { AvailabilityResource, Floor, Pavilion, ResourceType } from '@features/pavilions/models/pavilion.model';
+import { PageHero } from '@shared/components/page-hero/page-hero';
+import { FloorMapComponent } from '@shared/components/floor-map/floor-map.component';
 
 interface TimeOption {
     label: string;

@@ -1,5 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { lerIdiomaAtual } from '@/app/core/i18n/language.service';
+import { lerIdiomaAtual } from '@core/i18n/language.service';
 
 /**
  * Adiciona o cabeçalho Accept-Language em todas as requisições HTTP.

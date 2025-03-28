@@ -1,4 +1,4 @@
-import type { UserRole } from '@/app/core/auth/models/auth.model';
+import type { UserRole } from '@core/auth/models/auth.model';
 
 export interface UserListItem {
     id: string;

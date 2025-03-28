@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '@/environments/environment';
-import { ReasonRequest } from '@/app/features/blocks/models/block.model';
-import { Reservation } from '@/app/features/reservations/models/reservation.model';
+import { environment } from '@env/environment';
+import { ReasonRequest } from '@features/blocks/models/block.model';
+import { Reservation } from '@features/reservations/models/reservation.model';
 
 @Injectable({ providedIn: 'root' })
 export class ApprovalsService {

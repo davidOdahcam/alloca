@@ -13,13 +13,13 @@ import { TableModule } from 'primeng/table';
 import { TabsModule } from 'primeng/tabs';
 import { TooltipModule } from 'primeng/tooltip';
 import { RouterModule } from '@angular/router';
-import { ReservationService } from '@/app/features/reservations/services/reservation.service';
-import { LanguageService } from '@/app/core/i18n/language.service';
-import { Reservation, ReservationStatus } from '@/app/features/reservations/models/reservation.model';
-import { ReservationStatusTag } from '../../components/reservation-status-tag/reservation-status-tag';
-import { PageHero } from '@/app/shared/components/page-hero/page-hero';
-import { Loader } from '@/app/shared/components/loader/loader';
-import { EmptyState } from '@/app/shared/components/empty-state/empty-state';
+import { ReservationService } from '@features/reservations/services/reservation.service';
+import { LanguageService } from '@core/i18n/language.service';
+import { Reservation, ReservationStatus } from '@features/reservations/models/reservation.model';
+import { ReservationStatusTag } from '@features/reservations/components/reservation-status-tag/reservation-status-tag';
+import { PageHero } from '@shared/components/page-hero/page-hero';
+import { Loader } from '@shared/components/loader/loader';
+import { EmptyState } from '@shared/components/empty-state/empty-state';
 
 type AbaId = 'proximas' | 'pendentes' | 'historico';
 

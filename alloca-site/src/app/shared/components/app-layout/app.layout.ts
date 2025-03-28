@@ -5,7 +5,7 @@ import { ToastModule } from 'primeng/toast';
 import { AppTopbar } from './app.topbar';
 import { AppSidebar } from './app.sidebar';
 import { AppFooter } from './app.footer';
-import { LayoutService } from '@/app/core/layout/layout.service';
+import { LayoutService } from '@core/layout/layout.service';
 
 @Component({
     selector: 'app-layout',

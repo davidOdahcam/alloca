@@ -14,16 +14,16 @@ import { TableModule } from 'primeng/table';
 import { TextareaModule } from 'primeng/textarea';
 import { TooltipModule } from 'primeng/tooltip';
 import { forkJoin } from 'rxjs';
-import { ApprovalsService } from '@/app/features/approvals/services/approvals.service';
-import { PavilionService } from '@/app/features/pavilions/services/pavilion.service';
-import { CountersService } from '@/app/shared/services/counters.service';
-import { LanguageService } from '@/app/core/i18n/language.service';
-import { Pavilion } from '@/app/features/pavilions/models/pavilion.model';
-import { Reservation } from '@/app/features/reservations/models/reservation.model';
-import { ReservationStatusTag } from '@/app/features/reservations/components/reservation-status-tag/reservation-status-tag';
-import { PageHero } from '@/app/shared/components/page-hero/page-hero';
-import { Loader } from '@/app/shared/components/loader/loader';
-import { EmptyState } from '@/app/shared/components/empty-state/empty-state';
+import { ApprovalsService } from '@features/approvals/services/approvals.service';
+import { PavilionService } from '@features/pavilions/services/pavilion.service';
+import { CountersService } from '@shared/services/counters.service';
+import { LanguageService } from '@core/i18n/language.service';
+import { Pavilion } from '@features/pavilions/models/pavilion.model';
+import { Reservation } from '@features/reservations/models/reservation.model';
+import { ReservationStatusTag } from '@features/reservations/components/reservation-status-tag/reservation-status-tag';
+import { PageHero } from '@shared/components/page-hero/page-hero';
+import { Loader } from '@shared/components/loader/loader';
+import { EmptyState } from '@shared/components/empty-state/empty-state';
 
 @Component({
     selector: 'app-manager-approvals',

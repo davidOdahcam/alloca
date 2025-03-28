@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MessageModule } from 'primeng/message';
-import { PageHero } from '@/app/shared/components/page-hero/page-hero';
+import { PageHero } from '@shared/components/page-hero/page-hero';
 
 @Component({
     selector: 'app-manager-history',

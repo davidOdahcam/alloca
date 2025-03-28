@@ -1,5 +1,5 @@
 import { Injectable, effect, signal, computed } from '@angular/core';
-import { StorageKeys } from '@/app/core/layout/storage-keys';
+import { StorageKeys } from '@core/layout/storage-keys';
 
 export interface LayoutConfig {
     preset: string;

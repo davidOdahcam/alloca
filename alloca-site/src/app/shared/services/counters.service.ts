@@ -1,7 +1,7 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { AuthService } from '@/app/core/auth/auth.service';
-import { ApprovalsService } from '@/app/features/approvals/services/approvals.service';
-import { ReservationService } from '@/app/features/reservations/services/reservation.service';
+import { AuthService } from '@core/auth/auth.service';
+import { ApprovalsService } from '@features/approvals/services/approvals.service';
+import { ReservationService } from '@features/reservations/services/reservation.service';
 import { catchError, of } from 'rxjs';
 
 /**

@@ -9,10 +9,10 @@ import { TooltipModule } from 'primeng/tooltip';
 import { StyleClassModule } from 'primeng/styleclass';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { SelectModule } from 'primeng/select';
-import { LayoutService } from '@/app/core/layout/layout.service';
-import { AuthService } from '@/app/core/auth/auth.service';
-import { LanguageService, IdiomaSuportado } from '@/app/core/i18n/language.service';
-import { UserRole } from '@/app/core/auth/models/auth.model';
+import { LayoutService } from '@core/layout/layout.service';
+import { AuthService } from '@core/auth/auth.service';
+import { LanguageService, IdiomaSuportado } from '@core/i18n/language.service';
+import { UserRole } from '@core/auth/models/auth.model';
 
 const ROLE_LABEL_KEY: Record<UserRole, string> = {
     Admin: 'roles.admin',

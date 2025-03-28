@@ -16,13 +16,13 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
-import { UserListItem } from '../../models/user.model';
-import { UserRole } from '@/app/core/auth/models/auth.model';
-import { AuthService } from '@/app/core/auth/auth.service';
-import { UserService } from '@/app/features/users/services/user.service';
-import { LanguageService } from '@/app/core/i18n/language.service';
-import { PageHero } from '@/app/shared/components/page-hero/page-hero';
-import { EmptyState } from '@/app/shared/components/empty-state/empty-state';
+import { UserListItem } from '@features/users/models/user.model';
+import { UserRole } from '@core/auth/models/auth.model';
+import { AuthService } from '@core/auth/auth.service';
+import { UserService } from '@features/users/services/user.service';
+import { LanguageService } from '@core/i18n/language.service';
+import { PageHero } from '@shared/components/page-hero/page-hero';
+import { EmptyState } from '@shared/components/empty-state/empty-state';
 
 interface NovoUsuarioForm {
     fullName: string;

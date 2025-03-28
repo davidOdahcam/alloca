@@ -2,7 +2,7 @@ import { Component, computed, inject, input, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
-import { LayoutService } from '@/app/core/layout/layout.service';
+import { LayoutService } from '@core/layout/layout.service';
 import { filter } from 'rxjs/operators';
 
 @Component({

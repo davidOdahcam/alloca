@@ -19,9 +19,12 @@
         "module": "ES2022",
         "baseUrl": "./",
         "paths": {
-            "@/*": [
-                "src/*"
-            ]
+            "@/*": ["src/*"],
+            "@app/*": ["src/app/*"],
+            "@core/*": ["src/app/core/*"],
+            "@features/*": ["src/app/features/*"],
+            "@shared/*": ["src/app/shared/*"],
+            "@env/*": ["src/environments/*"]
         }
     },
     "angularCompilerOptions": {

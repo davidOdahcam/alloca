@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '@/environments/environment';
-import { CheckInRequest, CreateReservationRequest, CreateReservationResponse, Reservation } from '@/app/features/reservations/models/reservation.model';
+import { environment } from '@env/environment';
+import { CheckInRequest, CreateReservationRequest, CreateReservationResponse, Reservation } from '@features/reservations/models/reservation.model';
 
 @Injectable({ providedIn: 'root' })
 export class ReservationService {

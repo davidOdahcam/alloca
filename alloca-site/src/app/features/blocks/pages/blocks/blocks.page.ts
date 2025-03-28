@@ -12,14 +12,14 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { TooltipModule } from 'primeng/tooltip';
-import { BlockListItem, BlockTargetType } from '@/app/features/blocks/models/block.model';
-import { Pavilion } from '@/app/features/pavilions/models/pavilion.model';
-import { BlocksService } from '@/app/features/blocks/services/blocks.service';
-import { PavilionService } from '@/app/features/pavilions/services/pavilion.service';
-import { LanguageService } from '@/app/core/i18n/language.service';
-import { PageHero } from '@/app/shared/components/page-hero/page-hero';
-import { Loader } from '@/app/shared/components/loader/loader';
-import { EmptyState } from '@/app/shared/components/empty-state/empty-state';
+import { BlockListItem, BlockTargetType } from '@features/blocks/models/block.model';
+import { Pavilion } from '@features/pavilions/models/pavilion.model';
+import { BlocksService } from '@features/blocks/services/blocks.service';
+import { PavilionService } from '@features/pavilions/services/pavilion.service';
+import { LanguageService } from '@core/i18n/language.service';
+import { PageHero } from '@shared/components/page-hero/page-hero';
+import { Loader } from '@shared/components/loader/loader';
+import { EmptyState } from '@shared/components/empty-state/empty-state';
 
 const TIPO_ICON: Record<BlockTargetType, string> = {
     Pavilion: 'pi pi-building',

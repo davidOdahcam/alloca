@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '@/environments/environment';
-import { CreateUserRequest, ResetUserPasswordRequest, UpdateUserRequest, UserDetail, UserListItem, UserRole } from '@/app/features/users/models/user.model';
+import { environment } from '@env/environment';
+import { CreateUserRequest, ResetUserPasswordRequest, UpdateUserRequest, UserDetail, UserListItem, UserRole } from '@features/users/models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
