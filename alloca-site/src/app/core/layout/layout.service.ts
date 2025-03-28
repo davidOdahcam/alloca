@@ -60,7 +60,6 @@ export class LayoutService {
     private initialized = false;
 
     constructor() {
-        // Aplica imediatamente o tema configurado (sem transição) ao iniciar a app.
         this.toggleDarkMode(this.layoutConfig());
 
         effect(() => {
@@ -91,9 +90,7 @@ export class LayoutService {
         try {
             const dados: PersistedTheme = { darkTheme };
             localStorage.setItem(StorageKeys.tema, JSON.stringify(dados));
-        } catch {
-            /* ignore */
-        }
+        } catch {}
     }
 
     private handleDarkModeTransition(config: LayoutConfig): void {

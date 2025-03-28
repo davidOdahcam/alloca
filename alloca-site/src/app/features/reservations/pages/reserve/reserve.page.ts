@@ -24,12 +24,12 @@ import { FloorMapComponent } from '@shared/components/floor-map/floor-map.compon
 
 interface TimeOption {
     label: string;
-    value: string; // "HH:mm"
+    value: string;
 }
 
 interface DurationOption {
     label: string;
-    value: number; // minutos
+    value: number;
 }
 
 const RESOURCE_TYPE_KEYS: { value: ResourceType; labelKey: string; icon: string }[] = [
@@ -754,7 +754,6 @@ export class ReservePage {
         return candidatos.filter((t) => (this.toMinutes(t) ?? -1) >= minutosAgora).map((t) => ({ label: t, value: t }));
     });
 
-    /** Calcula o horário de término a partir do início + duração escolhida. */
     readonly endTime = computed<string | null>(() => {
         const start = this.startTime();
         const dur = this.durationMinutes();
@@ -768,7 +767,6 @@ export class ReservePage {
         return this.fromMinutes(endMin);
     });
 
-    /** Filtra durações que cabem dentro da janela de funcionamento a partir do início. */
     readonly durationOptions = computed<DurationOption[]>(() => {
         void this.language.atual();
         const base: DurationOption[] = DURATION_BASE.map((d) => ({
@@ -838,11 +836,10 @@ export class ReservePage {
         this.pavilionsApi.list().subscribe((p) => {
             this.pavilions.set(p);
             const restaurada = this.restaurarUltimaSelecao(p);
-            // Auto-seleciona se houver apenas um pavilhão (e nada foi restaurado).
+
             if (!restaurada && p.length === 1) this.pavilionId.set(p[0].id);
         });
 
-        // Carrega pavimentos quando muda pavilhão.
         effect(() => {
             const id = this.pavilionId();
             this.floorId.set(null);
@@ -857,7 +854,20 @@ export class ReservePage {
             }
         });
 
-        // Reseta horário de início se sair dos slots disponíveis (inclui filtro de "hoje").
+        effect(() => {
+            const p = this.selectedPavilion();
+            if (!p) return;
+            const dataAtual = this.date();
+            const agora = new Date();
+            const ehHoje = dataAtual.getFullYear() === agora.getFullYear() && dataAtual.getMonth() === agora.getMonth() && dataAtual.getDate() === agora.getDate();
+            if (!ehHoje) return;
+            const proxima = this.calcProximaDataDisponivel(p, agora);
+            const hojeZerado = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate()).getTime();
+            if (proxima.getTime() !== hojeZerado) {
+                this.date.set(proxima);
+            }
+        });
+
         effect(() => {
             const opcoes = this.startOptions().map((o) => o.value);
             const start = this.startTime();
@@ -866,7 +876,6 @@ export class ReservePage {
             }
         });
 
-        // Auto-busca com debounce. Não limpa recursos ao invalidar — overlay cobre o mapa.
         let buscaTimer: ReturnType<typeof setTimeout> | null = null;
         effect(() => {
             const ok = this.canSearch();
@@ -989,9 +998,7 @@ export class ReservePage {
                 resourceType: this.resourceType()
             };
             localStorage.setItem(ReservePage.STORAGE_ULTIMA, JSON.stringify(dados));
-        } catch {
-            /* ignore */
-        }
+        } catch {}
     }
 
     private restaurarUltimaSelecao(pavilions: { id: string }[]): boolean {
@@ -1015,7 +1022,6 @@ export class ReservePage {
             if (dados.pavilionId && pavilions.some((p) => p.id === dados.pavilionId)) {
                 this.pavilionId.set(dados.pavilionId);
                 if (dados.floorId) {
-                    // Aguarda o effect carregar floors antes de aplicar a sele\u00e7\u00e3o.
                     let tentativas = 0;
                     const tentar = () => {
                         const fs = this.floors();
@@ -1029,9 +1035,7 @@ export class ReservePage {
                 }
                 return true;
             }
-        } catch {
-            /* ignore */
-        }
+        } catch {}
         return false;
     }
 
@@ -1043,11 +1047,34 @@ export class ReservePage {
         for (let m = open; m <= close; m += slotMinutes) {
             out.push(this.fromMinutes(m));
         }
-        // Garante que o último slot seja exatamente o fechamento
+
         if (out[out.length - 1] !== this.fromMinutes(close)) {
             out.push(this.fromMinutes(close));
         }
         return out;
+    }
+
+    private calcProximaDataDisponivel(pavilion: Pavilion, from: Date, maxDias = 15): Date {
+        const agora = new Date();
+        const minutosAgora = agora.getHours() * 60 + agora.getMinutes();
+        for (let i = 0; i < maxDias; i++) {
+            const candidata = new Date(from);
+            candidata.setDate(candidata.getDate() + i);
+            candidata.setHours(0, 0, 0, 0);
+            const oh = (pavilion.operatingHours ?? []).find((o) => o.dayOfWeek === candidata.getDay());
+            if (!oh) continue;
+            const slots = this.buildSlots(oh.opensAt, oh.closesAt, pavilion.slotMinutes);
+            if (slots.length < 2) continue;
+            const candidatos = slots.slice(0, -1);
+            if (i === 0) {
+                const slotsDisponiveis = candidatos.filter((t) => (this.toMinutes(t) ?? -1) >= minutosAgora);
+                if (slotsDisponiveis.length === 0) continue;
+            }
+            return candidata;
+        }
+        const fallback = new Date(from);
+        fallback.setHours(0, 0, 0, 0);
+        return fallback;
     }
 
     private toMinutes(hhmm: string): number | null {

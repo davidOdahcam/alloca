@@ -28,7 +28,6 @@ export class PavilionService {
         return cache;
     }
 
-    /** Limpa caches (útil após login/logout ou alterações administrativas). */
     invalidarCache(): void {
         this.cachePavilions = undefined;
         this.cacheFloorsPorPavilion.clear();

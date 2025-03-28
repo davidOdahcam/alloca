@@ -64,7 +64,7 @@ export class AuthService {
     private restore(): PersistedAuth | null {
         try {
             let raw = localStorage.getItem(STORAGE_KEY);
-            // Migração transparente da chave antiga.
+
             if (!raw) {
                 const legado = localStorage.getItem(StorageKeysLegacy.auth);
                 if (legado) {

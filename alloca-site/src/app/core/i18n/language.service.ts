@@ -8,19 +8,11 @@ const STORAGE_KEY = 'app:language';
 const IDIOMAS: IdiomaSuportado[] = ['pt-BR', 'en-US'];
 const PADRAO: IdiomaSuportado = 'pt-BR';
 
-/**
- * Leitura pura do idioma atual a partir de `localStorage` (com fallback para
- * o idioma do navegador). Não depende do Angular nem do `TranslateService`,
- * permitindo que interceptors HTTP descubram o idioma sem participar do
- * grafo de DI do `LanguageService` (evita NG0200 circular dependency).
- */
 export function lerIdiomaAtual(): IdiomaSuportado {
     try {
         const salvo = localStorage.getItem(STORAGE_KEY) as IdiomaSuportado | null;
         if (salvo && IDIOMAS.includes(salvo)) return salvo;
-    } catch {
-        /* ignora */
-    }
+    } catch {}
     const navegador = (typeof navigator !== 'undefined' && navigator.language) || PADRAO;
     const correspondente = IDIOMAS.find((i) => navegador.toLowerCase().startsWith(i.toLowerCase().split('-')[0]));
     return correspondente ?? PADRAO;
@@ -36,7 +28,6 @@ export class LanguageService {
     readonly disponiveis = computed(() => IDIOMAS);
 
     constructor() {
-        // Aplica idioma inicial e mantém PrimeNG sincronizado.
         effect(() => {
             const idioma = this._atual();
             this.translate.use(idioma).subscribe(() => {
@@ -54,9 +45,7 @@ export class LanguageService {
         this._atual.set(idioma);
         try {
             localStorage.setItem(STORAGE_KEY, idioma);
-        } catch {
-            /* ignora */
-        }
+        } catch {}
     }
 
     private detectarInicial(): IdiomaSuportado {

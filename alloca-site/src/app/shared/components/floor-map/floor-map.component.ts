@@ -12,7 +12,6 @@ export interface FloorMapViewport {
     scale: number;
 }
 
-/** Recurso interativo do mapa. Estruturalmente compatível com AvailabilityResource. */
 export interface RecursoMapa {
     id: string;
     externalId: string;
@@ -45,15 +44,14 @@ export class FloorMapComponent implements OnInit, AfterViewInit {
     readonly zoomStep = input<number>(0.2);
     readonly panStep = input<number>(40);
 
-    /** Recursos exibidos no mapa. Cada um casa pelo externalId com data-identification do SVG. */
     readonly recursos = input<readonly RecursoMapa[]>([]);
-    /** Se true, recursos não listados em `recursos` ficam ocultos/inertes. */
+
     readonly esconderForaDaLista = input<boolean>(false);
 
     readonly viewportChange = output<FloorMapViewport>();
-    /** Emite quando o usuário clica/aciona um recurso disponível. */
+
     readonly recursoSelecionado = output<RecursoMapa>();
-    /** Emite quando o usuário clica num recurso marcado como indisponível. */
+
     readonly recursoIndisponivelSelecionado = output<RecursoMapa>();
 
     private readonly viewportRef = viewChild.required<ElementRef<HTMLDivElement>>('viewport');
@@ -71,7 +69,6 @@ export class FloorMapComponent implements OnInit, AfterViewInit {
     protected readonly canZoomIn = computed(() => this.scale() < this.maxScale());
     protected readonly canZoomOut = computed(() => this.scale() > this.minScale());
 
-    // Tooltip flutuante para hover em recursos
     protected readonly tipVisivel = signal(false);
     protected readonly tipTitulo = signal('');
     protected readonly tipCodigo = signal('');
@@ -80,7 +77,7 @@ export class FloorMapComponent implements OnInit, AfterViewInit {
     protected readonly tipY = signal(0);
 
     private dragStart: { x: number; y: number; tx: number; ty: number } | null = null;
-    /** Evita disparar click depois de um pan. */
+
     private podeClicar = true;
 
     constructor() {
@@ -88,7 +85,6 @@ export class FloorMapComponent implements OnInit, AfterViewInit {
             this.viewportChange.emit({ x: this.tx(), y: this.ty(), scale: this.scale() });
         });
 
-        // Reaplica o estado interativo sempre que `recursos` mudar OU o SVG for trocado.
         effect(() => {
             this.svgHtml();
             this.recursos();
@@ -119,15 +115,12 @@ export class FloorMapComponent implements OnInit, AfterViewInit {
         this.svgHtml.set(this.sanitizer.bypassSecurityTrustHtml(markup));
     }
 
-    /** Liga classes, aria, listeners para cada <g data-component="ROOM|DESK"> do SVG. */
     private aplicarInteratividade(): void {
         const stage = this.stageRef()?.nativeElement;
         if (!stage) return;
         const svg = stage.querySelector('svg');
         if (!svg) return;
 
-        // Listeners delegados são amarrados uma única vez por SVG; assim, mudanças
-        // de disponibilidade são sempre lidas do signal atual (sem closure stale).
         this.ligarListenersDelegados(svg);
 
         const mapa = new Map(this.recursos().map((r) => [r.externalId.toUpperCase(), r]));
@@ -139,7 +132,6 @@ export class FloorMapComponent implements OnInit, AfterViewInit {
             const recurso = mapa.get(`${tipo.toUpperCase()}-${ext}`);
             const baseClass = tipo === 'Room' ? 'room' : 'desk';
 
-            // Limpa estados anteriores.
             g.classList.remove(`${baseClass}--available`, `${baseClass}--indisponivel`, `${baseClass}--disabled`);
 
             if (!recurso) {
@@ -163,11 +155,6 @@ export class FloorMapComponent implements OnInit, AfterViewInit {
         });
     }
 
-    /**
-     * Amarra os handlers de clique/teclado/hover uma única vez por elemento SVG.
-     * Toda lookup do recurso é feita no momento do evento contra `this.recursos()`,
-     * evitando o bug de closure que mantinha o estado de disponibilidade defasado.
-     */
     private ligarListenersDelegados(svg: SVGSVGElement): void {
         if ((svg as any).__allocaDelegated) return;
         (svg as any).__allocaDelegated = true;

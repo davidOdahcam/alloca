@@ -40,7 +40,6 @@ export class AppMenu {
     }
 
     readonly model = computed<MenuItem[]>(() => {
-        // reage à mudança de idioma para refazer rótulos
         void this.language.atual();
         const role = this.auth.role();
         if (role === 'PavilionManager' || role === 'Admin') return this.managerMenu(role === 'Admin');

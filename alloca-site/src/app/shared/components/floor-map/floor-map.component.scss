@@ -25,12 +25,12 @@
         inset: 0;
         transform-origin: 0 0;
         display: flex;
-        // Importante: NÃO usar `will-change`, `backface-visibility`,
-        // `translateZ(0)` ou qualquer outra dica que promova este elemento
-        // a uma camada de composição. Isso faz o navegador rasterizar o SVG
-        // no tamanho base e depois ampliar a imagem (bitmap), borrando
-        // tudo no zoom. Sem layer promotion, o transform scale é aplicado
-        // ao SVG vetorial e permanece nítido em qualquer escala.
+        
+        
+        
+        
+        
+        
     }
 
     ::ng-deep .floor-map__stage > svg {

@@ -314,10 +314,9 @@ export class UsersPage {
 
     constructor() {
         this.recarregar();
-        // Re-renderiza tags de papel ao trocar idioma forçando refresh da lista.
+
         effect(() => {
             void this.language.atual();
-            // intencionalmente sem chamada — basta para invalidar computeds que dependem
         });
     }
 

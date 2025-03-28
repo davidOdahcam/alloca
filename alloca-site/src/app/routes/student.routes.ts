@@ -12,6 +12,6 @@ export default [
         title: 'Minhas reservas',
         loadComponent: () => import('@features/reservations/pages/my-reservations/my-reservations.page').then((m) => m.MyReservationsPage)
     },
-    // Redirecionamento legado do antigo menu de check-in (validação agora é feita por gestor)
+
     { path: 'checkin', pathMatch: 'full', redirectTo: 'reservations' }
 ] as Routes;

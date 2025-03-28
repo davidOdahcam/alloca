@@ -4,10 +4,6 @@ import { ApprovalsService } from '@features/approvals/services/approvals.service
 import { ReservationService } from '@features/reservations/services/reservation.service';
 import { catchError, of } from 'rxjs';
 
-/**
- * Centraliza contadores usados em badges do menu/topbar.
- * Atualiza on-demand (refresh()) e quando o usuário autenticado muda.
- */
 @Injectable({ providedIn: 'root' })
 export class CountersService {
     private readonly auth = inject(AuthService);

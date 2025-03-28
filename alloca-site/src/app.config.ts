@@ -28,10 +28,7 @@ export const appConfig: ApplicationConfig = {
         }),
         MessageService,
         ConfirmationService,
-        /**
-         * Carrega o idioma inicial antes do app subir, evitando o flash de
-         * chaves cruas. Roda no contexto de injeção do Angular.
-         */
+
         provideAppInitializer(() => {
             const translate = inject(TranslateService);
             const primeng = inject(PrimeNG);

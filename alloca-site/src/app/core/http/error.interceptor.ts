@@ -4,18 +4,6 @@ import { MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { catchError, throwError } from 'rxjs';
 
-/**
- * Mapeia erros HTTP em mensagens amigáveis usando chaves i18n.
- *
- * Estratégia de tradução (prioridade):
- *   1. Se o backend devolver `error.error.code`, busca em `errors.codes.<code>`
- *      passando `error.error.args` como contexto (interpolação `{{0}}`, `{{1}}`...).
- *   2. Se faltar a chave, cai para a categoria por status HTTP (`errors.network`, `errors.server`, etc.).
- *   3. Como último recurso, usa `errors.unknown`.
- *
- * 401 e 403 são tratados pelo authInterceptor (redireciona), aqui só logamos.
- * 4xx (exceto 401/403) são silenciados aqui — espera-se que as páginas mostrem feedback contextual.
- */
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
     const toast = inject(MessageService);
     const injector = inject(Injector);
@@ -46,7 +34,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             } else if (status >= 500) {
                 mostrar('errors.server');
             }
-            // 4xx (incl. 401/403) seguem o fluxo para os chamadores/authInterceptor.
 
             return throwError(() => err);
         })
