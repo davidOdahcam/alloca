@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Apps/">
+    <Project Path="src/Alloca.API/Alloca.API.csproj" />
+  </Folder>
+  <Project Path="src/Alloca.Application/Alloca.Application.csproj" />
+  <Project Path="src/Alloca.CrossCutting/Alloca.CrossCutting.csproj" />
+  <Project Path="src/Alloca.Domain/Alloca.Domain.csproj" />
+  <Project Path="src/Alloca.Infra/Alloca.Infra.csproj" />
+  <Project Path="src/Alloca.IoC/Alloca.IoC.csproj" />
+</Solution>
