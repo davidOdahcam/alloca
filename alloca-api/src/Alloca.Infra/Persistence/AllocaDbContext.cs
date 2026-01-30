@@ -1,10 +1,9 @@
-using Alloca.Application.Common.Interfaces;
 using Alloca.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Alloca.Infra.Persistence;
 
-public class AllocaDbContext(DbContextOptions<AllocaDbContext> options) : DbContext(options), IAppDbContext
+public class AllocaDbContext(DbContextOptions<AllocaDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users => Set<User>();
     public DbSet<Pavilion> Pavilions => Set<Pavilion>();

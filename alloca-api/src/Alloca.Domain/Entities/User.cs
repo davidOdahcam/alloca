@@ -11,7 +11,7 @@ public class User : Entity
     public UserRole Role { get; private set; }
     public bool IsActive { get; private set; } = true;
 
-    private readonly List<PavilionManager> _managedPavilions = new();
+    private readonly List<PavilionManager> _managedPavilions = [];
     public IReadOnlyCollection<PavilionManager> ManagedPavilions => _managedPavilions.AsReadOnly();
 
     private User() { }

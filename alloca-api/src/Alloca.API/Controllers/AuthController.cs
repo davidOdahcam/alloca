@@ -1,21 +1,21 @@
-using Alloca.Application.Features.Auth;
-using MediatR;
+using Alloca.Application.DTOs.Auth;
+using Alloca.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Alloca.API.Controllers;
 
 [ApiController]
 [Route("api/auth")]
-public class AuthController(ISender sender) : ControllerBase
+public class AuthController(IAuthService authService) : ControllerBase
 {
     [HttpPost("login")]
-    public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginCommand cmd, CancellationToken ct)
-        => Ok(await sender.Send(cmd, ct));
+    public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request, CancellationToken ct)
+        => Ok(await authService.LoginAsync(request, ct));
 
     [HttpPost("register")]
-    public async Task<ActionResult<object>> Register([FromBody] RegisterCommand cmd, CancellationToken ct)
+    public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest request, CancellationToken ct)
     {
-        var id = await sender.Send(cmd, ct);
-        return Created($"/api/users/{id}", new { id });
+        var resp = await authService.RegisterAsync(request, ct);
+        return Created($"/api/users/{resp.Id}", resp);
     }
 }
