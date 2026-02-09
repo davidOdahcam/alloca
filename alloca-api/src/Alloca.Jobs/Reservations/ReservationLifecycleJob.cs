@@ -3,13 +3,19 @@ using Alloca.Application.Common.Settings;
 using Alloca.Domain.Entities;
 using Alloca.Domain.Enums;
 using Alloca.Domain.Repositories;
+using Hangfire;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Alloca.Infra.Background;
+namespace Alloca.Jobs.Reservations;
 
 /// <summary>
-/// Periodically transitions reservation states.
+/// Job recorrente responsável por transitar estados de reservas:
+/// <list type="bullet">
+///   <item><c>Approved</c> → <c>NoShow</c> quando o usuário não fez check-in dentro do grace period.</item>
+///   <item><c>InProgress</c> → <c>Completed</c> quando o período da reserva já encerrou.</item>
+/// </list>
+/// Também aplica strikes e suspende usuários que excedem o limite configurado.
 /// </summary>
 public class ReservationLifecycleJob(
     IReservationRepository reservations,
@@ -20,6 +26,14 @@ public class ReservationLifecycleJob(
     IOptions<ReservationPolicySettings> policyOpts,
     ILogger<ReservationLifecycleJob> logger)
 {
+    /// <summary>Identificador estável do job no Hangfire.</summary>
+    public const string RecurringJobId = "reservation-lifecycle";
+
+    /// <summary>Expressão cron padrão (a cada minuto).</summary>
+    public const string DefaultCron = "* * * * *";
+
+    [AutomaticRetry(Attempts = 3, DelaysInSeconds = new[] { 30, 60, 120 })]
+    [DisableConcurrentExecution(timeoutInSeconds: 60)]
     public async Task RunAsync()
     {
         var policy = policyOpts.Value;
@@ -52,8 +66,10 @@ public class ReservationLifecycleJob(
         if (approved.Count > 0 || inProgress.Count > 0)
         {
             await uow.SaveChangesAsync();
-            logger.LogInformation("Reservation lifecycle: {NoShow} no-shows, {Completed} completed.",
-                approved.Count(r => r.Status == ReservationStatus.NoShow), inProgress.Count);
+            logger.LogInformation(
+                "Reservation lifecycle: {NoShow} no-shows, {Completed} completed.",
+                approved.Count(r => r.Status == ReservationStatus.NoShow),
+                inProgress.Count);
         }
     }
 }

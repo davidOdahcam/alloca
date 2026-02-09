@@ -1,7 +1,6 @@
 using Alloca.Application.Common.Interfaces;
 using Alloca.Application.Common.Settings;
 using Alloca.Domain.Repositories;
-using Alloca.Infra.Background;
 using Alloca.Infra.Persistence;
 using Alloca.Infra.Persistence.Repositories;
 using Alloca.Infra.Persistence.Seed;
@@ -46,7 +45,6 @@ public static class DependencyInjection
         services.AddScoped<IUserSuspensionRepository, UserSuspensionRepository>();
 
         // Background + seed
-        services.AddScoped<ReservationLifecycleJob>();
         services.AddScoped<DataSeeder>();
 
         return services;

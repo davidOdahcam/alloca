@@ -1,4 +1,3 @@
-using Alloca.Infra.Background;
 using Alloca.Infra.Persistence;
 using Alloca.Infra.Persistence.Seed;
 using Alloca.IoC.Config;
@@ -20,6 +19,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseExceptionHandlingConfig();
+app.UseLocalizationConfig();
 
 if (app.Environment.IsDevelopment())
     app.UseOpenApiConfig();
@@ -33,8 +33,5 @@ app.MapControllers();
 
 if (app.Environment.IsDevelopment())
     app.UseHangfireDashboard("/hangfire");
-
-RecurringJob.AddOrUpdate<ReservationLifecycleJob>(
-    "reservation-lifecycle", j => j.RunAsync(), "* * * * *");
 
 app.Run();

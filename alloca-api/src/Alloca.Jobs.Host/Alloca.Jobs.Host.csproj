@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>alloca-jobs-host</UserSecretsId>
+    <RootNamespace>Alloca.Jobs.Host</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.21" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.8.21" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Alloca.Jobs\Alloca.Jobs.csproj" />
+    <ProjectReference Include="..\Alloca.Infra\Alloca.Infra.csproj" />
+    <ProjectReference Include="..\Alloca.Application\Alloca.Application.csproj" />
+  </ItemGroup>
+
+</Project>

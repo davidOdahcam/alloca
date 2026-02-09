@@ -7,6 +7,10 @@ namespace Alloca.IoC.Config;
 
 public static class HangfireConfig
 {
+    /// <summary>
+    /// Registra apenas o cliente do Hangfire (storage + APIs para enfileirar/agendar/monitorar).
+    /// Use na API. O servidor que processa os jobs roda no projeto Alloca.Jobs.Host.
+    /// </summary>
     public static IServiceCollection AddHangfireConfig(this IServiceCollection services, IConfiguration configuration)
     {
         var conn = configuration.GetConnectionString("AllocaDb")
@@ -24,7 +28,7 @@ public static class HangfireConfig
                 UseRecommendedIsolationLevel = true,
                 DisableGlobalLocks = true
             }));
-        services.AddHangfireServer();
+
         return services;
     }
 }
