@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Text.Json.Serialization;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Alloca.IoC.Config;
@@ -13,7 +14,12 @@ public static class NativeInjectorBootStrapper
         services.AddHangfireConfig(configuration);
         services.AddOpenApiConfig();
         services.AddCorsConfig();
-        services.AddControllers();
+        services.AddLocalizationConfig();
+        services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
         return services;
     }
 }
