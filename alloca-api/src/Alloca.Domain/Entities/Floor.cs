@@ -17,7 +17,7 @@ public class Floor : Entity
 
     public Floor(Guid pavilionId, string code, string name, int level, string? svgKey)
     {
-        if (string.IsNullOrWhiteSpace(code)) throw new DomainException("Floor code is required.");
+        if (string.IsNullOrWhiteSpace(code)) throw new DomainException("O código do andar é obrigatório.");
         PavilionId = pavilionId;
         Code = code.Trim().ToUpperInvariant();
         Name = name.Trim();

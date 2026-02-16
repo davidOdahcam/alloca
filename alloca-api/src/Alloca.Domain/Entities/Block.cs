@@ -16,7 +16,7 @@ public class Block : Entity
 
     public Block(BlockTargetType targetType, Guid targetId, TimeRange period, string reason, Guid createdByUserId)
     {
-        if (string.IsNullOrWhiteSpace(reason)) throw new DomainException("Block reason is required.");
+        if (string.IsNullOrWhiteSpace(reason)) throw new DomainException("Informe o motivo do bloqueio.");
         TargetType = targetType;
         TargetId = targetId;
         Period = period;

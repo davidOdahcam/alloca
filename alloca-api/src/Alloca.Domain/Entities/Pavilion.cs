@@ -23,17 +23,17 @@ public class Pavilion : Entity
 
     public Pavilion(string code, string name)
     {
-        if (string.IsNullOrWhiteSpace(code)) throw new DomainException("Pavilion code is required.");
-        if (string.IsNullOrWhiteSpace(name)) throw new DomainException("Pavilion name is required.");
+        if (string.IsNullOrWhiteSpace(code)) throw new DomainException("O código do pavilhão é obrigatório.");
+        if (string.IsNullOrWhiteSpace(name)) throw new DomainException("O nome do pavilhão é obrigatório.");
         Code = code.Trim().ToUpperInvariant();
         Name = name.Trim();
     }
 
     public void UpdatePolicy(int minAdvanceMinutes, int maxAdvanceDays, int slotMinutes)
     {
-        if (minAdvanceMinutes < 0) throw new DomainException("MinAdvance cannot be negative.");
-        if (maxAdvanceDays <= 0) throw new DomainException("MaxAdvance must be positive.");
-        if (slotMinutes <= 0 || slotMinutes > 240) throw new DomainException("Slot must be 1..240 min.");
+        if (minAdvanceMinutes < 0) throw new DomainException("A antecedência mínima não pode ser negativa.");
+        if (maxAdvanceDays <= 0) throw new DomainException("A antecedência máxima deve ser positiva.");
+        if (slotMinutes <= 0 || slotMinutes > 240) throw new DomainException("O slot deve estar entre 1 e 240 minutos.");
         MinAdvanceMinutes = minAdvanceMinutes;
         MaxAdvanceDays = maxAdvanceDays;
         SlotMinutes = slotMinutes;

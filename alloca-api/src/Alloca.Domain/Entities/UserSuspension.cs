@@ -14,8 +14,8 @@ public class UserSuspension : Entity
 
     public UserSuspension(Guid userId, DateTime startsAt, DateTime endsAt, string reason, Guid? issuedByUserId)
     {
-        if (endsAt <= startsAt) throw new DomainException("Suspension end must be after start.");
-        if (string.IsNullOrWhiteSpace(reason)) throw new DomainException("Reason is required.");
+        if (endsAt <= startsAt) throw new DomainException("O fim da suspensão deve ser posterior ao início.");
+        if (string.IsNullOrWhiteSpace(reason)) throw new DomainException("Informe o motivo da suspensão.");
         UserId = userId;
         StartsAt = startsAt;
         EndsAt = endsAt;

@@ -12,9 +12,9 @@ public class TimeRange : IEquatable<TimeRange>
     public TimeRange(DateTime startUtc, DateTime endUtc)
     {
         if (startUtc.Kind != DateTimeKind.Utc || endUtc.Kind != DateTimeKind.Utc)
-            throw new DomainException("TimeRange requires UTC dates.");
+            throw new DomainException("O intervalo de tempo precisa estar em UTC.");
         if (endUtc <= startUtc)
-            throw new DomainException("End must be after start.");
+            throw new DomainException("A data/hora final deve ser posterior à inicial.");
 
         StartUtc = startUtc;
         EndUtc = endUtc;

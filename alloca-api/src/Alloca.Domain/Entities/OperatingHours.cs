@@ -21,7 +21,7 @@ public class OperatingHours : Entity
 
     public void Update(TimeOnly opensAt, TimeOnly closesAt)
     {
-        if (closesAt <= opensAt) throw new DomainException("ClosesAt must be after OpensAt.");
+        if (closesAt <= opensAt) throw new DomainException("O horário de fechamento deve ser posterior à abertura.");
         OpensAt = opensAt;
         ClosesAt = closesAt;
         IsClosed = false;

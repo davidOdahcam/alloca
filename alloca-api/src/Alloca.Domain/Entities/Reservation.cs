@@ -57,7 +57,7 @@ public class Reservation : Entity
     public void Reject(Guid managerUserId, string reason)
     {
         EnsureStatus(ReservationStatus.Pending);
-        if (string.IsNullOrWhiteSpace(reason)) throw new DomainException("Reject reason is required.");
+        if (string.IsNullOrWhiteSpace(reason)) throw new DomainException("Informe o motivo da rejeição.");
         Status = ReservationStatus.Rejected;
         DecidedAt = DateTime.UtcNow;
         DecidedByUserId = managerUserId;
@@ -68,8 +68,8 @@ public class Reservation : Entity
     public void Revoke(Guid managerUserId, string reason)
     {
         if (Status is not ReservationStatus.Approved and not ReservationStatus.InProgress)
-            throw new DomainException("Only approved/in-progress reservations can be revoked.");
-        if (string.IsNullOrWhiteSpace(reason)) throw new DomainException("Revoke reason is required.");
+            throw new DomainException("Apenas reservas aprovadas ou em andamento podem ser revogadas.");
+        if (string.IsNullOrWhiteSpace(reason)) throw new DomainException("Informe o motivo da revogação.");
         Status = ReservationStatus.RevokedByManager;
         DecidedAt = DateTime.UtcNow;
         DecidedByUserId = managerUserId;
@@ -86,9 +86,9 @@ public class Reservation : Entity
             return;
         }
         if (Status != ReservationStatus.Approved)
-            throw new DomainException("Only pending/approved reservations can be cancelled.");
+            throw new DomainException("Apenas reservas pendentes ou aprovadas podem ser canceladas.");
         if (Period.StartUtc - nowUtc < TimeSpan.FromHours(minHoursBeforeStart))
-            throw new DomainException($"Cancellation window closed ({minHoursBeforeStart}h before start).");
+            throw new DomainException($"Prazo para cancelamento encerrado ({minHoursBeforeStart}h antes do início).");
         Status = ReservationStatus.CancelledByUser;
         Touch();
     }
@@ -96,11 +96,11 @@ public class Reservation : Entity
     public void CheckIn(DateTime nowUtc, int graceMinutes)
     {
         if (Status != ReservationStatus.Approved)
-            throw new DomainException("Only approved reservations can check-in.");
+            throw new DomainException("Apenas reservas aprovadas permitem check-in.");
         var earliest = Period.StartUtc.AddMinutes(-15);
         var latest = Period.StartUtc.AddMinutes(graceMinutes);
         if (nowUtc < earliest || nowUtc > latest)
-            throw new DomainException("Outside check-in window.");
+            throw new DomainException("Fora da janela de check-in.");
         CheckedInAt = nowUtc;
         Status = ReservationStatus.InProgress;
         Touch();
@@ -126,6 +126,6 @@ public class Reservation : Entity
     private void EnsureStatus(ReservationStatus expected)
     {
         if (Status != expected)
-            throw new DomainException($"Operation requires status {expected}, current {Status}.");
+            throw new DomainException($"Operação requer status {expected}, atual {Status}.");
     }
 }

@@ -18,9 +18,9 @@ public class User : Entity
 
     public User(string email, string fullName, string passwordHash, UserRole role)
     {
-        if (string.IsNullOrWhiteSpace(email)) throw new DomainException("Email is required.");
-        if (string.IsNullOrWhiteSpace(fullName)) throw new DomainException("Name is required.");
-        if (string.IsNullOrWhiteSpace(passwordHash)) throw new DomainException("Password is required.");
+        if (string.IsNullOrWhiteSpace(email)) throw new DomainException("O e-mail é obrigatório.");
+        if (string.IsNullOrWhiteSpace(fullName)) throw new DomainException("O nome é obrigatório.");
+        if (string.IsNullOrWhiteSpace(passwordHash)) throw new DomainException("A senha é obrigatória.");
 
         Email = email.Trim().ToLowerInvariant();
         FullName = fullName.Trim();
@@ -30,8 +30,15 @@ public class User : Entity
 
     public void UpdatePasswordHash(string newHash)
     {
-        if (string.IsNullOrWhiteSpace(newHash)) throw new DomainException("Password hash invalid.");
+        if (string.IsNullOrWhiteSpace(newHash)) throw new DomainException("Hash de senha inválido.");
         PasswordHash = newHash;
+        Touch();
+    }
+
+    public void UpdateFullName(string fullName)
+    {
+        if (string.IsNullOrWhiteSpace(fullName)) throw new DomainException("O nome é obrigatório.");
+        FullName = fullName.Trim();
         Touch();
     }
 

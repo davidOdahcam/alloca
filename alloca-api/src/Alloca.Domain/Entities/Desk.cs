@@ -12,8 +12,8 @@ public class Desk : Entity
 
     public Desk(Guid roomId, string externalId, string name)
     {
-        if (string.IsNullOrWhiteSpace(externalId)) throw new DomainException("Desk ExternalId required.");
-        if (!externalId.StartsWith("DESK-")) throw new DomainException("Desk ExternalId must start with DESK-.");
+        if (string.IsNullOrWhiteSpace(externalId)) throw new DomainException("O identificador externo da mesa é obrigatório.");
+        if (!externalId.StartsWith("DESK-")) throw new DomainException("O identificador externo da mesa deve iniciar com DESK-.");
         RoomId = roomId;
         ExternalId = externalId.Trim().ToUpperInvariant();
         Name = name.Trim();

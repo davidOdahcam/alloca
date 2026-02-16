@@ -17,8 +17,8 @@ public class Room : Entity
 
     public Room(Guid floorId, string externalId, string name, bool isReservable)
     {
-        if (string.IsNullOrWhiteSpace(externalId)) throw new DomainException("Room ExternalId required.");
-        if (!externalId.StartsWith("ROOM-")) throw new DomainException("Room ExternalId must start with ROOM-.");
+        if (string.IsNullOrWhiteSpace(externalId)) throw new DomainException("O identificador externo da sala é obrigatório.");
+        if (!externalId.StartsWith("ROOM-")) throw new DomainException("O identificador externo da sala deve iniciar com ROOM-.");
         FloorId = floorId;
         ExternalId = externalId.Trim().ToUpperInvariant();
         Name = name.Trim();
@@ -27,7 +27,7 @@ public class Room : Entity
 
     public void SetCapacity(int? capacity)
     {
-        if (capacity is < 0) throw new DomainException("Capacity cannot be negative.");
+        if (capacity is < 0) throw new DomainException("A capacidade não pode ser negativa.");
         Capacity = capacity;
         Touch();
     }
