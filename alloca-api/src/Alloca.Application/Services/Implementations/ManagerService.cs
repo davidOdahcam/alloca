@@ -52,7 +52,7 @@ public class ManagerService(
     {
         var (userId, reservation) = await LoadAndAuthorizeAsync(reservationId, ct);
         try { reservation.Approve(userId); }
-        catch (DomainException ex) { throw new BusinessRuleException(ex.Message); }
+        catch (DomainException ex) { throw new BusinessRuleException(ErrorCodes.ReservationBusinessRule, ex.Message); }
         await uow.SaveChangesAsync(ct);
     }
 
@@ -61,7 +61,7 @@ public class ManagerService(
         await reasonValidator.ValidateAndThrowAsync(request, ct);
         var (userId, reservation) = await LoadAndAuthorizeAsync(reservationId, ct);
         try { reservation.Reject(userId, request.Reason); }
-        catch (DomainException ex) { throw new BusinessRuleException(ex.Message); }
+        catch (DomainException ex) { throw new BusinessRuleException(ErrorCodes.ReservationBusinessRule, ex.Message); }
         await uow.SaveChangesAsync(ct);
     }
 
@@ -70,13 +70,13 @@ public class ManagerService(
         await reasonValidator.ValidateAndThrowAsync(request, ct);
         var (userId, reservation) = await LoadAndAuthorizeAsync(reservationId, ct);
         try { reservation.Revoke(userId, request.Reason); }
-        catch (DomainException ex) { throw new BusinessRuleException(ex.Message); }
+        catch (DomainException ex) { throw new BusinessRuleException(ErrorCodes.ReservationBusinessRule, ex.Message); }
         await uow.SaveChangesAsync(ct);
     }
 
     private Guid RequireUserId()
     {
-        if (currentUser.UserId is null) throw new UnauthorizedException("Not authenticated.");
+        if (currentUser.UserId is null) throw new UnauthorizedException(ErrorCodes.Unauthenticated, "Você precisa estar autenticado.");
         return currentUser.UserId.Value;
     }
 
@@ -84,12 +84,12 @@ public class ManagerService(
     {
         var userId = RequireUserId();
         var reservation = await reservations.GetByIdAsync(reservationId, ct)
-            ?? throw new NotFoundException("Reservation not found.");
+            ?? throw new NotFoundException(ErrorCodes.ReservationNotFound, "Reserva não encontrada.");
 
         if (currentUser.Role != UserRole.Admin)
         {
             var manages = await pavilions.ManagesAsync(reservation.PavilionId, userId, ct);
-            if (!manages) throw new ForbiddenException("User does not manage this pavilion.");
+            if (!manages) throw new ForbiddenException(ErrorCodes.ManagerNotPavilionManager, "Você não é gestor deste pavilhão.");
         }
         return (userId, reservation);
     }

@@ -42,4 +42,11 @@ public class ManagerController(IManagerService managerService, IBlockService blo
         var resp = await blockService.CreateAsync(request, ct);
         return Created($"/api/manager/blocks/{resp.Id}", resp);
     }
+
+    [HttpGet("blocks")]
+    public async Task<IActionResult> ListBlocks(
+        [FromQuery] Guid? pavilionId,
+        [FromQuery] bool includeExpired,
+        CancellationToken ct)
+        => Ok(await blockService.ListAsync(pavilionId, includeExpired, ct));
 }

@@ -21,19 +21,57 @@ public class PavilionService(
 {
     public async Task<IReadOnlyList<PavilionResponse>> ListAsync(CancellationToken ct = default)
     {
-        return await pavilions.Query()
+        var list = await pavilions.Query()
+            .Include(p => p.OperatingHours)
             .OrderBy(p => p.Code)
-            .Select(p => new PavilionResponse(p.Id, p.Code, p.Name))
             .ToListAsync(ct);
+
+        return list
+            .Select(p => new PavilionResponse(
+                p.Id,
+                p.Code,
+                p.Name,
+                p.SlotMinutes,
+                p.MinAdvanceMinutes,
+                p.MaxAdvanceDays,
+                p.OperatingHours
+                    .OrderBy(o => o.DayOfWeek)
+                    .Select(o => new OperatingHoursResponse((int)o.DayOfWeek, o.OpensAt.ToString("HH:mm"), o.ClosesAt.ToString("HH:mm")))
+                    .ToList()))
+            .ToList();
     }
 
     public async Task<IReadOnlyList<FloorResponse>> ListFloorsAsync(Guid pavilionId, CancellationToken ct = default)
     {
         var exists = await pavilions.AnyAsync(p => p.Id == pavilionId, ct);
-        if (!exists) throw new NotFoundException("Pavilion not found.");
+        if (!exists) throw new NotFoundException(ErrorCodes.PavilionNotFound, "Pavilhão não encontrado.");
 
         var list = await floors.ListByPavilionAsync(pavilionId, ct);
         return list.Select(f => new FloorResponse(f.Id, f.Code, f.Name, f.Level, f.SvgKey)).ToList();
+    }
+
+    public async Task<FloorResourcesResponse> ListFloorResourcesAsync(Guid pavilionId, Guid floorId, CancellationToken ct = default)
+    {
+        var exists = await pavilions.AnyAsync(p => p.Id == pavilionId, ct);
+        if (!exists) throw new NotFoundException(ErrorCodes.PavilionNotFound, "Pavilhão não encontrado.");
+
+        var floor = await floors.GetWithRoomsAndDesksAsync(floorId, pavilionId, ct)
+            ?? throw new NotFoundException(ErrorCodes.FloorNotFound, "Andar não encontrado.");
+
+        var rooms = floor.Rooms
+            .OrderBy(r => r.ExternalId)
+            .Select(r => new FloorRoomResource(
+                r.Id,
+                r.ExternalId,
+                r.Name,
+                r.IsReservable,
+                r.Desks
+                    .OrderBy(d => d.ExternalId)
+                    .Select(d => new FloorDeskResource(d.Id, d.ExternalId, d.Name))
+                    .ToList()))
+            .ToList();
+
+        return new FloorResourcesResponse(floor.Id, rooms);
     }
 
     public async Task<IReadOnlyList<AvailabilityResourceResponse>> CheckAvailabilityAsync(
@@ -42,7 +80,7 @@ public class PavilionService(
         await availabilityValidator.ValidateAndThrowAsync(request, ct);
 
         var pavilion = await pavilions.GetWithOperatingHoursAsync(pavilionId, ct)
-            ?? throw new NotFoundException("Pavilion not found.");
+            ?? throw new NotFoundException(ErrorCodes.PavilionNotFound, "Pavilhão não encontrado.");
 
         var startUtc = DateTime.SpecifyKind(request.StartUtc, DateTimeKind.Utc);
         var endUtc = DateTime.SpecifyKind(request.EndUtc, DateTimeKind.Utc);
@@ -52,7 +90,7 @@ public class PavilionService(
             return [];
 
         var floor = await floors.GetWithRoomsAndDesksAsync(floorId, pavilionId, ct)
-            ?? throw new NotFoundException("Floor not found.");
+            ?? throw new NotFoundException(ErrorCodes.FloorNotFound, "Andar não encontrado.");
 
         var roomList = floor.Rooms.ToList();
         var roomIds = roomList.Select(r => r.Id).ToList();
@@ -69,16 +107,22 @@ public class PavilionService(
         var result = new List<AvailabilityResourceResponse>();
         foreach (var room in roomList)
         {
+            var anyDeskBusy = room.Desks.Any(d => busyDesks.Contains(d.Id));
+            var roomItselfBusy = busyRooms.Contains(room.Id);
             if (room.IsReservable)
             {
-                var available = !blockedRooms.Contains(room.Id) && !busyRooms.Contains(room.Id);
+                // A sala só está disponível se ela mesma não estiver reservada
+                // e se nenhuma de suas mesas estiver reservada no período.
+                var available = !blockedRooms.Contains(room.Id) && !roomItselfBusy && !anyDeskBusy;
                 result.Add(new AvailabilityResourceResponse(room.Id, room.ExternalId, room.Name, ResourceType.Room, null, available));
             }
             foreach (var desk in room.Desks)
             {
+                // A mesa não está disponível se a sala pai estiver reservada no período.
                 var available = !blockedRooms.Contains(room.Id)
                     && !blockedDesks.Contains(desk.Id)
-                    && !busyDesks.Contains(desk.Id);
+                    && !busyDesks.Contains(desk.Id)
+                    && !roomItselfBusy;
                 result.Add(new AvailabilityResourceResponse(desk.Id, desk.ExternalId, desk.Name, ResourceType.Desk, room.Id, available));
             }
         }

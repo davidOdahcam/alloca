@@ -10,3 +10,15 @@ public record CreateBlockRequest(
     string Reason);
 
 public record CreateBlockResponse(Guid Id);
+
+public record BlockListItemResponse(
+    Guid Id,
+    BlockTargetType TargetType,
+    Guid TargetId,
+    string TargetName,
+    Guid? PavilionId,
+    string? PavilionName,
+    DateTime StartUtc,
+    DateTime EndUtc,
+    string Reason,
+    bool IsActive);

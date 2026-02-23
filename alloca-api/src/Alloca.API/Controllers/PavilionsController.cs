@@ -18,6 +18,10 @@ public class PavilionsController(IPavilionService pavilions) : ControllerBase
     public async Task<IActionResult> Floors(Guid pavilionId, CancellationToken ct)
         => Ok(await pavilions.ListFloorsAsync(pavilionId, ct));
 
+    [HttpGet("{pavilionId:guid}/floors/{floorId:guid}/resources")]
+    public async Task<IActionResult> Resources(Guid pavilionId, Guid floorId, CancellationToken ct)
+        => Ok(await pavilions.ListFloorResourcesAsync(pavilionId, floorId, ct));
+
     [HttpPost("{pavilionId:guid}/floors/{floorId:guid}/availability")]
     public async Task<IActionResult> Availability(
         Guid pavilionId, Guid floorId, [FromBody] CheckAvailabilityRequest request, CancellationToken ct)
