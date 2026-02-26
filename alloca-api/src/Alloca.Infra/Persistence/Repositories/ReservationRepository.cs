@@ -29,6 +29,16 @@ public class ReservationRepository(AllocaDbContext db) : Repository<Reservation>
             && r.Period.StartUtc < endUtc && startUtc < r.Period.EndUtc, ct);
     }
 
+    public Task<bool> HasAnyDeskConflictInRoomAsync(Guid roomId, DateTime startUtc, DateTime endUtc, CancellationToken ct = default)
+    {
+        var desksInRoom = Db.Set<Desk>().Where(d => d.RoomId == roomId).Select(d => d.Id);
+        return Set.AnyAsync(r =>
+            r.ResourceType == ResourceType.Desk && r.DeskId != null
+            && desksInRoom.Contains(r.DeskId!.Value)
+            && ActiveStatuses.Contains(r.Status)
+            && r.Period.StartUtc < endUtc && startUtc < r.Period.EndUtc, ct);
+    }
+
     public async Task<IReadOnlyList<Reservation>> ListApprovedPastGraceAsync(DateTime cutoffUtc, CancellationToken ct = default)
         => await Set.Where(r => r.Status == ReservationStatus.Approved && r.Period.StartUtc < cutoffUtc).ToListAsync(ct);
 

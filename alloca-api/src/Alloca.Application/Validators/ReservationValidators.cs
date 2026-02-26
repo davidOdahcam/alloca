@@ -10,29 +10,29 @@ public class CreateReservationRequestValidator : AbstractValidator<CreateReserva
 {
     public CreateReservationRequestValidator()
     {
-        RuleFor(x => x.ResourceId).NotEmpty();
-        RuleFor(x => x.StartUtc).LessThan(x => x.EndUtc);
+        RuleFor(x => x.ResourceId).NotEmpty().WithMessage("Selecione um recurso para reservar.");
+        RuleFor(x => x.StartUtc).LessThan(x => x.EndUtc).WithMessage("A data/hora de início deve ser anterior à de término.");
     }
 }
 
 public class CheckAvailabilityRequestValidator : AbstractValidator<CheckAvailabilityRequest>
 {
     public CheckAvailabilityRequestValidator()
-        => RuleFor(x => x.StartUtc).LessThan(x => x.EndUtc);
+        => RuleFor(x => x.StartUtc).LessThan(x => x.EndUtc).WithMessage("A data/hora de início deve ser anterior à de término.");
 }
 
 public class ReasonRequestValidator : AbstractValidator<ReasonRequest>
 {
     public ReasonRequestValidator()
-        => RuleFor(x => x.Reason).NotEmpty().MaximumLength(500);
+        => RuleFor(x => x.Reason).NotEmpty().WithMessage("Informe o motivo.").MaximumLength(500).WithMessage("O motivo deve ter no máximo 500 caracteres.");
 }
 
 public class CreateBlockRequestValidator : AbstractValidator<CreateBlockRequest>
 {
     public CreateBlockRequestValidator()
     {
-        RuleFor(x => x.TargetId).NotEmpty();
-        RuleFor(x => x.Reason).NotEmpty().MaximumLength(500);
-        RuleFor(x => x.StartUtc).LessThan(x => x.EndUtc);
+        RuleFor(x => x.TargetId).NotEmpty().WithMessage("Selecione o recurso a ser bloqueado.");
+        RuleFor(x => x.Reason).NotEmpty().WithMessage("Informe o motivo do bloqueio.").MaximumLength(500).WithMessage("O motivo deve ter no máximo 500 caracteres.");
+        RuleFor(x => x.StartUtc).LessThan(x => x.EndUtc).WithMessage("A data/hora de início deve ser anterior à de término.");
     }
 }

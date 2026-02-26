@@ -40,54 +40,69 @@ public class ReservationService(
         var now = clock.UtcNow;
 
         if (await suspensions.IsCurrentlySuspendedAsync(userId, now, ct))
-            throw new ForbiddenException("User is currently suspended.");
+            throw new ForbiddenException(ErrorCodes.UserSuspended, "Sua conta está suspensa no momento.");
 
         var duration = period.Duration;
         if (duration < TimeSpan.FromMinutes(_policy.MinDurationMinutes))
-            throw new BusinessRuleException($"Minimum duration is {_policy.MinDurationMinutes} min.");
+            throw new BusinessRuleException(ErrorCodes.ReservationMinDuration, $"A duração mínima é de {_policy.MinDurationMinutes} min.", _policy.MinDurationMinutes);
         if (duration > TimeSpan.FromMinutes(_policy.MaxDurationMinutes))
-            throw new BusinessRuleException($"Maximum duration is {_policy.MaxDurationMinutes} min.");
+            throw new BusinessRuleException(ErrorCodes.ReservationMaxDuration, $"A duração máxima é de {_policy.MaxDurationMinutes} min.", _policy.MaxDurationMinutes);
 
         var pavilionId = await ResolvePavilionIdAsync(request.ResourceType, request.ResourceId, ct);
         var pavilion = await pavilions.GetWithOperatingHoursAsync(pavilionId, ct)
-            ?? throw new NotFoundException("Pavilion not found.");
+            ?? throw new NotFoundException(ErrorCodes.PavilionNotFound, "Pavilhão não encontrado.");
 
         var minStart = now.AddMinutes(pavilion.MinAdvanceMinutes);
         var maxStart = now.AddDays(pavilion.MaxAdvanceDays);
         if (period.StartUtc < minStart)
-            throw new BusinessRuleException($"Reservation must start at least {pavilion.MinAdvanceMinutes} min from now.");
+            throw new BusinessRuleException(ErrorCodes.ReservationMinAdvance, $"A reserva precisa começar pelo menos {pavilion.MinAdvanceMinutes} min após o momento atual.", pavilion.MinAdvanceMinutes);
         if (period.StartUtc > maxStart)
-            throw new BusinessRuleException($"Reservation cannot exceed {pavilion.MaxAdvanceDays} days advance.");
+            throw new BusinessRuleException(ErrorCodes.ReservationMaxAdvance, $"A reserva não pode ultrapassar {pavilion.MaxAdvanceDays} dias de antecedência.", pavilion.MaxAdvanceDays);
 
         if (!IsWithinOperatingHours(pavilion, period))
-            throw new BusinessRuleException("Outside pavilion operating hours.");
+            throw new BusinessRuleException(ErrorCodes.ReservationOutsideHours, "Horário fora do funcionamento do pavilhão.");
 
         if (pavilion.SlotMinutes > 0 && !IsAlignedToSlot(period, pavilion.SlotMinutes))
-            throw new BusinessRuleException($"Times must align to {pavilion.SlotMinutes}-minute slots.");
+            throw new BusinessRuleException(ErrorCodes.ReservationSlotAlignment, $"Os horários devem estar alinhados em blocos de {pavilion.SlotMinutes} minutos.", pavilion.SlotMinutes);
 
         var activeCount = await reservations.CountActiveByUserAsync(userId, now, ct);
         if (activeCount >= _policy.MaxActiveReservations)
-            throw new BusinessRuleException($"Maximum of {_policy.MaxActiveReservations} active reservations reached.");
+            throw new BusinessRuleException(ErrorCodes.ReservationActiveLimit, $"Você atingiu o limite de {_policy.MaxActiveReservations} reservas ativas.", _policy.MaxActiveReservations);
 
         if (await blocks.AnyBlockingAsync(BlockTargetType.Pavilion, pavilionId, startUtc, endUtc, ct))
-            throw new ConflictException("Pavilion is blocked in this period.");
+            throw new ConflictException(ErrorCodes.ReservationPavilionBlocked, "O pavilhão está bloqueado nesse período.");
 
         if (request.ResourceType == ResourceType.Room)
         {
             if (await blocks.AnyBlockingAsync(BlockTargetType.Room, request.ResourceId, startUtc, endUtc, ct))
-                throw new ConflictException("Room is blocked in this period.");
+                throw new ConflictException(ErrorCodes.ReservationRoomBlocked, "A sala está bloqueada nesse período.");
         }
         else
         {
             var desk = await desks.GetByIdAsync(request.ResourceId, ct)
-                ?? throw new NotFoundException("Desk not found.");
+                ?? throw new NotFoundException(ErrorCodes.DeskNotFound, "Mesa não encontrada.");
             if (await blocks.AnyBlockingAsync(BlockTargetType.Desk, desk.Id, startUtc, endUtc, ct)
                 || await blocks.AnyBlockingAsync(BlockTargetType.Room, desk.RoomId, startUtc, endUtc, ct))
-                throw new ConflictException("Desk/room is blocked in this period.");
+                throw new ConflictException(ErrorCodes.ReservationResourceBlocked, "A mesa ou a sala está bloqueada nesse período.");
         }
 
         if (await reservations.HasConflictAsync(request.ResourceType, request.ResourceId, startUtc, endUtc, ct))
-            throw new ConflictException("Resource is not available in this period.");
+            throw new ConflictException(ErrorCodes.ReservationConflict, "O recurso não está disponível nesse período.");
+
+        if (request.ResourceType == ResourceType.Room)
+        {
+            // Sala não pode ser reservada se qualquer mesa dela já estiver reservada no período
+            if (await reservations.HasAnyDeskConflictInRoomAsync(request.ResourceId, startUtc, endUtc, ct))
+                throw new ConflictException(ErrorCodes.ReservationConflict, "Existe uma reserva de mesa nesta sala nesse período.");
+        }
+        else
+        {
+            // Mesa não pode ser reservada se a sala pai já estiver reservada no período
+            var deskParent = await desks.GetByIdAsync(request.ResourceId, ct)
+                ?? throw new NotFoundException(ErrorCodes.DeskNotFound, "Mesa não encontrada.");
+            if (await reservations.HasConflictAsync(ResourceType.Room, deskParent.RoomId, startUtc, endUtc, ct))
+                throw new ConflictException(ErrorCodes.ReservationConflict, "A sala desta mesa já está reservada nesse período.");
+        }
 
         var reservation = request.ResourceType == ResourceType.Room
             ? Reservation.ForRoom(userId, pavilionId, request.ResourceId, period, request.Notes)
@@ -102,12 +117,12 @@ public class ReservationService(
     {
         var userId = RequireUserId();
         var reservation = await reservations.GetByIdAsync(reservationId, ct)
-            ?? throw new NotFoundException("Reservation not found.");
+            ?? throw new NotFoundException(ErrorCodes.ReservationNotFound, "Reserva não encontrada.");
         if (reservation.UserId != userId)
-            throw new ForbiddenException("You can only cancel your own reservations.");
+            throw new ForbiddenException(ErrorCodes.ReservationOwnerOnly, "Você só pode cancelar suas próprias reservas.");
 
         try { reservation.CancelByUser(clock.UtcNow, _policy.CancellationCutoffHours); }
-        catch (DomainException ex) { throw new BusinessRuleException(ex.Message); }
+        catch (DomainException ex) { throw new BusinessRuleException(ErrorCodes.ReservationBusinessRule, ex.Message); }
         await uow.SaveChangesAsync(ct);
     }
 
@@ -115,17 +130,17 @@ public class ReservationService(
     {
         var userId = RequireUserId();
         var reservation = await reservations.GetByIdAsync(reservationId, ct)
-            ?? throw new NotFoundException("Reservation not found.");
+            ?? throw new NotFoundException(ErrorCodes.ReservationNotFound, "Reserva não encontrada.");
         if (reservation.UserId != userId)
-            throw new ForbiddenException("You can only check-in your own reservations.");
+            throw new ForbiddenException(ErrorCodes.ReservationOwnerOnly, "Você só pode fazer check-in nas suas próprias reservas.");
 
         var scanned = (request.ScannedExternalId ?? string.Empty).Trim().ToUpperInvariant();
         var expected = await GetResourceExternalIdAsync(reservation, ct);
         if (scanned != expected)
-            throw new BusinessRuleException("Scanned QR does not match the reserved resource.");
+            throw new BusinessRuleException(ErrorCodes.ReservationCheckInWrongQr, "O QR Code lido não corresponde ao recurso reservado.");
 
         try { reservation.CheckIn(clock.UtcNow, _policy.NoShowGraceMinutes); }
-        catch (DomainException ex) { throw new BusinessRuleException(ex.Message); }
+        catch (DomainException ex) { throw new BusinessRuleException(ErrorCodes.ReservationBusinessRule, ex.Message); }
         await uow.SaveChangesAsync(ct);
     }
 
@@ -155,9 +170,9 @@ public class ReservationService(
     {
         var userId = RequireUserId();
         var reservation = await reservations.GetByIdAsync(reservationId, ct)
-            ?? throw new NotFoundException("Reservation not found.");
+            ?? throw new NotFoundException(ErrorCodes.ReservationNotFound, "Reserva não encontrada.");
         if (reservation.UserId != userId)
-            throw new ForbiddenException("You can only view your own reservation's QR code.");
+            throw new ForbiddenException(ErrorCodes.ReservationOwnerOnly, "Você só pode visualizar o QR Code das suas próprias reservas.");
 
         var payload = await GetResourceExternalIdAsync(reservation, ct);
         var png = qrCode.GeneratePng(payload);
@@ -166,7 +181,7 @@ public class ReservationService(
 
     private Guid RequireUserId()
     {
-        if (currentUser.UserId is null) throw new UnauthorizedException("User not authenticated.");
+        if (currentUser.UserId is null) throw new UnauthorizedException(ErrorCodes.Unauthenticated, "Você precisa estar autenticado.");
         return currentUser.UserId.Value;
     }
 
@@ -175,20 +190,20 @@ public class ReservationService(
         if (type == ResourceType.Room)
         {
             var room = await rooms.GetByIdAsync(resourceId, ct)
-                ?? throw new NotFoundException("Room not found.");
-            if (!room.IsReservable) throw new BusinessRuleException("Room is not reservable.");
+                ?? throw new NotFoundException(ErrorCodes.RoomNotFound, "Sala não encontrada.");
+            if (!room.IsReservable) throw new BusinessRuleException(ErrorCodes.RoomNotReservable, "Esta sala não aceita reservas.");
             var floor = await floors.GetByIdAsync(room.FloorId, ct)
-                ?? throw new NotFoundException("Floor not found.");
+                ?? throw new NotFoundException(ErrorCodes.FloorNotFound, "Andar não encontrado.");
             return floor.PavilionId;
         }
         else
         {
             var desk = await desks.GetByIdAsync(resourceId, ct)
-                ?? throw new NotFoundException("Desk not found.");
+                ?? throw new NotFoundException(ErrorCodes.DeskNotFound, "Mesa não encontrada.");
             var room = await rooms.GetByIdAsync(desk.RoomId, ct)
-                ?? throw new NotFoundException("Room not found.");
+                ?? throw new NotFoundException(ErrorCodes.RoomNotFound, "Sala não encontrada.");
             var floor = await floors.GetByIdAsync(room.FloorId, ct)
-                ?? throw new NotFoundException("Floor not found.");
+                ?? throw new NotFoundException(ErrorCodes.FloorNotFound, "Andar não encontrado.");
             return floor.PavilionId;
         }
     }
@@ -198,11 +213,11 @@ public class ReservationService(
         if (reservation.ResourceType == ResourceType.Room)
         {
             var room = await rooms.GetByIdAsync(reservation.RoomId!.Value, ct)
-                ?? throw new NotFoundException("Room not found.");
+                ?? throw new NotFoundException(ErrorCodes.RoomNotFound, "Sala não encontrada.");
             return room.ExternalId;
         }
         var desk = await desks.GetByIdAsync(reservation.DeskId!.Value, ct)
-            ?? throw new NotFoundException("Desk not found.");
+            ?? throw new NotFoundException(ErrorCodes.DeskNotFound, "Mesa não encontrada.");
         return desk.ExternalId;
     }
 
