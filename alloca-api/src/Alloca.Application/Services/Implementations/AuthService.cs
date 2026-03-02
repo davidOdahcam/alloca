@@ -21,11 +21,11 @@ public class AuthService(
         await loginValidator.ValidateAndThrowAsync(request, ct);
 
         var user = await users.FindByEmailAsync(request.Email, ct)
-            ?? throw new UnauthorizedException("Invalid credentials.");
+            ?? throw new UnauthorizedException(ErrorCodes.UserInvalidCredentials, "E-mail ou senha incorretos.");
 
-        if (!user.IsActive) throw new UnauthorizedException("User is inactive.");
+        if (!user.IsActive) throw new UnauthorizedException(ErrorCodes.UserInactive, "Sua conta está inativa. Procure um administrador.");
         if (!hasher.Verify(request.Password, user.PasswordHash))
-            throw new UnauthorizedException("Invalid credentials.");
+            throw new UnauthorizedException(ErrorCodes.UserInvalidCredentials, "E-mail ou senha incorretos.");
 
         var (token, exp) = jwt.Generate(user);
         return new LoginResponse(token, exp, user.Id, user.FullName, user.Email, user.Role.ToString());
@@ -36,7 +36,7 @@ public class AuthService(
         await registerValidator.ValidateAndThrowAsync(request, ct);
 
         if (await users.EmailExistsAsync(request.Email, ct))
-            throw new ConflictException("Email already in use.");
+            throw new ConflictException(ErrorCodes.UserEmailInUse, "Este e-mail já está em uso.");
 
         var user = new User(request.Email, request.FullName, hasher.Hash(request.Password), UserRole.Member);
         users.Add(user);
