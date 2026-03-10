@@ -1,0 +1,48 @@
+<div
+    #viewport
+    class="floor-map"
+    role="application"
+    [attr.aria-label]="ariaLabel()"
+    tabindex="0"
+    [class.is-panning]="isPanning()"
+    (pointerdown)="onPointerDown($event)"
+    (pointermove)="onPointerMove($event)"
+    (pointerup)="onPointerUp($event)"
+    (pointerleave)="onPointerUp($event)"
+    (wheel)="onWheel($event)"
+>
+    <div class="floor-map__stage" #stage [style.transform]="transform()" [innerHTML]="svgHtml()"></div>
+
+    @if (tipVisivel()) {
+        <div class="floor-map__tip" role="tooltip" [style.left.px]="tipX()" [style.top.px]="tipY()">
+            <div class="floor-map__tip-titulo">{{ tipTitulo() }}</div>
+            <div class="floor-map__tip-meta">
+                <span class="floor-map__tip-codigo">{{ tipCodigo() }}</span>
+                <span class="floor-map__tip-status" [class.is-livre]="tipDisponivel()" [class.is-ocupado]="!tipDisponivel()">
+                    {{ tipDisponivel() ? 'Disponível' : 'Indisponível' }}
+                </span>
+            </div>
+        </div>
+    }
+
+    <div class="floor-map__controls" role="toolbar" aria-label="Controles do mapa">
+        <p-button icon="pi pi-plus" [rounded]="true" severity="secondary" [text]="true" pTooltip="Aumentar zoom" tooltipPosition="left" ariaLabel="Aumentar zoom" [disabled]="!canZoomIn()" (onClick)="zoomIn()" />
+
+        <span class="floor-map__zoom" aria-live="polite">{{ zoomPercent() }}%</span>
+
+        <p-button icon="pi pi-minus" [rounded]="true" severity="secondary" [text]="true" pTooltip="Diminuir zoom" tooltipPosition="left" ariaLabel="Diminuir zoom" [disabled]="!canZoomOut()" (onClick)="zoomOut()" />
+
+        <p-button icon="pi pi-refresh" [rounded]="true" severity="secondary" [text]="true" pTooltip="Centralizar" tooltipPosition="left" ariaLabel="Centralizar e resetar zoom" (onClick)="reset()" />
+
+        <div class="floor-map__pad">
+            <p-button icon="pi pi-chevron-up" [rounded]="true" severity="secondary" [text]="true" ariaLabel="Mover para cima" (onClick)="panBy(0, panStep())" />
+
+            <div class="floor-map__pad-row">
+                <p-button icon="pi pi-chevron-left" [rounded]="true" severity="secondary" [text]="true" ariaLabel="Mover para a esquerda" (onClick)="panBy(panStep(), 0)" />
+                <p-button icon="pi pi-chevron-right" [rounded]="true" severity="secondary" [text]="true" ariaLabel="Mover para a direita" (onClick)="panBy(-panStep(), 0)" />
+            </div>
+
+            <p-button icon="pi pi-chevron-down" [rounded]="true" severity="secondary" [text]="true" ariaLabel="Mover para baixo" (onClick)="panBy(0, -panStep())" />
+        </div>
+    </div>
+</div>

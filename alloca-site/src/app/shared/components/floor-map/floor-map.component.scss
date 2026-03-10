@@ -1,0 +1,227 @@
+.floor-map {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 40rem;
+    overflow: hidden;
+    background: var(--surface-50);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--border-radius, 0.5rem);
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+
+    &:focus-visible {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+    }
+
+    &.is-panning {
+        cursor: grabbing;
+    }
+
+    &__stage {
+        position: absolute;
+        inset: 0;
+        transform-origin: 0 0;
+        display: flex;
+        // Importante: NÃO usar `will-change`, `backface-visibility`,
+        // `translateZ(0)` ou qualquer outra dica que promova este elemento
+        // a uma camada de composição. Isso faz o navegador rasterizar o SVG
+        // no tamanho base e depois ampliar a imagem (bitmap), borrando
+        // tudo no zoom. Sem layer promotion, o transform scale é aplicado
+        // ao SVG vetorial e permanece nítido em qualquer escala.
+    }
+
+    ::ng-deep .floor-map__stage > svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        shape-rendering: geometricPrecision;
+        text-rendering: geometricPrecision;
+    }
+
+    &__controls {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.5rem;
+        background: var(--surface-card);
+        border: 1px solid var(--surface-border);
+        border-radius: var(--border-radius, 0.5rem);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+        z-index: 1;
+    }
+
+    &__zoom {
+        font-size: 0.75rem;
+        color: var(--text-color-secondary);
+        font-variant-numeric: tabular-nums;
+        min-width: 3rem;
+        text-align: center;
+    }
+
+    &__pad {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.125rem;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--surface-border);
+    }
+
+    &__pad-row {
+        display: flex;
+        gap: 0.125rem;
+    }
+}
+
+:host ::ng-deep [data-component="ROOM"] {
+    --room-fill-color: #ffffff;
+    --room-transition: all 50ms ease-in-out;
+
+    & [data-name="FLOOR"] {
+        fill: var(--room-fill-color) !important;
+        transition: var(--room-transition);
+    }
+
+    &.room {
+        &--available {
+            --room-fill-color: var(--p-green-400);
+            cursor: pointer;
+            &:hover {
+                --room-fill-color: var(--p-green-500);
+            }
+        }
+    }
+}
+
+
+:host ::ng-deep [data-component="DESK"] {
+    --desk-fill-color: none;
+    --desk-transition: all 50ms ease-in-out;
+
+    & [data-name="TABLE"],
+    & [data-name="TABLE"] [data-name="STRUCTURE"],
+    & [data-name="TABLE"] [data-name="DIVISION"],
+    & [data-name="COMPUTER"] [data-name="MOUSEPAD"],
+    & [data-name="COMPUTER"] [data-name="MOUSE"] [data-name="STRUCTURE"],
+    & [data-name="COMPUTER"] [data-name="MONITOR"] [data-name="STRUCTURE"],
+    & [data-name="COMPUTER"] [data-name="MONITOR"] [data-name="SCREEN"],
+    & [data-name="COMPUTER"] [data-name="MONITOR"] [data-name="BASE"],
+    & [data-name="COMPUTER"] [data-name="CASE"] [data-name="STRUCTURE"],
+    & [data-name="COMPUTER"] [data-name="KEYBOARD"] [data-name="STRUCTURE"],
+    & [data-name="COMPUTER"] [data-name="KEYBOARD"] [data-name="KEYS"],
+    & [data-name="ARM"],
+    & [data-name="STRUCTURE"],
+    & [data-name="SEAT"],
+    & [data-name="SEAT"] [data-name="DETAIL"],
+    & [data-name="SEAT"] [data-name="BORDER"],
+    & [data-name="OBJECT"],
+    & [data-name="BACKREST"],
+    & [data-name="BACKREST"] [data-name="DETAIL"] {
+        fill: var(--desk-fill-color) !important;
+        transition: var(--desk-transition);
+    }
+
+    [data-name="CHAIR"] [data-name="DETAIL"],
+    [data-name="COMPUTER"] [data-name="CABLES"] [data-name="CABLE"] {
+        fill: none;
+    }
+
+    &.desk {
+        &--available {
+            --desk-fill-color: var(--p-green-400);
+            cursor: pointer;
+            &:hover {
+                --desk-fill-color: var(--p-green-500);
+            }
+        }
+
+        &--disabled {
+            --desk-fill-color: transparent;
+            opacity: 0.3;
+            display: none;
+        }
+    }
+}
+
+:host ::ng-deep [data-component="ROOM"],
+:host ::ng-deep [data-component="DESK"] {
+    &:focus { outline: none; }
+    &:focus-visible { outline: none; }
+}
+
+:host ::ng-deep .room--available:focus-visible {
+    --room-fill-color: var(--p-primary-500);
+}
+
+:host ::ng-deep .desk--available:focus-visible {
+    --desk-fill-color: var(--p-primary-500);
+}
+
+:host ::ng-deep .room--indisponivel {
+    --room-fill-color: var(--p-red-300);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+:host ::ng-deep .desk--indisponivel {
+    --desk-fill-color: var(--p-red-300);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.floor-map__tip {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    background: var(--surface-900, #111);
+    color: var(--surface-0, #fff);
+    padding: 0.5rem 0.65rem;
+    border-radius: 0.4rem;
+    font-size: 0.78rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    max-width: 16rem;
+    line-height: 1.25;
+    transform: translateZ(0);
+}
+
+.floor-map__tip-titulo {
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.floor-map__tip-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    opacity: 0.92;
+}
+
+.floor-map__tip-codigo {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    opacity: 0.85;
+}
+
+.floor-map__tip-status {
+    padding: 0.05rem 0.4rem;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.floor-map__tip-status.is-livre {
+    background: var(--p-green-500, #22c55e);
+    color: #fff;
+}
+
+.floor-map__tip-status.is-ocupado {
+    background: var(--p-red-500, #ef4444);
+    color: #fff;
+}

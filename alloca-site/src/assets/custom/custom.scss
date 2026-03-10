@@ -1,0 +1,207 @@
+/* Estilos globais para o popover de conta do usuário (renderizado no body via appendTo). */
+.topbar-user-popover .p-popover-content {
+    padding: 0;
+}
+
+.topbar-user-popover .menu-conta {
+    width: 19rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar-user-popover .menu-conta__cabecalho {
+    display: flex;
+    gap: 0.85rem;
+    align-items: center;
+    padding: 1rem;
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--primary-color), transparent 92%),
+        color-mix(in srgb, var(--primary-color), transparent 98%)
+    );
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.topbar-user-popover .topbar-avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: color-mix(in srgb, var(--primary-color), transparent 80%);
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.topbar-user-popover .topbar-avatar--grande {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 0.95rem;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color), transparent 88%);
+}
+
+.topbar-user-popover .menu-conta__id {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+    min-width: 0;
+    gap: 0.15rem;
+}
+
+.topbar-user-popover .menu-conta__id strong {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 12rem;
+}
+
+.topbar-user-popover .menu-conta__email {
+    font-size: 0.78rem;
+    color: var(--text-color-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 12rem;
+}
+
+.topbar-user-popover .menu-conta__papel {
+    margin-top: 0.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    width: fit-content;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--primary-color), transparent 85%);
+    color: var(--primary-color);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+}
+
+.topbar-user-popover .menu-conta__papel i {
+    font-size: 0.65rem;
+}
+
+.topbar-user-popover .menu-conta__secao {
+    padding: 0.75rem 0.65rem 0.5rem;
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.topbar-user-popover .menu-conta__secao--lista {
+    padding-bottom: 0.4rem;
+}
+
+.topbar-user-popover .menu-conta__titulo {
+    display: block;
+    padding: 0 0.4rem 0.35rem;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-color-secondary);
+    font-weight: 600;
+}
+
+.topbar-user-popover .menu-conta__itens {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.topbar-user-popover .menu-conta__item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.5rem 0.55rem;
+    background: transparent;
+    border: 0;
+    border-radius: 0.55rem;
+    color: var(--text-color);
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.15s ease;
+}
+
+.topbar-user-popover .menu-conta__item:hover,
+.topbar-user-popover .menu-conta__item:focus-visible {
+    background: var(--surface-hover);
+    outline: none;
+}
+
+.topbar-user-popover .menu-conta__item-icone,
+.topbar-user-popover .menu-conta__pref-icone {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--primary-color), transparent 90%);
+    color: var(--primary-color);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.topbar-user-popover .menu-conta__item-texto,
+.topbar-user-popover .menu-conta__pref-texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    min-width: 0;
+    flex: 1;
+}
+
+.topbar-user-popover .menu-conta__item-rotulo,
+.topbar-user-popover .menu-conta__pref-rotulo {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.topbar-user-popover .menu-conta__item-descricao,
+.topbar-user-popover .menu-conta__pref-descricao {
+    font-size: 0.72rem;
+    color: var(--text-color-secondary);
+}
+
+.topbar-user-popover .menu-conta__item-seta {
+    font-size: 0.7rem;
+    color: var(--text-color-secondary);
+    opacity: 0.7;
+}
+
+.topbar-user-popover .menu-conta__pref {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.5rem 0.55rem;
+    border-radius: 0.55rem;
+}
+
+.topbar-user-popover .menu-conta__pref--coluna {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+}
+
+.topbar-user-popover .menu-conta__pref-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 0;
+}
+
+.topbar-user-popover .menu-conta__rodape {
+    padding: 0.75rem;
+}

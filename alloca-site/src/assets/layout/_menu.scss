@@ -75,6 +75,23 @@
                 margin-right: 0.5rem;
             }
 
+            .layout-menuitem-badge {
+                margin-left: auto;
+                background: var(--primary-color);
+                color: var(--primary-contrast-color, #fff);
+                font-size: 0.7rem;
+                font-weight: 600;
+                padding: 0.05rem 0.5rem;
+                border-radius: 999px;
+                line-height: 1.4;
+                min-width: 1.5rem;
+                text-align: center;
+            }
+
+            .layout-menuitem-badge + .layout-submenu-toggler {
+                margin-left: 0.5rem;
+            }
+
             .layout-submenu-toggler {
                 font-size: 75%;
                 margin-left: auto;
