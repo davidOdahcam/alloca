@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { Access } from './pages/access';
-import { Error } from './pages/error';
-import { Login } from './pages/login';
+import { Access } from './pages/access/access.page';
+import { Error } from './pages/error/error.page';
+import { Login } from './pages/login/login.page';
 
 export default [
     { path: 'access', component: Access },
