@@ -1,0 +1,685 @@
+{
+    "app": {
+        "name": "Alloca",
+        "tagline": "Gestão de reservas de pavilhões"
+    },
+    "common": {
+        "actions": {
+            "save": "Salvar",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "edit": "Editar",
+            "delete": "Excluir",
+            "remove": "Remover",
+            "create": "Cadastrar",
+            "back": "Voltar",
+            "close": "Fechar",
+            "search": "Buscar",
+            "filter": "Filtrar",
+            "clear": "Limpar",
+            "apply": "Aplicar",
+            "refresh": "Atualizar",
+            "submit": "Enviar",
+            "loadMore": "Carregar mais",
+            "yes": "Sim",
+            "no": "Não",
+            "goToDashboard": "Ir para o painel",
+            "tryAgain": "Tentar novamente",
+            "next": "Avançar",
+            "previous": "Voltar",
+            "deactivate": "Desativar",
+            "reactivate": "Reativar",
+            "resetPassword": "Redefinir senha"
+        },
+        "status": {
+            "loading": "Carregando...",
+            "saving": "Salvando...",
+            "sending": "Enviando...",
+            "empty": "Nada por aqui ainda.",
+            "noResults": "Nenhum resultado encontrado.",
+            "active": "Ativo",
+            "inactive": "Inativo",
+            "pending": "Pendente",
+            "approved": "Aprovada",
+            "rejected": "Rejeitada",
+            "cancelled": "Cancelada",
+            "checkedIn": "Check-in feito",
+            "expired": "Expirada"
+        },
+        "labels": {
+            "name": "Nome",
+            "email": "E-mail",
+            "password": "Senha",
+            "currentPassword": "Senha atual",
+            "newPassword": "Nova senha",
+            "confirmPassword": "Confirmar senha",
+            "role": "Papel",
+            "status": "Status",
+            "date": "Data",
+            "time": "Horário",
+            "start": "Início",
+            "end": "Término",
+            "reason": "Motivo",
+            "notes": "Observações",
+            "actions": "Ações",
+            "required": "obrigatório",
+            "you": "Você",
+            "all": "Todos",
+            "allRoles": "Todos os papéis",
+            "allStatus": "Todos os status",
+            "onlyActive": "Apenas ativos",
+            "onlyInactive": "Apenas inativos",
+            "error": "Erro"
+        },
+        "toasts": {
+            "errorLoad": "Falha ao carregar os dados.",
+            "errorSave": "Falha ao salvar."
+        }
+    },
+    "roles": {
+        "admin": "Administrador",
+        "manager": "Gestor de pavilhão",
+        "member": "Aluno"
+    },
+    "topbar": {
+        "visitor": "Visitante",
+        "userMenu": "Menu do usuário",
+        "preferences": "Preferências",
+        "darkTheme": {
+            "label": "Tema escuro",
+            "description": "Alterna entre claro e escuro"
+        },
+        "language": {
+            "description": "Idioma da interface"
+        }
+    },
+    "auth": {
+        "login": {
+            "title": "Alloca",
+            "subtitle": "Entre com sua conta institucional",
+            "emailLabel": "E-mail",
+            "emailPlaceholder": "seu@email",
+            "passwordLabel": "Senha",
+            "passwordPlaceholder": "Senha",
+            "submit": "Entrar",
+            "submitting": "Entrando..."
+        },
+        "access": {
+            "title": "Acesso Negado",
+            "description": "Você não tem as permissões necessárias. Procure um administrador."
+        },
+        "errorPage": {
+            "title": "Algo deu errado",
+            "description": "O recurso solicitado não está disponível."
+        },
+        "messages": {
+            "loginSuccess": "Bem-vindo(a) de volta!",
+            "logoutSuccess": "Sessão encerrada.",
+            "sessionExpired": "Sessão expirada. Faça login novamente.",
+            "invalidCredentials": "E-mail ou senha incorretos.",
+            "fillCredentials": "Informe e-mail e senha para continuar."
+        }
+    },
+    "language": {
+        "label": "Idioma",
+        "pt-BR": "Português (Brasil)",
+        "en-US": "English (US)"
+    },
+    "errors": {
+        "network": {
+            "summary": "Sem conexão",
+            "detail": "Verifique sua internet e tente novamente."
+        },
+        "server": {
+            "summary": "Erro no servidor",
+            "detail": "Tente novamente em instantes."
+        },
+        "unauthorized": {
+            "summary": "Não autorizado",
+            "detail": "Faça login novamente para continuar."
+        },
+        "forbidden": {
+            "summary": "Acesso negado",
+            "detail": "Você não tem permissão para realizar esta ação."
+        },
+        "notFound": {
+            "summary": "Não encontrado",
+            "detail": "O recurso solicitado não foi localizado."
+        },
+        "conflict": {
+            "summary": "Conflito",
+            "detail": "Já existe um registro com esses dados."
+        },
+        "validation": {
+            "summary": "Dados inválidos",
+            "detail": "Revise os campos destacados e tente novamente."
+        },
+        "unknown": {
+            "summary": "Algo deu errado",
+            "detail": "Ocorreu um erro inesperado."
+        },
+        "codes": {
+            "unknown": "Ocorreu um erro inesperado.",
+            "validation.error": "Há campos inválidos. Revise e tente novamente.",
+            "auth.unauthenticated": "Você precisa estar autenticado para realizar esta ação.",
+            "user.email.in_use": "Já existe um usuário com este e-mail.",
+            "user.not_found": "Usuário não encontrado.",
+            "user.invalid_credentials": "E-mail ou senha incorretos.",
+            "user.invalid_current_password": "A senha atual está incorreta.",
+            "user.cannot_delete_self": "Você não pode excluir o próprio usuário.",
+            "user.cannot_demote_self": "Você não pode alterar seu próprio papel.",
+            "user.cannot_deactivate_self": "Você não pode desativar a si mesmo.",
+            "user.inactive": "Usuário inativo.",
+            "user.invalid_role": "Papel inválido.",
+            "user.suspended": "Usuário suspenso de novas reservas.",
+            "pavilion.not_found": "Pavilhão não encontrado.",
+            "pavilion.name.in_use": "Já existe um pavilhão com este nome.",
+            "floor.not_found": "Andar não encontrado.",
+            "room.not_found": "Sala não encontrada.",
+            "room.not_reservable": "Esta sala não está disponível para reserva.",
+            "desk.not_found": "Mesa não encontrada.",
+            "reservation.not_found": "Reserva não encontrada.",
+            "reservation.conflict.window": "Já existe uma reserva neste horário.",
+            "reservation.past_date": "Não é possível reservar em data passada.",
+            "reservation.past_time": "Não é possível reservar em horário passado.",
+            "reservation.invalid_window": "Janela de reserva inválida.",
+            "reservation.already_approved": "Esta reserva já foi aprovada.",
+            "reservation.already_rejected": "Esta reserva já foi rejeitada.",
+            "reservation.min_duration": "A duração mínima é de {{0}} min.",
+            "reservation.max_duration": "A duração máxima é de {{0}} min.",
+            "reservation.min_advance": "É preciso reservar com no mínimo {{0}} min de antecedência.",
+            "reservation.max_advance": "Não é possível reservar com mais de {{0}} min de antecedência.",
+            "reservation.outside_hours": "Horário fora do funcionamento.",
+            "reservation.slot_alignment": "O horário deve estar alinhado em blocos de {{0}} min.",
+            "reservation.active_limit": "Você atingiu o limite de {{0}} reservas ativas.",
+            "reservation.pavilion_blocked": "Pavilhão indisponível no período.",
+            "reservation.room_blocked": "Sala indisponível no período.",
+            "reservation.resource_blocked": "Recurso indisponível no período.",
+            "reservation.conflict": "Conflito com outra reserva.",
+            "reservation.owner_only": "Apenas o autor da reserva pode realizar esta ação.",
+            "reservation.checkin.wrong_qr": "QR Code não corresponde a esta reserva.",
+            "reservation.business_rule": "Regra de negócio violada.",
+            "block.not_found": "Bloqueio não encontrado.",
+            "block.conflict.window": "Já existe um bloqueio neste horário.",
+            "block.past_date": "Não é possível bloquear em data passada.",
+            "block.not_pavilion_manager": "Você não é gestor deste pavilhão.",
+            "block.target_unknown": "Alvo de bloqueio desconhecido.",
+            "manager.not_pavilion_manager": "Você não é gestor deste pavilhão."
+        }
+    },
+    "validation": {
+        "required": "Campo obrigatório.",
+        "email": "Informe um e-mail válido.",
+        "minLength": "Mínimo de {{min}} caracteres.",
+        "maxLength": "Máximo de {{max}} caracteres.",
+        "passwordMismatch": "As senhas não conferem.",
+        "futureDate": "A data deve estar no futuro.",
+        "futureTime": "O horário deve estar no futuro.",
+        "endAfterStart": "O término deve ser após o início."
+    },
+    "menu": {
+        "toggle": "Alternar menu",
+        "operations": "Operação",
+        "administration": "Administração",
+        "dashboard": "Painel",
+        "reservations": "Reservas",
+        "myReservations": "Minhas reservas",
+        "newReservation": "Reservar",
+        "approvals": "Pedidos",
+        "blocks": "Bloqueios",
+        "newBlock": "Novo bloqueio",
+        "users": "Usuários",
+        "history": "Histórico",
+        "logout": "Sair"
+    },
+    "users": {
+        "list": {
+            "title": "Usuários",
+            "subtitle": "Cadastro e gestão de alunos, gestores e administradores.",
+            "newButton": "Novo usuário",
+            "searchPlaceholder": "Buscar por nome ou e-mail",
+            "empty": "Nenhum usuário encontrado",
+            "emptyDescription": "Ajuste os filtros ou clique em “Novo usuário” para cadastrar.",
+            "columns": {
+                "name": "Nome",
+                "email": "E-mail",
+                "role": "Papel",
+                "status": "Status",
+                "actions": "Ações"
+            },
+            "tooltips": {
+                "edit": "Editar",
+                "resetPassword": "Redefinir senha",
+                "deactivate": "Desativar",
+                "reactivate": "Reativar"
+            }
+        },
+        "form": {
+            "createTitle": "Novo usuário",
+            "editTitle": "Editar usuário",
+            "fullNameLabel": "Nome completo",
+            "emailLabel": "E-mail",
+            "roleLabel": "Papel",
+            "passwordLabel": "Senha provisória",
+            "passwordPlaceholder": "Mínimo 8 caracteres",
+            "cannotChangeOwnRole": "Você não pode alterar o seu próprio papel.",
+            "rolesOptions": {
+                "Member": "Aluno",
+                "PavilionManager": "Gestor de pavilhão",
+                "Admin": "Administrador"
+            }
+        },
+        "resetPassword": {
+            "title": "Redefinir senha",
+            "description": "Defina uma nova senha provisória para <strong>{{name}}</strong>.",
+            "newPasswordLabel": "Nova senha",
+            "confirmLabel": "Confirmar nova senha",
+            "submit": "Redefinir"
+        },
+        "confirmDeactivate": {
+            "title": "Desativar usuário",
+            "message": "Deseja realmente desativar {{name}}?"
+        },
+        "confirmReactivate": {
+            "title": "Reativar usuário",
+            "message": "Deseja realmente reativar {{name}}?"
+        },
+        "toasts": {
+            "created": { "summary": "Usuário cadastrado", "detail": "O novo usuário já pode acessar o sistema." },
+            "updated": { "summary": "Usuário atualizado", "detail": "As alterações foram salvas." },
+            "deactivated": { "summary": "Usuário desativado", "detail": "{{name}}" },
+            "reactivated": { "summary": "Usuário reativado", "detail": "{{name}}" },
+            "passwordReset": { "summary": "Senha redefinida", "detail": "A nova senha já está ativa." },
+            "errorLoad": "Falha ao carregar a lista de usuários.",
+            "errorCreate": "Falha ao cadastrar usuário.",
+            "errorUpdate": "Falha ao atualizar usuário.",
+            "errorReset": "Falha ao redefinir a senha.",
+            "errorToggle": "Falha ao alterar o status do usuário."
+        }
+    },
+    "blocks": {
+        "list": {
+            "title": "Bloqueios",
+            "subtitle": "Gerencie indisponibilizações de pavilhões, salas e mesas.",
+            "newButton": "Novo bloqueio",
+            "empty": "Nenhum bloqueio encontrado",
+            "emptyCreate": "Crie um novo bloqueio para indisponibilizar recursos em uma janela.",
+            "emptyFiltered": "Nenhum bloqueio corresponde ao filtro aplicado.",
+            "searchPlaceholder": "Buscar por alvo, pavilhão ou motivo",
+            "allPavilions": "Todos os pavilhões",
+            "includeExpired": "Incluir expirados",
+            "loading": "Carregando bloqueios…",
+            "until": "até",
+            "statusActive": "Ativo",
+            "statusExpired": "Expirado",
+            "targets": {
+                "Pavilion": "Pavilhão",
+                "Room": "Sala",
+                "Desk": "Mesa"
+            },
+            "columns": {
+                "type": "Tipo",
+                "target": "Alvo",
+                "pavilion": "Pavilhão",
+                "period": "Período",
+                "reason": "Motivo",
+                "status": "Status",
+                "actions": "Ações"
+            },
+            "confirmDelete": {
+                "title": "Remover bloqueio",
+                "message": "Deseja realmente remover este bloqueio?"
+            }
+        },
+        "create": {
+            "title": "Novo bloqueio",
+            "subtitle": "Indisponibiliza um pavilhão, sala ou mesa em uma janela específica.",
+            "back": "Voltar",
+            "submit": "Criar bloqueio",
+            "section1": {
+                "title": "O que será bloqueado?",
+                "description": "Escolha o tipo de recurso afetado.",
+                "groupLabel": "Tipo de bloqueio"
+            },
+            "section2": {
+                "title": "Localização",
+                "descriptionPavilion": "Selecione o pavilhão a ser bloqueado.",
+                "descriptionRoom": "Selecione o pavilhão, andar e a sala.",
+                "descriptionDesk": "Selecione o pavilhão, andar e a mesa."
+            },
+            "section3": {
+                "title": "Janela de bloqueio",
+                "description": "Defina o início e o término da indisponibilização.",
+                "durationLabel": "Duração:"
+            },
+            "section4": {
+                "title": "Motivo",
+                "description": "Explique o motivo do bloqueio (visível para gestores).",
+                "placeholder": "Ex.: Manutenção elétrica, evento institucional, dedetização.",
+                "minHint": "Mínimo de 5 caracteres."
+            },
+            "summary": {
+                "label": "Resumo:",
+                "placeholder": "Preencha os campos para visualizar o resumo."
+            },
+            "pavilionLabel": "Pavilhão",
+            "floorLabel": "Andar",
+            "roomLabel": "Sala",
+            "deskLabel": "Mesa",
+            "startLabel": "Início",
+            "endLabel": "Término",
+            "reasonLabel": "Motivo",
+            "selectPavilion": "Selecione um pavilhão",
+            "selectPavilionFirst": "Selecione um pavilhão primeiro",
+            "selectFloorFirst": "Selecione um andar primeiro",
+            "selectFloor": "Selecione um andar",
+            "selectRoom": "Selecione uma sala",
+            "selectDesk": "Selecione uma mesa",
+            "loading": "Carregando…",
+            "floorLevel": "Nível",
+            "deskCount": "{{count}} mesa(s)",
+            "datePlaceholder": "dd/mm/aaaa hh:mm",
+            "emptyRooms": "Nenhuma sala reservável encontrada neste andar.",
+            "emptyDesks": "Nenhuma mesa encontrada neste andar.",
+            "errors": {
+                "missingPeriod": "Informe início e término.",
+                "pastStart": "O início não pode ser no passado.",
+                "endBeforeStart": "O término deve ser posterior ao início.",
+                "errorLoadResources": "Falha ao carregar recursos do andar."
+            },
+            "scopes": {
+                "pavilion": "Pavilhão inteiro",
+                "pavilionDescription": "Bloqueia todas as reservas em um pavilhão.",
+                "room": "Sala",
+                "roomDescription": "Bloqueia uma sala específica.",
+                "desk": "Mesa",
+                "deskDescription": "Bloqueia uma mesa específica."
+            }
+        },
+        "toasts": {
+            "created": { "summary": "Bloqueio criado", "detail": "O bloqueio foi registrado." },
+            "deleted": { "summary": "Bloqueio removido", "detail": "O bloqueio foi removido." },
+            "errorLoad": "Falha ao carregar os bloqueios.",
+            "errorCreate": "Falha ao criar o bloqueio.",
+            "errorDelete": "Falha ao remover o bloqueio."
+        }
+    },
+    "reservations": {
+        "reserve": {
+            "title": "Nova reserva",
+            "subtitle": "Escolha o local, o horário e clique no recurso disponível no mapa.",
+            "myReservations": "Minhas reservas",
+            "pavilionLabel": "Pavilhão",
+            "floorLabel": "Pavimento",
+            "dateLabel": "Data",
+            "startLabel": "Início",
+            "typeLabel": "Tipo",
+            "durationLabel": "Duração",
+            "selectPlaceholder": "Selecione",
+            "hourPlaceholder": "—",
+            "types": {
+                "room": "Sala",
+                "desk": "Mesa"
+            },
+            "durations": {
+                "min30": "30 min",
+                "h1": "1 h",
+                "h1m30": "1 h 30",
+                "h2": "2 h"
+            },
+            "operatingHours": "Funcionamento: {{open}} – {{close}}",
+            "noOperatingHours": "Este pavilhão não possui horários de funcionamento cadastrados.",
+            "closedToday": "Este pavilhão não funciona no dia selecionado.",
+            "map": {
+                "clickAvailable": "Clique em um recurso disponível para reservar.",
+                "available": "Disponível",
+                "unavailable": "Indisponível",
+                "ariaLabel": "Mapa do pavimento {{name}}",
+                "emptyResources": "Nenhum recurso encontrado para esse pavimento e tipo."
+            },
+            "empty": {
+                "title": "Complete os campos acima",
+                "description": "Preencha pavilhão, pavimento, data, início e duração para ver o mapa interativo."
+            },
+            "dialog": {
+                "eyebrowRoom": "Reserva de sala",
+                "eyebrowDesk": "Reserva de mesa",
+                "title": "Confirmar reserva",
+                "date": "Data",
+                "time": "Horário",
+                "duration": "Duração",
+                "managerApproval": {
+                    "title": "Aprovação do gestor",
+                    "description": "Sua reserva ficará pendente até que um gestor aprove."
+                },
+                "checkIn": {
+                    "title": "Check-in obrigatório",
+                    "description": "Faça o check-in escaneando o QR Code do recurso entre 15 min antes e até 15 min após o início. Caso contrário, será marcado como falta."
+                },
+                "cancellation": {
+                    "title": "Cancelamento",
+                    "description": "Você pode cancelar livremente enquanto pendente. Após aprovada, o cancelamento só é permitido com pelo menos 2 h de antecedência."
+                },
+                "notesLabel": "Observações",
+                "notesOptional": "(opcional)",
+                "notesPlaceholder": "Ex.: precisarei de projetor, levarei convidado, etc.",
+                "confirm": "Confirmar reserva"
+            },
+            "durationFormat": {
+                "hoursMinutes": "{{h}} h {{m}} min",
+                "hours": "{{h}} h",
+                "minutes": "{{m}} min"
+            },
+            "toasts": {
+                "errorAvailability": "Falha ao consultar disponibilidade.",
+                "created": { "summary": "Reserva enviada", "detail": "Aguardando aprovação do gestor." },
+                "errorCreate": "Não foi possível criar a reserva.",
+                "unavailableSelected": {
+                    "summary": "Recurso indisponível",
+                    "detail": "{{name}} ({{code}}) não está disponível no horário selecionado. Escolha outro recurso ou ajuste o horário."
+                }
+            }
+        },
+        "approvals": {
+            "title": "Pedidos",
+            "subtitle": "Solicitações de reserva aguardando análise.",
+            "approve": "Aprovar",
+            "reject": "Rejeitar",
+            "rejectReasonLabel": "Motivo da rejeição",
+            "reasonLabel": "Motivo",
+            "empty": "Nada pendente!",
+            "emptyDescription": "Não há reservas aguardando aprovação no momento.",
+            "loading": "Carregando reservas pendentes…",
+            "searchPlaceholder": "Buscar por recurso ou pavilhão",
+            "allPavilions": "Todos os pavilhões",
+            "selectedCount": "{{count}} selecionada(s)",
+            "approveSelected": "Aprovar selecionadas",
+            "rejectSelected": "Rejeitar selecionadas",
+            "clearSelection": "Limpar",
+            "until": "até",
+            "resource": "Recurso",
+            "batchRejectMessage": "<strong>{{count}} reserva(s)</strong> serão rejeitadas com o mesmo motivo.",
+            "confirmApprove": {
+                "title": "Aprovar reserva",
+                "message": "Aprovar reserva de {{resource}}?",
+                "acceptLabel": "Aprovar"
+            },
+            "confirmApproveBatch": {
+                "title": "Aprovar selecionadas",
+                "message": "Aprovar {{count}} reserva(s)?",
+                "acceptLabel": "Aprovar todas"
+            },
+            "rejectDialog": {
+                "titleSingle": "Rejeitar reserva",
+                "titleBatch": "Rejeitar selecionadas"
+            },
+            "toasts": {
+                "approved": { "summary": "Aprovada", "detail": "Reserva aprovada." },
+                "approvedBatch": { "summary": "Aprovadas", "detail": "{{count}} reserva(s) aprovada(s)." },
+                "rejected": { "summary": "Rejeitada", "detail": "Reserva rejeitada." },
+                "rejectedBatch": { "summary": "Rejeitadas", "detail": "{{count}} reserva(s) rejeitada(s)." },
+                "errorApprove": "Falha ao aprovar.",
+                "errorReject": "Falha ao rejeitar.",
+                "errorBatchApprove": "Algumas reservas não puderam ser aprovadas.",
+                "errorBatchReject": "Algumas reservas não puderam ser rejeitadas."
+            },
+            "columns": {
+                "user": "Solicitante",
+                "resource": "Recurso",
+                "pavilion": "Pavilhão",
+                "period": "Período",
+                "notes": "Observações",
+                "status": "Status",
+                "actions": "Ações"
+            }
+        },
+        "myList": {
+            "title": "Minhas reservas",
+            "subtitle": "Acompanhe o status e gerencie suas reservas.",
+            "newReservation": "Nova reserva",
+            "loading": "Carregando reservas…",
+            "searchPlaceholder": "Buscar por recurso ou pavilhão",
+            "empty": "Nenhuma reserva aqui",
+            "emptyDescription": "Quando houver reservas nesta categoria elas aparecerão aqui.",
+            "cancel": "Cancelar",
+            "checkIn": "Check-in",
+            "cancelReservation": "Cancelar reserva",
+            "showQr": "Mostrar QR Code",
+            "qrTooltip": "QR Code",
+            "qrTitle": "QR Code da reserva",
+            "qrInstruction": "Apresente este código para o responsável validar sua presença.",
+            "qrError": "Não foi possível obter o QR Code.",
+            "cancelTooltipBlocked": "Cancelamento exige no mínimo 2 h de antecedência",
+            "countdown": {
+                "inProgress": "Em andamento",
+                "now": "Agora",
+                "inMinutes": "Em {{min}} min",
+                "inHours": "Em {{h}}h",
+                "inHoursMinutes": "Em {{h}}h {{min}}min",
+                "inDay": "Em 1 dia",
+                "inDays": "Em {{d}} dias"
+            },
+            "tabs": {
+                "upcoming": "Próximas",
+                "pending": "Pendentes",
+                "history": "Histórico"
+            },
+            "until": "até",
+            "columns": {
+                "resource": "Recurso",
+                "pavilion": "Pavilhão",
+                "period": "Período",
+                "status": "Status",
+                "actions": "Ações"
+            },
+            "confirmCancel": {
+                "title": "Cancelar reserva",
+                "message": "Deseja realmente cancelar a reserva de \"{{resource}}\"?",
+                "acceptLabel": "Sim, cancelar",
+                "rejectLabel": "Voltar"
+            }
+        },
+        "toasts": {
+            "created": { "summary": "Reserva solicitada", "detail": "Sua solicitação foi enviada para aprovação." },
+            "approved": { "summary": "Reserva aprovada", "detail": "A reserva foi aprovada." },
+            "rejected": { "summary": "Reserva rejeitada", "detail": "A reserva foi rejeitada." },
+            "cancelled": { "summary": "Reserva cancelada", "detail": "A reserva foi cancelada." },
+            "checkedIn": { "summary": "Check-in realizado", "detail": "Bom uso da sala!" },
+            "errorLoad": "Falha ao carregar as reservas.",
+            "errorCreate": "Falha ao solicitar a reserva.",
+            "errorApprove": "Falha ao aprovar a reserva.",
+            "errorReject": "Falha ao rejeitar a reserva.",
+            "errorCancel": "Falha ao cancelar a reserva.",
+            "errorCheckIn": "Falha ao realizar o check-in."
+        }
+    },
+    "dashboard": {
+        "title": "Painel",
+        "subtitle": "Visão consolidada da operação dos seus pavilhões.",
+        "greeting": {
+            "morning": "Bom dia",
+            "afternoon": "Boa tarde",
+            "evening": "Boa noite"
+        },
+        "actions": {
+            "reviewRequests": "Revisar pedidos",
+            "reviewNow": "Revisar agora",
+            "newBlock": "Novo bloqueio",
+            "viewAll": "Ver todos"
+        },
+        "kpis": {
+            "pending": "Pedidos pendentes",
+            "next24h": "Próximas 24h",
+            "next24hHelp": "Pedidos começando em até 24 horas.",
+            "late": "Atrasados",
+            "lateHelp": "Pendentes cuja janela de início já passou — exigem ação imediata.",
+            "pavilionsPending": "Pavilhões com pendência",
+            "pavilionsPendingHelp": "de {{total}} pavilhão(ões) gerenciado(s)."
+        },
+        "sections": {
+            "upcomingRequests": "Próximos pedidos",
+            "shortcuts": "Atalhos",
+            "empty": "Nada pendente!",
+            "emptyDescription": "Todos os pedidos foram analisados."
+        },
+        "shortcuts": {
+            "requests": "Pedidos",
+            "requestsDescription": "Aprovar ou rejeitar reservas",
+            "blocks": "Bloqueios",
+            "blocksDescription": "Indisponibilizar recursos",
+            "users": "Usuários",
+            "usersDescription": "Gerenciar contas e papéis"
+        },
+        "empty": "Sem dados para exibir."
+    },
+    "history": {
+        "title": "Histórico",
+        "subtitle": "Auditoria de ações administrativas.",
+        "empty": "Sem registros."
+    },
+    "primeng": {
+        "accept": "Sim",
+        "reject": "Não",
+        "choose": "Escolher",
+        "upload": "Enviar",
+        "cancel": "Cancelar",
+        "clear": "Limpar",
+        "apply": "Aplicar",
+        "pending": "Pendente",
+        "addRule": "Adicionar regra",
+        "removeRule": "Remover regra",
+        "matchAll": "Atender todos",
+        "matchAny": "Atender algum",
+        "emptyMessage": "Nenhum resultado encontrado",
+        "emptyFilterMessage": "Nenhum resultado encontrado",
+        "emptySearchMessage": "Nenhum resultado encontrado",
+        "emptySelectionMessage": "Nenhum item selecionado",
+        "noFilter": "Sem filtro",
+        "searchMessage": "{0} resultados disponíveis",
+        "selectionMessage": "{0} itens selecionados",
+        "today": "Hoje",
+        "weekHeader": "Sem",
+        "firstDayOfWeek": 0,
+        "dayNames": ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+        "dayNamesShort": ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+        "dayNamesMin": ["D", "S", "T", "Q", "Q", "S", "S"],
+        "monthNames": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+        "monthNamesShort": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+        "dateFormat": "dd/mm/yy",
+        "chooseYear": "Escolher ano",
+        "chooseMonth": "Escolher mês",
+        "chooseDate": "Escolher data",
+        "prevDecade": "Década anterior",
+        "nextDecade": "Próxima década",
+        "prevYear": "Ano anterior",
+        "nextYear": "Próximo ano",
+        "prevMonth": "Mês anterior",
+        "nextMonth": "Próximo mês",
+        "am": "am",
+        "pm": "pm",
+        "weak": "Fraca",
+        "medium": "Média",
+        "strong": "Forte",
+        "passwordPrompt": "Digite uma senha"
+    }
+}
