@@ -200,6 +200,7 @@ public class ReservationService(
         {
             var desk = await desks.GetByIdAsync(resourceId, ct)
                 ?? throw new NotFoundException(ErrorCodes.DeskNotFound, "Mesa não encontrada.");
+            if (!desk.IsReservable) throw new BusinessRuleException(ErrorCodes.DeskNotReservable, "Esta mesa não aceita reservas.");
             var room = await rooms.GetByIdAsync(desk.RoomId, ct)
                 ?? throw new NotFoundException(ErrorCodes.RoomNotFound, "Sala não encontrada.");
             var floor = await floors.GetByIdAsync(room.FloorId, ct)

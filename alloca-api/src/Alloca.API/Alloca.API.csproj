@@ -20,10 +20,4 @@
     <ProjectReference Include="..\Alloca.CrossCutting\Alloca.CrossCutting.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="seed-data.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>

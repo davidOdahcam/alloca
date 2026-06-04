@@ -32,9 +32,9 @@ public class Room : Entity
         Touch();
     }
 
-    public Desk AddDesk(string externalId, string name)
+    public Desk AddDesk(string externalId, string name, bool isReservable = true)
     {
-        var desk = new Desk(Id, externalId, name);
+        var desk = new Desk(Id, externalId, name, isReservable);
         _desks.Add(desk);
         return desk;
     }

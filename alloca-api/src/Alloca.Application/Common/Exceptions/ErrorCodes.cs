@@ -27,6 +27,7 @@ public static class ErrorCodes
     public const string RoomNotFound = "room.not_found";
     public const string RoomNotReservable = "room.not_reservable";
     public const string DeskNotFound = "desk.not_found";
+    public const string DeskNotReservable = "desk.not_reservable";
 
     // Reservas
     public const string ReservationNotFound = "reservation.not_found";

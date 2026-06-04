@@ -67,7 +67,7 @@ public class PavilionService(
                 r.IsReservable,
                 r.Desks
                     .OrderBy(d => d.ExternalId)
-                    .Select(d => new FloorDeskResource(d.Id, d.ExternalId, d.Name))
+                    .Select(d => new FloorDeskResource(d.Id, d.ExternalId, d.Name, d.IsReservable))
                     .ToList()))
             .ToList();
 
@@ -118,6 +118,7 @@ public class PavilionService(
             }
             foreach (var desk in room.Desks)
             {
+                if (!desk.IsReservable) continue;
                 // A mesa não está disponível se a sala pai estiver reservada no período.
                 var available = !blockedRooms.Contains(room.Id)
                     && !blockedDesks.Contains(desk.Id)

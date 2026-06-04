@@ -3,7 +3,6 @@ using Alloca.Application.Common.Settings;
 using Alloca.Domain.Repositories;
 using Alloca.Infra.Persistence;
 using Alloca.Infra.Persistence.Repositories;
-using Alloca.Infra.Persistence.Seed;
 using Alloca.Infra.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -43,9 +42,6 @@ public static class DependencyInjection
         services.AddScoped<IBlockRepository, BlockRepository>();
         services.AddScoped<IUserStrikeRepository, UserStrikeRepository>();
         services.AddScoped<IUserSuspensionRepository, UserSuspensionRepository>();
-
-        // Background + seed
-        services.AddScoped<DataSeeder>();
 
         return services;
     }

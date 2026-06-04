@@ -15,6 +15,6 @@ public record FloorResponse(Guid Id, string Code, string Name, int Level, string
 
 public record FloorRoomResource(Guid Id, string ExternalId, string Name, bool IsReservable, IReadOnlyList<FloorDeskResource> Desks);
 
-public record FloorDeskResource(Guid Id, string ExternalId, string Name);
+public record FloorDeskResource(Guid Id, string ExternalId, string Name, bool IsReservable);
 
 public record FloorResourcesResponse(Guid FloorId, IReadOnlyList<FloorRoomResource> Rooms);
