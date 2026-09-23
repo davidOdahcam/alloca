@@ -10,21 +10,18 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
-import { TabsModule } from 'primeng/tabs';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { TooltipModule } from 'primeng/tooltip';
 import { RouterModule } from '@angular/router';
 import { ReservationService } from '@features/reservations/services/reservation.service';
 import { LanguageService } from '@core/i18n/language.service';
 import { Reservation, ReservationStatus } from '@features/reservations/models/reservation.model';
-import { ReservationStatusTag } from '@features/reservations/components/reservation-status-tag/reservation-status-tag';
+import { ReservationStatusTag, RESERVATION_STATUSES, STATUS_LABEL } from '@features/reservations/components/reservation-status-tag/reservation-status-tag';
 import { PageHero } from '@shared/components/page-hero/page-hero';
 import { Loader } from '@shared/components/loader/loader';
 import { EmptyState } from '@shared/components/empty-state/empty-state';
 
-type AbaId = 'proximas' | 'pendentes' | 'historico';
-
 const STATUS_PROXIMAS: ReservationStatus[] = ['Approved', 'InProgress'];
-const STATUS_HISTORICO: ReservationStatus[] = ['Rejected', 'CancelledByUser', 'RevokedByManager', 'Completed', 'NoShow'];
 
 @Component({
     selector: 'app-my-reservations',
@@ -40,8 +37,8 @@ const STATUS_HISTORICO: ReservationStatus[] = ['Rejected', 'CancelledByUser', 'R
         IconFieldModule,
         InputIconModule,
         InputTextModule,
+        MultiSelectModule,
         TableModule,
-        TabsModule,
         TooltipModule,
         ReservationStatusTag,
         PageHero,
@@ -112,37 +109,21 @@ const STATUS_HISTORICO: ReservationStatus[] = ['Rejected', 'CancelledByUser', 'R
                         <p-inputicon><i class="pi pi-search"></i></p-inputicon>
                         <input pInputText type="text" [placeholder]="'reservations.myList.searchPlaceholder' | translate" [(ngModel)]="searchText" class="w-full" />
                     </p-iconfield>
+                    <p-multiselect
+                        [options]="opcoesStatus"
+                        optionLabel="label"
+                        optionValue="value"
+                        [(ngModel)]="statusSelecionados"
+                        [placeholder]="'reservations.myList.filterStatus' | translate"
+                        [selectedItemsLabel]="'reservations.myList.filterStatusSelected' | translate"
+                        [maxSelectedLabels]="2"
+                        [showClear]="true"
+                        appendTo="body"
+                        styleClass="reservas-filtro-status"
+                    />
                 </div>
 
-                <p-tabs [(value)]="abaAtiva">
-                    <p-tablist>
-                        <p-tab value="proximas">
-                            {{ 'reservations.myList.tabs.upcoming' | translate }}
-                            @if (proximas().length > 0) {
-                                <span class="aba-badge">{{ proximas().length }}</span>
-                            }
-                        </p-tab>
-                        <p-tab value="pendentes">
-                            {{ 'reservations.myList.tabs.pending' | translate }}
-                            @if (pendentes().length > 0) {
-                                <span class="aba-badge">{{ pendentes().length }}</span>
-                            }
-                        </p-tab>
-                        <p-tab value="historico">{{ 'reservations.myList.tabs.history' | translate }}</p-tab>
-                    </p-tablist>
-
-                    <p-tabpanels>
-                        <p-tabpanel value="proximas">
-                            <ng-container *ngTemplateOutlet="lista; context: { $implicit: filtrar(proximas()) }" />
-                        </p-tabpanel>
-                        <p-tabpanel value="pendentes">
-                            <ng-container *ngTemplateOutlet="lista; context: { $implicit: filtrar(pendentes()) }" />
-                        </p-tabpanel>
-                        <p-tabpanel value="historico">
-                            <ng-container *ngTemplateOutlet="lista; context: { $implicit: filtrar(historico()) }" />
-                        </p-tabpanel>
-                    </p-tabpanels>
-                </p-tabs>
+                <ng-container *ngTemplateOutlet="lista; context: { $implicit: filtrar(reservations()) }" />
             </div>
         }
 
@@ -150,7 +131,7 @@ const STATUS_HISTORICO: ReservationStatus[] = ['Rejected', 'CancelledByUser', 'R
             @if (items.length === 0) {
                 <app-empty-state icone="pi pi-inbox" [titulo]="'reservations.myList.empty' | translate" [descricao]="'reservations.myList.emptyDescription' | translate" [compact]="true" />
             } @else {
-                <p-table [value]="items" dataKey="id" [paginator]="items.length > 10" [rows]="10" responsiveLayout="scroll" sortField="startUtc" [sortOrder]="abaAtiva() === 'historico' ? -1 : 1">
+                <p-table [value]="items" dataKey="id" [paginator]="items.length > 10" [rows]="10" responsiveLayout="scroll" sortField="startUtc" [sortOrder]="-1">
                     <ng-template pTemplate="header">
                         <tr>
                             <th pSortableColumn="resourceName">{{ 'reservations.myList.columns.resource' | translate }} <p-sortIcon field="resourceName" /></th>
@@ -302,18 +283,9 @@ const STATUS_HISTORICO: ReservationStatus[] = ['Rejected', 'CancelledByUser', 'R
             .reservas-busca input {
                 width: 100%;
             }
-            .aba-badge {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                min-width: 1.4rem;
-                padding: 0 0.4rem;
-                margin-left: 0.4rem;
-                border-radius: 999px;
-                background: var(--primary-color);
-                color: var(--primary-contrast-color, #fff);
-                font-size: 0.7rem;
-                font-weight: 600;
+            .reservas-filtro-status {
+                flex: 0 1 18rem;
+                min-width: 12rem;
             }
         `
     ]
@@ -327,36 +299,25 @@ export class MyReservationsPage {
 
     readonly loading = signal(true);
     readonly reservations = signal<Reservation[]>([]);
-    readonly abaAtiva = signal<AbaId>('proximas');
     readonly qrUrl = signal<string | null>(null);
 
+    readonly opcoesStatus = RESERVATION_STATUSES.map((status) => ({ label: STATUS_LABEL[status], value: status }));
+
     searchText = '';
+    statusSelecionados: ReservationStatus[] = [...RESERVATION_STATUSES];
 
     readonly breadcrumb = computed(() => {
         void this.language.atual();
         return [{ label: this.translate.instant('roles.member') }, { label: this.translate.instant('reservations.myList.title') }];
     });
 
-    readonly proximas = computed(() =>
-        this.reservations()
-            .filter((r) => STATUS_PROXIMAS.includes(r.status))
-            .sort((a, b) => +new Date(a.startUtc) - +new Date(b.startUtc))
-    );
-    readonly pendentes = computed(() =>
-        this.reservations()
-            .filter((r) => r.status === 'Pending')
-            .sort((a, b) => +new Date(a.startUtc) - +new Date(b.startUtc))
-    );
-    readonly historico = computed(() =>
-        this.reservations()
-            .filter((r) => STATUS_HISTORICO.includes(r.status))
-            .sort((a, b) => +new Date(b.startUtc) - +new Date(a.startUtc))
-    );
-
     readonly proximaReserva = computed<Reservation | null>(() => {
-        const ativa = this.proximas().find((r) => r.status === 'InProgress');
+        const candidatos = this.reservations()
+            .filter((r) => STATUS_PROXIMAS.includes(r.status))
+            .sort((a, b) => +new Date(a.startUtc) - +new Date(b.startUtc));
+        const ativa = candidatos.find((r) => r.status === 'InProgress');
         if (ativa) return ativa;
-        return this.proximas()[0] ?? null;
+        return candidatos[0] ?? null;
     });
 
     constructor() {
@@ -364,9 +325,13 @@ export class MyReservationsPage {
     }
 
     filtrar(items: Reservation[]): Reservation[] {
+        const statusAtivos = this.statusSelecionados;
         const term = this.searchText.trim().toLowerCase();
-        if (!term) return items;
-        return items.filter((r) => r.resourceName.toLowerCase().includes(term) || r.resourceExternalId.toLowerCase().includes(term) || r.pavilionName.toLowerCase().includes(term));
+        return items.filter((r) => {
+            if (statusAtivos.length > 0 && !statusAtivos.includes(r.status)) return false;
+            if (!term) return true;
+            return r.resourceName.toLowerCase().includes(term) || r.resourceExternalId.toLowerCase().includes(term) || r.pavilionName.toLowerCase().includes(term);
+        });
     }
 
     contagemRegressiva(r: Reservation): string {

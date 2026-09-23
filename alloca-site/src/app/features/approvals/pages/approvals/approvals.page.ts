@@ -16,7 +16,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { forkJoin } from 'rxjs';
 import { ApprovalsService } from '@features/approvals/services/approvals.service';
 import { PavilionService } from '@features/pavilions/services/pavilion.service';
-import { CountersService } from '@shared/services/counters.service';
 import { LanguageService } from '@core/i18n/language.service';
 import { Pavilion } from '@features/pavilions/models/pavilion.model';
 import { Reservation } from '@features/reservations/models/reservation.model';
@@ -230,7 +229,6 @@ export class ApprovalsPage {
     private readonly pavilionsApi = inject(PavilionService);
     private readonly toast = inject(MessageService);
     private readonly confirm = inject(ConfirmationService);
-    private readonly counters = inject(CountersService);
     private readonly translate = inject(TranslateService);
     private readonly language = inject(LanguageService);
 
@@ -283,7 +281,6 @@ export class ApprovalsPage {
             next: (list) => {
                 this.pending.set(list);
                 this.loading.set(false);
-                this.counters.refresh();
             },
             error: () => this.loading.set(false)
         });

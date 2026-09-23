@@ -1,12 +1,10 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
-import { filter } from 'rxjs/operators';
 import { AppMenuitem } from './app.menuitem';
 import { AuthService } from '@core/auth/auth.service';
-import { CountersService } from '@shared/services/counters.service';
 import { LanguageService } from '@core/i18n/language.service';
 import { environment } from '@env/environment';
 
@@ -26,18 +24,8 @@ import { environment } from '@env/environment';
 })
 export class AppMenu {
     private readonly auth = inject(AuthService);
-    private readonly counters = inject(CountersService);
-    private readonly router = inject(Router);
     private readonly translate = inject(TranslateService);
     private readonly language = inject(LanguageService);
-
-    constructor() {
-        effect(() => {
-            void this.auth.role();
-            this.counters.refresh();
-        });
-        this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() => this.counters.refresh());
-    }
 
     readonly model = computed<MenuItem[]>(() => {
         void this.language.atual();
@@ -52,7 +40,6 @@ export class AppMenu {
     }
 
     private studentMenu(): MenuItem[] {
-        const proximas = this.counters.minhasProximas();
         return [
             {
                 label: this.t('menu.reservations'),
@@ -61,8 +48,7 @@ export class AppMenu {
                     {
                         label: this.t('menu.myReservations'),
                         icon: 'pi pi-fw pi-list',
-                        routerLink: ['/student/reservations'],
-                        badge: proximas > 0 ? String(proximas) : undefined
+                        routerLink: ['/student/reservations']
                     }
                 ]
             }
@@ -70,14 +56,12 @@ export class AppMenu {
     }
 
     private managerMenu(isAdmin: boolean): MenuItem[] {
-        const pendentes = this.counters.aprovacoesPendentes();
         const operacao: MenuItem[] = [
             { label: this.t('menu.dashboard'), icon: 'pi pi-fw pi-chart-bar', routerLink: ['/manager'] },
             {
                 label: this.t('menu.approvals'),
                 icon: 'pi pi-fw pi-inbox',
-                routerLink: ['/manager/approvals'],
-                badge: pendentes > 0 ? String(pendentes) : undefined
+                routerLink: ['/manager/approvals']
             },
             { label: this.t('menu.blocks'), icon: 'pi pi-fw pi-ban', routerLink: ['/manager/blocks'] }
         ];

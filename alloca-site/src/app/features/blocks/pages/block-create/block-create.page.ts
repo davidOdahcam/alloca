@@ -502,11 +502,13 @@ export class BlockCreatePage implements OnDestroy {
         }
         if (tipo === 'Desk') {
             return salas.flatMap((r) =>
-                r.desks.map((d) => ({
-                    label: d.name,
-                    descricao: `${d.externalId} · ${r.name}`,
-                    value: d.id
-                }))
+                r.desks
+                    .filter((d) => d.isReservable)
+                    .map((d) => ({
+                        label: d.name,
+                        descricao: `${d.externalId} · ${r.name}`,
+                        value: d.id
+                    }))
             );
         }
         return [];

@@ -42,6 +42,7 @@ export interface FloorDeskResource {
     id: string;
     externalId: string;
     name: string;
+    isReservable: boolean;
 }
 
 export interface FloorRoomResource {

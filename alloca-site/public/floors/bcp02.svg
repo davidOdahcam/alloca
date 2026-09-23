@@ -4670,41 +4670,41 @@
 			<g data-name="DESK-RTAS-00006" data-component="DESK" data-identification="RTAS-00006">
 				<g data-name="CHAIR">
 					<path class="chair__seat" d="M524.2,234.5h3.4v2.8       c-0.2,0.2-0.5,0.4-0.8,0.5c-0.3,0.1-0.6,0.2-0.9,0.2c-0.3,0-0.6-0.1-0.9-0.2c-0.3-0.1-0.5-0.3-0.8-0.5V234.5z" data-name="SEAT"/>
-						<rect x="523.7" y="235.2" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
-						<rect x="527.6" y="235.2" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="523.7" y="235.2" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="527.6" y="235.2" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
 					<path class="chair__backrest" d="M527.6,237.3       c0.1-0.1,0.2-0.1,0.3,0c0.1,0.1,0.1,0.2,0,0.3c-0.3,0.3-0.6,0.5-0.9,0.6c-0.3,0.1-0.7,0.2-1.1,0.2s-0.7-0.1-1.1-0.2       c-0.3-0.1-0.7-0.3-0.9-0.6c-0.1-0.1-0.1-0.2,0-0.3c0.1-0.1,0.2-0.1,0.3,0c0.2,0.2,0.5,0.4,0.8,0.5c0.3,0.1,0.6,0.2,0.9,0.2       c0.3,0,0.6-0.1,0.9-0.2C527.1,237.7,527.3,237.5,527.6,237.3z" data-name="BACKREST"/>
 				</g>
 				<g data-name="CHAIR">
 					<path class="chair__seat" d="M518.8,234.5h3.4v2.8       c-0.2,0.2-0.5,0.4-0.8,0.5c-0.3,0.1-0.6,0.2-0.9,0.2c-0.3,0-0.6-0.1-0.9-0.2c-0.3-0.1-0.5-0.3-0.8-0.5V234.5z" data-name="SEAT"/>
-						<rect x="518.4" y="235.2" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
-						<rect x="522.2" y="235.2" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="518.4" y="235.2" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="522.2" y="235.2" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
 					<path class="chair__backrest" d="M522.3,237.3       c0.1-0.1,0.2-0.1,0.3,0c0.1,0.1,0.1,0.2,0,0.3c-0.3,0.3-0.6,0.5-0.9,0.6c-0.3,0.1-0.7,0.2-1.1,0.2c-0.4,0-0.7-0.1-1.1-0.2       c-0.3-0.1-0.7-0.3-0.9-0.6c-0.1-0.1-0.1-0.2,0-0.3c0.1-0.1,0.2-0.1,0.3,0c0.2,0.2,0.5,0.4,0.8,0.5c0.3,0.1,0.6,0.2,0.9,0.2       c0.3,0,0.6-0.1,0.9-0.2C521.8,237.7,522,237.5,522.3,237.3z" data-name="BACKREST"/>
 				</g>
 				<g data-name="CHAIR">
 					<path class="chair__seat" d="M513.5,234.5h3.4v2.8       c-0.2,0.2-0.5,0.4-0.8,0.5c-0.3,0.1-0.6,0.2-0.9,0.2c-0.3,0-0.6-0.1-0.9-0.2c-0.3-0.1-0.5-0.3-0.8-0.5V234.5z" data-name="SEAT"/>
-						<rect x="513.1" y="235.2" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
-						<rect x="516.9" y="235.2" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="513.1" y="235.2" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="516.9" y="235.2" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
 					<path class="chair__backrest" d="M517,237.3       c0.1-0.1,0.2-0.1,0.3,0c0.1,0.1,0.1,0.2,0,0.3c-0.3,0.3-0.6,0.5-0.9,0.6c-0.3,0.1-0.7,0.2-1.1,0.2c-0.4,0-0.7-0.1-1.1-0.2       c-0.3-0.1-0.7-0.3-0.9-0.6c-0.1-0.1-0.1-0.2,0-0.3c0.1-0.1,0.2-0.1,0.3,0c0.2,0.2,0.5,0.4,0.8,0.5c0.3,0.1,0.6,0.2,0.9,0.2       c0.3,0,0.6-0.1,0.9-0.2C516.4,237.7,516.7,237.5,517,237.3z" data-name="BACKREST"/>
 				</g>
 				<g data-name="CHAIR">
 					<path class="chair__seat" d="M524.2,226h3.4v-2.8       c-0.2-0.2-0.5-0.4-0.8-0.5c-0.3-0.1-0.6-0.2-0.9-0.2c-0.3,0-0.6,0.1-0.9,0.2c-0.3,0.1-0.5,0.3-0.8,0.5V226z" data-name="SEAT"/>
-						<rect x="523.7" y="223.7" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
-						<rect x="527.6" y="223.7" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="523.7" y="223.7" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="527.6" y="223.7" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
 					<path class="chair__backrest" d="M527.6,223.2       c0.1,0.1,0.2,0.1,0.3,0c0.1-0.1,0.1-0.2,0-0.3c-0.3-0.3-0.6-0.5-0.9-0.6c-0.3-0.1-0.7-0.2-1.1-0.2s-0.7,0.1-1.1,0.2       c-0.3,0.1-0.7,0.3-0.9,0.6c-0.1,0.1-0.1,0.2,0,0.3c0.1,0.1,0.2,0.1,0.3,0c0.2-0.2,0.5-0.4,0.8-0.5c0.3-0.1,0.6-0.2,0.9-0.2       c0.3,0,0.6,0.1,0.9,0.2C527.1,222.8,527.3,223,527.6,223.2z" data-name="BACKREST"/>
 				</g>
 				<g data-name="CHAIR">
 					<path class="chair__seat" d="M518.8,226h3.4v-2.8       c-0.2-0.2-0.5-0.4-0.8-0.5c-0.3-0.1-0.6-0.2-0.9-0.2c-0.3,0-0.6,0.1-0.9,0.2c-0.3,0.1-0.5,0.3-0.8,0.5V226z" data-name="SEAT"/>
-						<rect x="518.4" y="223.7" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
-						<rect x="522.2" y="223.7" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="518.4" y="223.7" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="522.2" y="223.7" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
 					<path class="chair__backrest" d="M522.3,223.2       c0.1,0.1,0.2,0.1,0.3,0c0.1-0.1,0.1-0.2,0-0.3c-0.3-0.3-0.6-0.5-0.9-0.6c-0.3-0.1-0.7-0.2-1.1-0.2c-0.4,0-0.7,0.1-1.1,0.2       c-0.3,0.1-0.7,0.3-0.9,0.6c-0.1,0.1-0.1,0.2,0,0.3c0.1,0.1,0.2,0.1,0.3,0c0.2-0.2,0.5-0.4,0.8-0.5c0.3-0.1,0.6-0.2,0.9-0.2       c0.3,0,0.6,0.1,0.9,0.2C521.8,222.8,522,223,522.3,223.2z" data-name="BACKREST"/>
 				</g>
-				<g>
-					<path class="chair__seat" d="M513.5,226h3.4v-2.8c-0.2-0.2-0.5-0.4-0.8-0.5c-0.3-0.1-0.6-0.2-0.9-0.2       c-0.3,0-0.6,0.1-0.9,0.2c-0.3,0.1-0.5,0.3-0.8,0.5V226z"/>
-						<rect x="513.1" y="223.7" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
-					<rect x="516.9" y="223.7" class="chair__arm" width="0.4" height="1.7"/>
+				<g data-name="CHAIR">
+					<path class="chair__seat" d="M513.5,226h3.4v-2.8c-0.2-0.2-0.5-0.4-0.8-0.5c-0.3-0.1-0.6-0.2-0.9-0.2       c-0.3,0-0.6,0.1-0.9,0.2c-0.3,0.1-0.5,0.3-0.8,0.5V226z" data-name="SEAT"/>
+                    <rect x="513.1" y="223.7" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+					<rect x="516.9" y="223.7" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
 					<path class="chair__backrest" d="M517,223.2c0.1,0.1,0.2,0.1,0.3,0c0.1-0.1,0.1-0.2,0-0.3       c-0.3-0.3-0.6-0.5-0.9-0.6c-0.3-0.1-0.7-0.2-1.1-0.2c-0.4,0-0.7,0.1-1.1,0.2c-0.3,0.1-0.7,0.3-0.9,0.6c-0.1,0.1-0.1,0.2,0,0.3       c0.1,0.1,0.2,0.1,0.3,0c0.2-0.2,0.5-0.4,0.8-0.5c0.3-0.1,0.6-0.2,0.9-0.2c0.3,0,0.6,0.1,0.9,0.2       C516.4,222.8,516.7,223,517,223.2z"/>
 				</g>
-				<path class="desk__table" d="M512.2,226h16.7c0.1,0,0.2,0.1,0.2,0.2v8.2c0,0.1-0.1,0.2-0.2,0.2h-16.7      c-0.1,0-0.2-0.1-0.2-0.2v-8.2C512,226.1,512.1,226,512.2,226z"/>
+				<path class="desk__table" d="M512.2,226h16.7c0.1,0,0.2,0.1,0.2,0.2v8.2c0,0.1-0.1,0.2-0.2,0.2h-16.7      c-0.1,0-0.2-0.1-0.2-0.2v-8.2C512,226.1,512.1,226,512.2,226z" data-name="TABLE"/>
 			</g>
 		</g>
 		<g data-component="ROOM" data-identification="BCP02S015">
@@ -4712,38 +4712,38 @@
 			<g data-name="DESK-RTAS-00005" data-component="DESK" data-identification="RTAS-00005">
 				<g data-name="CHAIR">
 					<path class="chair__seat" d="M524.2,255.8h3.4v2.8       c-0.2,0.2-0.5,0.4-0.8,0.5c-0.3,0.1-0.6,0.2-0.9,0.2c-0.3,0-0.6-0.1-0.9-0.2c-0.3-0.1-0.5-0.3-0.8-0.5V255.8z" data-name="SEAT"/>
-						<rect x="523.7" y="256.4" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
-						<rect x="527.6" y="256.4" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="523.7" y="256.4" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="527.6" y="256.4" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
 					<path class="chair__backrest" d="M527.6,258.6       c0.1-0.1,0.2-0.1,0.3,0c0.1,0.1,0.1,0.2,0,0.3c-0.3,0.3-0.6,0.5-0.9,0.6c-0.3,0.1-0.7,0.2-1.1,0.2s-0.7-0.1-1.1-0.2       c-0.3-0.1-0.7-0.3-0.9-0.6c-0.1-0.1-0.1-0.2,0-0.3c0.1-0.1,0.2-0.1,0.3,0c0.2,0.2,0.5,0.4,0.8,0.5c0.3,0.1,0.6,0.2,0.9,0.2       c0.3,0,0.6-0.1,0.9-0.2C527.1,258.9,527.3,258.8,527.6,258.6z" data-name="BACKREST"/>
 				</g>
 				<g data-name="CHAIR">
 					<path class="chair__seat" d="M518.8,255.8h3.4v2.8       c-0.2,0.2-0.5,0.4-0.8,0.5c-0.3,0.1-0.6,0.2-0.9,0.2c-0.3,0-0.6-0.1-0.9-0.2c-0.3-0.1-0.5-0.3-0.8-0.5V255.8z" data-name="SEAT"/>
-						<rect x="518.4" y="256.4" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
-						<rect x="522.2" y="256.4" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="518.4" y="256.4" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="522.2" y="256.4" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
 					<path class="chair__backrest" d="M522.3,258.6       c0.1-0.1,0.2-0.1,0.3,0c0.1,0.1,0.1,0.2,0,0.3c-0.3,0.3-0.6,0.5-0.9,0.6c-0.3,0.1-0.7,0.2-1.1,0.2c-0.4,0-0.7-0.1-1.1-0.2       c-0.3-0.1-0.7-0.3-0.9-0.6c-0.1-0.1-0.1-0.2,0-0.3c0.1-0.1,0.2-0.1,0.3,0c0.2,0.2,0.5,0.4,0.8,0.5c0.3,0.1,0.6,0.2,0.9,0.2       c0.3,0,0.6-0.1,0.9-0.2C521.8,258.9,522,258.8,522.3,258.6z" data-name="BACKREST"/>
 				</g>
 				<g data-name="CHAIR">
 					<path class="chair__seat" d="M513.5,255.8h3.4v2.8       c-0.2,0.2-0.5,0.4-0.8,0.5c-0.3,0.1-0.6,0.2-0.9,0.2c-0.3,0-0.6-0.1-0.9-0.2c-0.3-0.1-0.5-0.3-0.8-0.5V255.8z" data-name="SEAT"/>
-						<rect x="513.1" y="256.4" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
-						<rect x="516.9" y="256.4" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="513.1" y="256.4" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="516.9" y="256.4" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
 					<path class="chair__backrest" d="M517,258.6       c0.1-0.1,0.2-0.1,0.3,0c0.1,0.1,0.1,0.2,0,0.3c-0.3,0.3-0.6,0.5-0.9,0.6c-0.3,0.1-0.7,0.2-1.1,0.2c-0.4,0-0.7-0.1-1.1-0.2       c-0.3-0.1-0.7-0.3-0.9-0.6c-0.1-0.1-0.1-0.2,0-0.3c0.1-0.1,0.2-0.1,0.3,0c0.2,0.2,0.5,0.4,0.8,0.5c0.3,0.1,0.6,0.2,0.9,0.2       c0.3,0,0.6-0.1,0.9-0.2C516.4,258.9,516.7,258.8,517,258.6z" data-name="BACKREST"/>
 				</g>
 				<g data-name="CHAIR">
 					<path class="chair__seat" d="M524.2,247.3h3.4v-2.8       c-0.2-0.2-0.5-0.4-0.8-0.5c-0.3-0.1-0.6-0.2-0.9-0.2c-0.3,0-0.6,0.1-0.9,0.2c-0.3,0.1-0.5,0.3-0.8,0.5V247.3z" data-name="SEAT"/>
-						<rect x="523.7" y="244.9" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
-						<rect x="527.6" y="244.9" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="523.7" y="244.9" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="527.6" y="244.9" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
 					<path class="chair__backrest" d="M527.6,244.5       c0.1,0.1,0.2,0.1,0.3,0c0.1-0.1,0.1-0.2,0-0.3c-0.3-0.3-0.6-0.5-0.9-0.6c-0.3-0.1-0.7-0.2-1.1-0.2s-0.7,0.1-1.1,0.2       c-0.3,0.1-0.7,0.3-0.9,0.6c-0.1,0.1-0.1,0.2,0,0.3c0.1,0.1,0.2,0.1,0.3,0c0.2-0.2,0.5-0.4,0.8-0.5c0.3-0.1,0.6-0.2,0.9-0.2       c0.3,0,0.6,0.1,0.9,0.2C527.1,244.1,527.3,244.2,527.6,244.5z" data-name="BACKREST"/>
 				</g>
 				<g data-name="CHAIR">
 					<path class="chair__seat" d="M518.8,247.3h3.4v-2.8       c-0.2-0.2-0.5-0.4-0.8-0.5c-0.3-0.1-0.6-0.2-0.9-0.2c-0.3,0-0.6,0.1-0.9,0.2c-0.3,0.1-0.5,0.3-0.8,0.5V247.3z" data-name="SEAT"/>
-						<rect x="518.4" y="244.9" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
-						<rect x="522.2" y="244.9" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="518.4" y="244.9" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="522.2" y="244.9" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
 					<path class="chair__backrest" d="M522.3,244.5       c0.1,0.1,0.2,0.1,0.3,0c0.1-0.1,0.1-0.2,0-0.3c-0.3-0.3-0.6-0.5-0.9-0.6c-0.3-0.1-0.7-0.2-1.1-0.2c-0.4,0-0.7,0.1-1.1,0.2       c-0.3,0.1-0.7,0.3-0.9,0.6c-0.1,0.1-0.1,0.2,0,0.3c0.1,0.1,0.2,0.1,0.3,0c0.2-0.2,0.5-0.4,0.8-0.5c0.3-0.1,0.6-0.2,0.9-0.2       c0.3,0,0.6,0.1,0.9,0.2C521.8,244.1,522,244.2,522.3,244.5z" data-name="BACKREST"/>
 				</g>
 				<g data-name="CHAIR">
 					<path class="chair__seat" d="M513.5,247.3h3.4v-2.8       c-0.2-0.2-0.5-0.4-0.8-0.5c-0.3-0.1-0.6-0.2-0.9-0.2c-0.3,0-0.6,0.1-0.9,0.2c-0.3,0.1-0.5,0.3-0.8,0.5V247.3z" data-name="SEAT"/>
-						<rect x="513.1" y="244.9" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
-						<rect x="516.9" y="244.9" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="513.1" y="244.9" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
+                    <rect x="516.9" y="244.9" class="chair__arm" width="0.4" height="1.7" data-name="ARM"/>
 					<path class="chair__backrest" d="M517,244.5       c0.1,0.1,0.2,0.1,0.3,0c0.1-0.1,0.1-0.2,0-0.3c-0.3-0.3-0.6-0.5-0.9-0.6c-0.3-0.1-0.7-0.2-1.1-0.2c-0.4,0-0.7,0.1-1.1,0.2       c-0.3,0.1-0.7,0.3-0.9,0.6c-0.1,0.1-0.1,0.2,0,0.3c0.1,0.1,0.2,0.1,0.3,0c0.2-0.2,0.5-0.4,0.8-0.5c0.3-0.1,0.6-0.2,0.9-0.2       c0.3,0,0.6,0.1,0.9,0.2C516.4,244.1,516.7,244.2,517,244.5z" data-name="BACKREST"/>
 				</g>
 				<path class="desk__table" d="M512.2,247.3h16.7      c0.1,0,0.2,0.1,0.2,0.2v8.2c0,0.1-0.1,0.2-0.2,0.2h-16.7c-0.1,0-0.2-0.1-0.2-0.2v-8.2C512,247.3,512.1,247.3,512.2,247.3z" data-name="TABLE"/>

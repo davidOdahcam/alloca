@@ -25,12 +25,12 @@
         inset: 0;
         transform-origin: 0 0;
         display: flex;
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
     }
 
     ::ng-deep .floor-map__stage > svg {
@@ -122,6 +122,7 @@
     & [data-name="SEAT"],
     & [data-name="SEAT"] [data-name="DETAIL"],
     & [data-name="SEAT"] [data-name="BORDER"],
+    & [data-name="SEAT"] [data-name="PART"],
     & [data-name="OBJECT"],
     & [data-name="BACKREST"],
     & [data-name="BACKREST"] [data-name="DETAIL"] {

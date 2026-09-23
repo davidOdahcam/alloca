@@ -5,7 +5,7 @@ import { ReservationStatus } from '@features/reservations/models/reservation.mod
 
 type Severity = 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast';
 
-const STATUS_LABEL: Record<ReservationStatus, string> = {
+export const STATUS_LABEL: Record<ReservationStatus, string> = {
     Pending: 'Pendente',
     Approved: 'Aprovada',
     Rejected: 'Recusada',
@@ -15,6 +15,8 @@ const STATUS_LABEL: Record<ReservationStatus, string> = {
     Completed: 'Concluída',
     NoShow: 'Não compareceu'
 };
+
+export const RESERVATION_STATUSES: ReservationStatus[] = ['Pending', 'Approved', 'InProgress', 'Completed', 'NoShow', 'Rejected', 'CancelledByUser', 'RevokedByManager'];
 
 const STATUS_SEVERITY: Record<ReservationStatus, Severity> = {
     Pending: 'warn',
