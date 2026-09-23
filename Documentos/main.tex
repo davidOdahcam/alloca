@@ -1,0 +1,222 @@
+\documentclass{projetofinal}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%        P A C O T E S
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Adicione aqui seus pacotes
+\usepackage{verbatim}
+\usepackage{quoting}
+\usepackage{setspace} %para a ficha de catalogação
+\usepackage{float}
+\usepackage[alf]{abntex2cite}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{amssymb}
+\usepackage{pdfpages}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% QUADROS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addto\captionsbrazilian{\renewcommand{\tablename}{Quadro}}
+\addto\captionsbrazilian{\renewcommand{\listtablename}{Lista de Quadros}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FIGURAS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{subfig}
+
+\usepackage{multirow} %% para tabelas
+
+\usepackage{array}
+\usepackage{tabu}
+
+\usepackage{ragged2e}
+\usepackage{rotating}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configurações para mostrar um JSON bonitinho
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xcolor}
+
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=6pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configurações personalizadas
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareCaptionFormat{citation}{%
+   \ifx\captioncitation\relax\relax\else
+     \captioncitation\par
+   \fi
+   #1#2#3\par}
+   
+\newcommand*\setcaptioncitation[1]{\def\captioncitation{\textit{Fonte:}~#1}}
+\let\captioncitation\relax
+\captionsetup{format=citation,justification=centering}
+
+%%%%%%%%%%%%
+% Apêndice
+%%%%%%%%%%%%
+
+
+%\renewcommand*{\sectionautorefname}{\appendixname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%INICIO  DO  DOCUMENTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\bibliographystyle{abntex2-alf}
+% título da tese é obrigatório
+\title{ \begin{center} SAEA: Sistema de Alocação de Espaço Acadêmico \end{center} } 
+% Sensoriamento Remoto: Um Estudo de Caso Com Dados do Município Campo Verde
+
+% autor é obrigatório;
+\author{David dos Santos Machado}{\input{elementos-pretextuais/agradecimentos}}
+
+% orientador é obrigatório
+\advisor[Prof.]{D.Sc. Raimundo José Macário Costa}
+%\advisor[Prof.]{D.Sc. André Luiz de Castro Leal \break DECOMP/UFRRJ - Orientador }{DECOMP~-~UFRRJ}
+
+% co-orientador é opcional
+%\coadvisor[]{D.Sc. Maciel Zortea \break IBM Research - Coorientador}{}
+
+% máximo de 3 integrantes da banca (orientador e coorientador já são adicionados automaticamente)
+\banca[Prof.]{D.Sc. André Luiz de Castro Leal \break DECOMP/UFRRJ}{~-~UFRRJ}
+\banca[Prof.]{D.Sc. Nome professor da banca 2 \break DECOMP/UFRRJ}{~-~UFRRJ}
+\banca[Prof.]{D.Sc. Nome professor da banca 3 \break DECOMP/UFRRJ}{~-~UFRRJ}
+%\banca[]{Nome,~D.Sc.}{Grupo}
+
+\location{Seropédica, Rio de Janeiro - Brasil}{}{}
+\date{Outubro}{2025}% mês e ano de defesa
+\maketitle % não remover
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Inserir a ficha Catalográfica
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{elementos-pretextuais/fichacatalog}
+
+\startdocument%%inicia a contagem de páginas
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% D E D I C A T Ó R I A
+%%%%%%%%%%%%%%%%%%%%%%%%
+\input{elementos-pretextuais/dedicatoria}
+%\makededicatoriapage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%A G R A D E C I M E N T O S
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{elementos-pretextuais/agradecimentos}
+%\makethankspage
+
+%%%%%%%%%%%%%%%%%%
+% E P Í G R A F E
+%%%%%%%%%%%%%%%%%%
+\begin{epigrafe}
+    \vspace*{\fill}
+    \begin{flushright}
+        \textit{
+            “Compartilhar espaços é mais do que dividir lugares —\\
+            é construir possibilidades em conjunto.”\\[0.5cm]
+            — Autoria própria
+        }
+    \end{flushright}
+    \pagebreak
+\end{epigrafe}
+%\epigrafepage
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%R E S U M O
+%%%%%%%%%%%%%%%%%%%%%%%
+\input{elementos-pretextuais/resumo}
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%A B S T R A C T
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{elementos-pretextuais/abstract}
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   L I S T A S
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Figuras
+\makefigurespage
+
+% Tabelas
+\maketablespage
+
+% Algoritmos
+% \makelistingspage
+
+
+% Abreviaturas (devem estar em ordem alfabética)
+\makeabrevpage{\input{elementos-pretextuais/abreviaturas}}
+
+% Símbolos (devem estar em ordem alfabética)
+%\makesymbolspage{\input{elementos-pretextuais/simbolos}}
+
+% Sumário 
+\maketocpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%   C O N T E Ú D O
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\startcontent
+
+\input{elementos-textuais/Intro}
+\input{elementos-textuais/FundamentaTeorica}
+\input{elementos-textuais/Metodologia}
+\input{elementos-textuais/Resultados}
+\input{elementos-textuais/Conclusao}
+
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% B I B L I O G R A F I A
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Retirar esta parte se o trabalho não tiver bibliografia
+\makebibspage{abnt}{elementos-postextuais/referencias}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% A P E N D I C E
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Retirar esta parte se o trabalho não tiver anexos
+\appendix
+\input{elementos-postextuais/apendice-formulario.tex}
+
+\end{document}
