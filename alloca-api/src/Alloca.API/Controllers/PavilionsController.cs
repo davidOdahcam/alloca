@@ -8,7 +8,7 @@ namespace Alloca.API.Controllers;
 [ApiController]
 [Authorize]
 [Route("api/pavilions")]
-public class PavilionsController(IPavilionService pavilions) : ControllerBase
+public class PavilionsController(IPavilionAppService pavilions) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> List(CancellationToken ct)

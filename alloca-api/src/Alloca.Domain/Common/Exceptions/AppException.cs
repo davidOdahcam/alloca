@@ -1,4 +1,4 @@
-namespace Alloca.Application.Common.Exceptions;
+namespace Alloca.Domain.Common.Exceptions;
 
 public abstract class AppException : Exception
 {

@@ -8,7 +8,7 @@ namespace Alloca.API.Controllers;
 [ApiController]
 [Authorize(Roles = "Admin")]
 [Route("api/users")]
-public class UsersController(IUserService userService) : ControllerBase
+public class UsersController(IUserAppService userService) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<UserListItem>>> List(

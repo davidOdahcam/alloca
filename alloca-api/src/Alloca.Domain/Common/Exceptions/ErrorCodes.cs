@@ -1,4 +1,4 @@
-namespace Alloca.Application.Common.Exceptions;
+namespace Alloca.Domain.Common.Exceptions;
 
 /// <summary>
 /// Códigos estáveis de erro consumidos pelo frontend para tradução via i18n.

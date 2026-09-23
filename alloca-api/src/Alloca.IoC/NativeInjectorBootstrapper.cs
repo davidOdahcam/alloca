@@ -19,6 +19,7 @@ public static class NativeInjectorBootStrapper
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.Converters.Add(new UtcDateTimeJsonConverter());
             });
         return services;
     }

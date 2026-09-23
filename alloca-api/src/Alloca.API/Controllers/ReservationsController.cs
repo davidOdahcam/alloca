@@ -8,7 +8,7 @@ namespace Alloca.API.Controllers;
 [ApiController]
 [Authorize]
 [Route("api/reservations")]
-public class ReservationsController(IReservationService reservations) : ControllerBase
+public class ReservationsController(IReservationAppService reservations) : ControllerBase
 {
     [HttpGet("mine")]
     public async Task<IActionResult> Mine(CancellationToken ct)

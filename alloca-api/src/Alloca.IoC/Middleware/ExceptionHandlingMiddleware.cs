@@ -1,6 +1,6 @@
 using System.Globalization;
 using System.Text.Json;
-using Alloca.Application.Common.Exceptions;
+using Alloca.Domain.Common.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;

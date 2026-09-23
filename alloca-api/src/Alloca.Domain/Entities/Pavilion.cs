@@ -1,4 +1,5 @@
 using Alloca.Domain.Common;
+using Alloca.Domain.ValueObjects;
 
 namespace Alloca.Domain.Entities;
 
@@ -58,5 +59,26 @@ public class Pavilion : Entity
         var oh = new OperatingHours(Id, day, opensAt, closesAt);
         _operatingHours.Add(oh);
         return oh;
+    }
+
+    /// <summary>Indica se o período informado está dentro do horário de funcionamento do pavilhão.</summary>
+    public bool IsWithinOperatingHours(TimeRange period)
+    {
+        var startLocal = period.StartUtc.ToLocalTime();
+        var endLocal = period.EndUtc.ToLocalTime();
+        if (startLocal.Date != endLocal.Date) return false;
+        var oh = _operatingHours.FirstOrDefault(o => o.DayOfWeek == startLocal.DayOfWeek);
+        if (oh is null || oh.IsClosed) return false;
+        var start = TimeOnly.FromDateTime(startLocal);
+        var end = TimeOnly.FromDateTime(endLocal);
+        return start >= oh.OpensAt && end <= oh.ClosesAt;
+    }
+
+    /// <summary>Indica se o período está alinhado aos blocos de tempo (<see cref="SlotMinutes"/>) do pavilhão.</summary>
+    public bool IsAlignedToSlot(TimeRange period)
+    {
+        if (SlotMinutes <= 0) return true;
+        return period.StartUtc.Minute % SlotMinutes == 0 && period.StartUtc.Second == 0
+            && period.EndUtc.Minute % SlotMinutes == 0 && period.EndUtc.Second == 0;
     }
 }

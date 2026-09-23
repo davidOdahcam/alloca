@@ -2,7 +2,7 @@ using Alloca.Application.DTOs.Users;
 
 namespace Alloca.Application.Services;
 
-public interface IUserService
+public interface IUserAppService
 {
     Task<IReadOnlyList<UserListItem>> ListAsync(string? search, string? role, bool? isActive, CancellationToken ct = default);
     Task<UserDetail> GetAsync(Guid id, CancellationToken ct = default);

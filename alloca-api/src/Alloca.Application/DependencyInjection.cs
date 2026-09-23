@@ -16,12 +16,12 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-        services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<IReservationService, ReservationService>();
-        services.AddScoped<IPavilionService, PavilionService>();
-        services.AddScoped<IManagerService, ManagerService>();
-        services.AddScoped<IBlockService, BlockService>();
-        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAuthAppService, AuthAppService>();
+        services.AddScoped<IReservationAppService, ReservationAppService>();
+        services.AddScoped<IPavilionAppService, PavilionAppService>();
+        services.AddScoped<IManagerAppService, ManagerAppService>();
+        services.AddScoped<IBlockAppService, BlockAppService>();
+        services.AddScoped<IUserAppService, UserAppService>();
 
         return services;
     }

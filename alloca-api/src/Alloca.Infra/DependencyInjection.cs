@@ -1,6 +1,9 @@
 using Alloca.Application.Common.Interfaces;
 using Alloca.Application.Common.Settings;
+using Alloca.Domain.Common.Settings;
 using Alloca.Domain.Repositories;
+using Alloca.Domain.Services;
+using Alloca.Domain.Services.Implementations;
 using Alloca.Infra.Persistence;
 using Alloca.Infra.Persistence.Repositories;
 using Alloca.Infra.Services;
@@ -42,6 +45,15 @@ public static class DependencyInjection
         services.AddScoped<IBlockRepository, BlockRepository>();
         services.AddScoped<IUserStrikeRepository, UserStrikeRepository>();
         services.AddScoped<IUserSuspensionRepository, UserSuspensionRepository>();
+
+        // Domain services (regras de negócio)
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IReservationService, ReservationService>();
+        services.AddScoped<IManagerService, ManagerService>();
+        services.AddScoped<IBlockService, BlockService>();
+        services.AddScoped<IPavilionService, PavilionService>();
+        services.AddScoped<IReservationLifecycleService, ReservationLifecycleService>();
 
         return services;
     }

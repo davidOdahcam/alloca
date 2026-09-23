@@ -3,7 +3,7 @@ using Alloca.Application.DTOs.Reservations;
 
 namespace Alloca.Application.Services;
 
-public interface IManagerService
+public interface IManagerAppService
 {
     Task<IReadOnlyList<ReservationResponse>> ListPendingAsync(Guid? pavilionId, CancellationToken ct = default);
     Task ApproveAsync(Guid reservationId, CancellationToken ct = default);

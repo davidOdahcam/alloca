@@ -1,26 +1,24 @@
-using Alloca.Application.Common.Exceptions;
 using Alloca.Application.Common.Interfaces;
 using Alloca.Application.DTOs.Auth;
-using Alloca.Domain.Entities;
+using Alloca.Domain.Common.Exceptions;
 using Alloca.Domain.Enums;
-using Alloca.Domain.Repositories;
+using Alloca.Domain.Services;
 using FluentValidation;
 
 namespace Alloca.Application.Services.Implementations;
 
-public class AuthService(
-    IUserRepository users,
-    IUnitOfWork uow,
+public class AuthAppService(
+    IAuthService authService,
     IPasswordHasher hasher,
     IJwtTokenService jwt,
     IValidator<LoginRequest> loginValidator,
-    IValidator<RegisterRequest> registerValidator) : IAuthService
+    IValidator<RegisterRequest> registerValidator) : IAuthAppService
 {
     public async Task<LoginResponse> LoginAsync(LoginRequest request, CancellationToken ct = default)
     {
         await loginValidator.ValidateAndThrowAsync(request, ct);
 
-        var user = await users.FindByEmailAsync(request.Email, ct)
+        var user = await authService.FindByEmailAsync(request.Email, ct)
             ?? throw new UnauthorizedException(ErrorCodes.UserInvalidCredentials, "E-mail ou senha incorretos.");
 
         if (!user.IsActive) throw new UnauthorizedException(ErrorCodes.UserInactive, "Sua conta está inativa. Procure um administrador.");
@@ -35,12 +33,7 @@ public class AuthService(
     {
         await registerValidator.ValidateAndThrowAsync(request, ct);
 
-        if (await users.EmailExistsAsync(request.Email, ct))
-            throw new ConflictException(ErrorCodes.UserEmailInUse, "Este e-mail já está em uso.");
-
-        var user = new User(request.Email, request.FullName, hasher.Hash(request.Password), UserRole.Member);
-        users.Add(user);
-        await uow.SaveChangesAsync(ct);
+        var user = await authService.RegisterAsync(request.Email, request.FullName, hasher.Hash(request.Password), UserRole.Member, ct);
         return new RegisterResponse(user.Id);
     }
 }

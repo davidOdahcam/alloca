@@ -9,7 +9,7 @@ namespace Alloca.API.Controllers;
 [ApiController]
 [Authorize(Roles = "PavilionManager,Admin")]
 [Route("api/manager")]
-public class ManagerController(IManagerService managerService, IBlockService blockService) : ControllerBase
+public class ManagerController(IManagerAppService managerService, IBlockAppService blockService) : ControllerBase
 {
     [HttpGet("reservations/pending")]
     public async Task<IActionResult> Pending([FromQuery] Guid? pavilionId, CancellationToken ct)

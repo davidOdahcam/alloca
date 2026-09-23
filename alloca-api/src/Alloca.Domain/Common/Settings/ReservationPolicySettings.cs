@@ -1,4 +1,4 @@
-namespace Alloca.Application.Common.Settings;
+namespace Alloca.Domain.Common.Settings;
 
 public class ReservationPolicySettings
 {

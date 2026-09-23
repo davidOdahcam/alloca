@@ -1,11 +1,7 @@
 using Alloca.Application.Common.Interfaces;
-using Alloca.Application.Common.Settings;
-using Alloca.Domain.Entities;
-using Alloca.Domain.Enums;
-using Alloca.Domain.Repositories;
+using Alloca.Domain.Services;
 using Hangfire;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Alloca.Jobs.Reservations;
 
@@ -16,14 +12,11 @@ namespace Alloca.Jobs.Reservations;
 ///   <item><c>InProgress</c> → <c>Completed</c> quando o período da reserva já encerrou.</item>
 /// </list>
 /// Também aplica strikes e suspende usuários que excedem o limite configurado.
+/// A regra de negócio reside no serviço de domínio; este job apenas a aciona.
 /// </summary>
 public class ReservationLifecycleJob(
-    IReservationRepository reservations,
-    IUserStrikeRepository strikes,
-    IUserSuspensionRepository suspensions,
-    IUnitOfWork uow,
+    IReservationLifecycleService lifecycleService,
     IDateTimeProvider clock,
-    IOptions<ReservationPolicySettings> policyOpts,
     ILogger<ReservationLifecycleJob> logger)
 {
     /// <summary>Identificador estável do job no Hangfire.</summary>
@@ -36,40 +29,11 @@ public class ReservationLifecycleJob(
     [DisableConcurrentExecution(timeoutInSeconds: 60)]
     public async Task RunAsync()
     {
-        var policy = policyOpts.Value;
-        var now = clock.UtcNow;
-        var cutoff = now.AddMinutes(-policy.NoShowGraceMinutes);
+        var (noShows, completed) = await lifecycleService.RunAsync(clock.UtcNow);
 
-        var approved = await reservations.ListApprovedPastGraceAsync(cutoff);
-
-        foreach (var r in approved)
-        {
-            r.MarkNoShow(now, policy.NoShowGraceMinutes);
-            if (r.Status == ReservationStatus.NoShow)
-            {
-                strikes.Add(new UserStrike(r.UserId, r.Id, now, policy.StrikeWindowDays));
-
-                var activeStrikes = await strikes.CountActiveAsync(r.UserId, now) + 1;
-                if (activeStrikes >= policy.StrikeSuspensionThreshold
-                    && !await suspensions.IsCurrentlySuspendedAsync(r.UserId, now))
-                {
-                    suspensions.Add(new UserSuspension(
-                        r.UserId, now, now.AddDays(policy.StrikeSuspensionDays),
-                        $"Auto: {policy.StrikeSuspensionThreshold} strikes accumulated.", null));
-                }
-            }
-        }
-
-        var inProgress = await reservations.ListInProgressPastEndAsync(now);
-        foreach (var r in inProgress) r.MarkCompleted(now);
-
-        if (approved.Count > 0 || inProgress.Count > 0)
-        {
-            await uow.SaveChangesAsync();
+        if (noShows > 0 || completed > 0)
             logger.LogInformation(
                 "Reservation lifecycle: {NoShow} no-shows, {Completed} completed.",
-                approved.Count(r => r.Status == ReservationStatus.NoShow),
-                inProgress.Count);
-        }
+                noShows, completed);
     }
 }

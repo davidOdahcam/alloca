@@ -1,5 +1,6 @@
 using Alloca.Domain.Entities;
 using Alloca.Domain.Enums;
+using Alloca.Domain.ReadModels;
 
 namespace Alloca.Domain.Repositories;
 
@@ -12,4 +13,6 @@ public interface IReservationRepository : IRepository<Reservation>
     Task<IReadOnlyList<Reservation>> ListInProgressPastEndAsync(DateTime nowUtc, CancellationToken ct = default);
     Task<IReadOnlyList<Guid>> ListConflictingRoomIdsAsync(IEnumerable<Guid> roomIds, DateTime startUtc, DateTime endUtc, CancellationToken ct = default);
     Task<IReadOnlyList<Guid>> ListConflictingDeskIdsAsync(IEnumerable<Guid> deskIds, DateTime startUtc, DateTime endUtc, CancellationToken ct = default);
+    Task<IReadOnlyList<ReservationView>> ListByUserAsync(Guid userId, CancellationToken ct = default);
+    Task<IReadOnlyList<ReservationView>> ListPendingByPavilionsAsync(IReadOnlyCollection<Guid> pavilionIds, Guid? pavilionFilter, CancellationToken ct = default);
 }

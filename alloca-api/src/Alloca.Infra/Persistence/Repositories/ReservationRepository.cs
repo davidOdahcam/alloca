@@ -1,5 +1,6 @@
 using Alloca.Domain.Entities;
 using Alloca.Domain.Enums;
+using Alloca.Domain.ReadModels;
 using Alloca.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -63,5 +64,49 @@ public class ReservationRepository(AllocaDbContext db) : Repository<Reservation>
             && ActiveStatuses.Contains(r.Status)
             && r.Period.StartUtc < endUtc && startUtc < r.Period.EndUtc)
             .Select(r => r.DeskId!.Value).ToListAsync(ct);
+    }
+
+    public async Task<IReadOnlyList<ReservationView>> ListByUserAsync(Guid userId, CancellationToken ct = default)
+    {
+        var query =
+            from r in Set
+            where r.UserId == userId
+            join pav in Db.Pavilions on r.PavilionId equals pav.Id
+            join room in Db.Rooms on r.RoomId equals room.Id into roomJ
+            from room in roomJ.DefaultIfEmpty()
+            join desk in Db.Desks on r.DeskId equals desk.Id into deskJ
+            from desk in deskJ.DefaultIfEmpty()
+            orderby r.Period.StartUtc descending
+            select new ReservationView(
+                r.Id, r.ResourceType, r.RoomId, r.DeskId,
+                r.ResourceType == ResourceType.Room ? room!.ExternalId : desk!.ExternalId,
+                r.ResourceType == ResourceType.Room ? room!.Name : desk!.Name,
+                r.PavilionId, pav.Name, r.Period.StartUtc, r.Period.EndUtc,
+                r.Status, r.Notes, r.DecisionReason, r.CheckedInAt, r.CreatedAt);
+
+        return await query.ToListAsync(ct);
+    }
+
+    public async Task<IReadOnlyList<ReservationView>> ListPendingByPavilionsAsync(IReadOnlyCollection<Guid> pavilionIds, Guid? pavilionFilter, CancellationToken ct = default)
+    {
+        var query =
+            from r in Set
+            where r.Status == ReservationStatus.Pending
+                && pavilionIds.Contains(r.PavilionId)
+                && (pavilionFilter == null || r.PavilionId == pavilionFilter)
+            join pav in Db.Pavilions on r.PavilionId equals pav.Id
+            join room in Db.Rooms on r.RoomId equals room.Id into roomJ
+            from room in roomJ.DefaultIfEmpty()
+            join desk in Db.Desks on r.DeskId equals desk.Id into deskJ
+            from desk in deskJ.DefaultIfEmpty()
+            orderby r.CreatedAt
+            select new ReservationView(
+                r.Id, r.ResourceType, r.RoomId, r.DeskId,
+                r.ResourceType == ResourceType.Room ? room!.ExternalId : desk!.ExternalId,
+                r.ResourceType == ResourceType.Room ? room!.Name : desk!.Name,
+                r.PavilionId, pav.Name, r.Period.StartUtc, r.Period.EndUtc,
+                r.Status, r.Notes, r.DecisionReason, r.CheckedInAt, r.CreatedAt);
+
+        return await query.ToListAsync(ct);
     }
 }
