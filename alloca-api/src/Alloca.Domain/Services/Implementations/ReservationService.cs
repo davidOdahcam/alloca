@@ -17,7 +17,6 @@ public class ReservationService(
     IFloorRepository floorRepository,
     IPavilionRepository pavilionRepository,
     IBlockRepository blockRepository,
-    IUserSuspensionRepository userSuspensionRepository,
     IUnitOfWork uow,
     IOptions<ReservationPolicySettings> policyOpts) : IReservationService
 {
@@ -27,9 +26,6 @@ public class ReservationService(
     {
         var startUtc = period.StartUtc;
         var endUtc = period.EndUtc;
-
-        if (await userSuspensionRepository.IsCurrentlySuspendedAsync(userId, nowUtc, ct))
-            throw new ForbiddenException(ErrorCodes.UserSuspended, "Sua conta está suspensa no momento.");
 
         var duration = period.Duration;
         if (duration < TimeSpan.FromMinutes(_policy.MinDurationMinutes))
@@ -110,26 +106,6 @@ public class ReservationService(
         await uow.SaveChangesAsync(ct);
     }
 
-    public async Task CheckInAsync(Guid reservationId, Guid userId, string scannedExternalId, DateTime nowUtc, CancellationToken ct = default)
-    {
-        var reservation = await LoadOwnedAsync(reservationId, userId, "Você só pode fazer check-in nas suas próprias reservas.", ct);
-
-        var scanned = (scannedExternalId ?? string.Empty).Trim().ToUpperInvariant();
-        var expected = await GetResourceExternalIdAsync(reservation, ct);
-        if (scanned != expected)
-            throw new BusinessRuleException(ErrorCodes.ReservationCheckInWrongQr, "O QR Code lido não corresponde ao recurso reservado.");
-
-        try { reservation.CheckIn(nowUtc, _policy.NoShowGraceMinutes); }
-        catch (DomainException ex) { throw new BusinessRuleException(ErrorCodes.ReservationBusinessRule, ex.Message); }
-        await uow.SaveChangesAsync(ct);
-    }
-
-    public async Task<string> GetQrPayloadAsync(Guid reservationId, Guid userId, CancellationToken ct = default)
-    {
-        var reservation = await LoadOwnedAsync(reservationId, userId, "Você só pode visualizar o QR Code das suas próprias reservas.", ct);
-        return await GetResourceExternalIdAsync(reservation, ct);
-    }
-
     public Task<IReadOnlyList<ReservationView>> ListByUserAsync(Guid userId, CancellationToken ct = default)
         => reservationRepository.ListByUserAsync(userId, ct);
 
@@ -164,18 +140,5 @@ public class ReservationService(
                 ?? throw new NotFoundException(ErrorCodes.FloorNotFound, "Andar não encontrado.");
             return floor.PavilionId;
         }
-    }
-
-    private async Task<string> GetResourceExternalIdAsync(Reservation reservation, CancellationToken ct)
-    {
-        if (reservation.ResourceType == ResourceType.Room)
-        {
-            var room = await roomRepository.GetByIdAsync(reservation.RoomId!.Value, ct)
-                ?? throw new NotFoundException(ErrorCodes.RoomNotFound, "Sala não encontrada.");
-            return room.ExternalId;
-        }
-        var desk = await deskRepository.GetByIdAsync(reservation.DeskId!.Value, ct)
-            ?? throw new NotFoundException(ErrorCodes.DeskNotFound, "Mesa não encontrada.");
-        return desk.ExternalId;
     }
 }

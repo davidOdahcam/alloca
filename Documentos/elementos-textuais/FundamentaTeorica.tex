@@ -1,6 +1,6 @@
 \chapter{Fundamentação Teórica}\label{chp:FUNDAMENTACAO}
 
-Texto
+Este capítulo apresenta os fundamentos teóricos e tecnológicos que embasam o desenvolvimento do sistema proposto. Inicialmente, discutem-se os conceitos de sistemas de reserva e gestão de espaços; em seguida, abordam-se as técnicas de visualização de ambientes, as tecnologias de desenvolvimento web e os princípios de experiência do usuário; por fim, apresentam-se estudos de caso e trabalhos relacionados que contextualizam a solução desenvolvida.
 
 %Cada seção deve começar com uma definição ou conceito e terminar mostrando como isso se relaciona com o seu sistema.
 
@@ -15,6 +15,13 @@ Texto
 % Benefícios para gestão de recursos e otimização de uso.
 % Exemplos de trabalhos acadêmicos relacionados.
 
+Sistemas de reserva são aplicações destinadas a mediar o acesso compartilhado a recursos de disponibilidade limitada, coordenando a demanda de múltiplos usuários ao longo do tempo e evitando a sobreposição de uso. % TODO: \cite{ref-sistemas-reserva}
+No contexto da gestão de espaços físicos, tais sistemas permitem que ambientes como salas, mesas e auditórios sejam agendados de forma organizada, substituindo controles manuais — como planilhas, livros de registro ou comunicação informal — por um processo centralizado, rastreável e acessível remotamente.
+
+Esse tipo de solução é encontrado em contextos diversos, como espaços de trabalho compartilhado (\textit{coworkings}), empresas que gerenciam salas de reunião e instituições de ensino que administram laboratórios e ambientes de estudo. Em todos esses casos, os benefícios são semelhantes: melhor aproveitamento da infraestrutura disponível, redução de conflitos de agendamento, transparência quanto à ocupação e obtenção de dados que apoiam o planejamento do uso dos espaços. % TODO: \cite{ref-gestao-espacos}
+
+No ambiente acadêmico, a gestão de espaços apresenta particularidades relevantes, como a existência de diferentes perfis de usuário, a necessidade de aprovação por responsáveis e a alta rotatividade de uso ao longo do dia. O sistema proposto neste trabalho insere-se nesse contexto, oferecendo um mecanismo de reserva \textit{self-service} associado a fluxos de aprovação e a políticas de uso que visam coibir o desperdício de recursos.
+
 \section{Visualização de ambientes}\label{sec:visualizacaoDeAmbientes}
 
 %Técnicas de visualização de plantas baixas.
@@ -22,40 +29,63 @@ Texto
 %Softwares e ferramentas comuns (ex.: CAD, Google Indoor Maps).
 %Importância da fidelidade da visualização para a experiência do usuário.
 
+A visualização de ambientes diz respeito às técnicas empregadas para representar graficamente espaços físicos em interfaces digitais, de modo que o usuário compreenda a disposição e a ocupação dos recursos. As representações podem ser bidimensionais (2D), como plantas baixas e mapas esquemáticos, ou tridimensionais (3D), como modelos volumétricos e ambientes navegáveis. As representações 2D destacam-se pela clareza e pelo baixo custo computacional, sendo especialmente adequadas à visão geral de um pavimento. % TODO: \cite{ref-visualizacao}
+
+Plantas baixas são tradicionalmente produzidas em ferramentas de desenho assistido por computador (\textit{Computer-Aided Design} — CAD) e em editores gráficos vetoriais. Soluções de mapeamento de ambientes internos, como serviços de mapas em espaços fechados, evidenciam o valor de representar fielmente a estrutura real para orientar o usuário. A fidelidade da visualização é, portanto, um fator determinante da experiência: quanto mais a representação corresponde ao ambiente real, maior a confiança do usuário e menor o esforço cognitivo necessário para localizar e selecionar um recurso. % TODO: \cite{ref-fidelidade-visual}
+
+Neste trabalho, a visualização foi construída a partir das plantas baixas oficiais dos ambientes, redesenhadas e exportadas em formato vetorial, o que garante precisão dimensional e permite a interação direta sobre a representação dos espaços, conforme detalhado no Capítulo~\ref{chp:METODOLOGIA}.
 
 \section{Tecnologias de Desenvolvimento Web}\label{sec:tecnologiasDesenvolvimentoWeb}
 %Tecnologias utilizadas para o sistema (front-end, back-end, frameworks).
 %Integração com bancos de dados para reservas.
 %Padrões de usabilidade e acessibilidade em aplicações web.
 
+Aplicações web modernas são comumente estruturadas segundo o modelo cliente-servidor, no qual a interface executada no navegador (\textit{front-end}) comunica-se com um serviço de retaguarda (\textit{back-end}) responsável pela lógica de negócio e pela persistência dos dados. Essa comunicação costuma ocorrer por meio de APIs no estilo REST, que padronizam o acesso aos recursos e favorecem o desacoplamento entre as camadas. % TODO: \cite{ref-rest}
+
+No \textit{front-end}, \textit{frameworks} para a construção de aplicações de página única (SPA) permitem interfaces ricas e responsivas, nas quais a navegação ocorre sem recarregamentos completos da página. No \textit{back-end}, plataformas maduras oferecem recursos para a construção de serviços seguros e de alto desempenho, incluindo autenticação, autorização e validação de dados. A persistência, por sua vez, apoia-se frequentemente em SGBDs relacionais, acessados por meio de bibliotecas de mapeamento objeto-relacional (ORM), que reduzem a distância entre o modelo de objetos da aplicação e o modelo de tabelas do banco de dados. % TODO: \cite{ref-orm}
+
+Além da funcionalidade, aplicações web devem observar padrões de usabilidade e de acessibilidade, garantindo que a interface seja utilizável por pessoas com diferentes capacidades e em diferentes dispositivos. As tecnologias específicas adotadas neste trabalho e as justificativas para sua escolha são apresentadas no Capítulo~\ref{chp:METODOLOGIA}.
 
 \section{Experiência do Usuário (UX)}\label{sec:ux}
 %Princípios de design de interfaces para sistemas de reserva.
 %Métodos para tornar o sistema intuitivo e eficiente.
 %Pesquisas que mostram impacto da interface na satisfação do usuário.
 
+A experiência do usuário (\textit{User Experience} — UX) abrange o conjunto de percepções e respostas resultantes da interação de uma pessoa com um sistema, englobando aspectos como facilidade de uso, eficiência, clareza e satisfação. % TODO: \cite{ref-ux}
+O projeto de interfaces orientado à UX apoia-se em princípios como consistência, prevenção de erros, retorno imediato às ações do usuário e redução da carga cognitiva, de modo que o sistema seja intuitivo e demande pouco esforço de aprendizagem.
+
+Em sistemas de reserva, esses princípios traduzem-se em fluxos objetivos para consultar disponibilidade e concretizar um agendamento, em mensagens claras diante de restrições ou erros e em uma representação visual que facilite a localização dos recursos. A literatura aponta que a qualidade da interface influencia diretamente a satisfação e a adesão dos usuários, impactando a efetividade da solução. % TODO: \cite{ref-ux-satisfacao}
+Esses fundamentos orientaram as decisões de projeto da interface deste trabalho, especialmente no que se refere à visualização interativa das plantas baixas e ao suporte a múltiplos idiomas.
+
 \section{Estudos de Casos e Trabalhos Relacionados}\label{sec:trabsrelacionados}
 %Apresentar sistemas similares implementados em outras universidades ou empresas.
 %Comparar soluções existentes com a proposta do seu sistema.
 %Identificar lacunas que o seu trabalho pretende preencher.
 
-\subsection{Sub-tópico}\label{subsec:landsat}
+Diversas soluções abordam a reserva e a gestão de espaços, desde plataformas comerciais de agendamento de salas até sistemas desenvolvidos no âmbito acadêmico. % TODO: \cite{ref-trabalho-relacionado-1, ref-trabalho-relacionado-2}
+De modo geral, essas soluções contemplam o cadastro de recursos, a consulta de disponibilidade e o registro de reservas; contudo, muitas apresentam a disponibilidade por meio de listas ou grades de horário, sem uma representação espacial fiel do ambiente.
 
+A comparação entre as soluções existentes e a proposta deste trabalho é sintetizada no Quadro~\ref{tab:comparativo-trabalhos}. % TODO: preencher o quadro comparativo com os trabalhos relacionados selecionados.
+A principal lacuna identificada refere-se à combinação, em uma única solução voltada ao contexto acadêmico, de visualização interativa baseada nas plantas baixas reais, fluxo de aprovação por gestores e política de penalidades por não comparecimento — conjunto de características que orienta a contribuição do presente trabalho.
 
-\begin{comment}
 \begin{table}[H]
-  \centering   \caption{Título}
-  \begin{tabular}{ ||l | l|| }
+  \centering
+  \caption{Comparativo entre trabalhos relacionados e a proposta}
+  \label{tab:comparativo-trabalhos}
+  \begin{tabular}{|p{4cm}|p{3.2cm}|p{2.4cm}|p{2.4cm}|}
     \hline
-      Índice & Valor \\
+    \textbf{Solução} & \textbf{Visualização fiel} & \textbf{Aprovação} & \textbf{Penalidades} \\
     \hline
-      Índice & Valor \\
-\hline
-  \end{tabular}
- \break \newline  \centering Fonte: Local (\citeyear{landINPE})
- \label{tab:TAB_LANDSAT8}
+    Trabalho relacionado 1 & --- & --- & --- \\
+    \hline
+    Trabalho relacionado 2 & --- & --- & --- \\
+    \hline
+    Proposta (este trabalho) & Sim & Sim & Sim \\
+    \hline
+    % TODO: ajustar as linhas conforme os trabalhos relacionados selecionados.
+  \end{tabular}\\
+  {\footnotesize Fonte: Autoria própria.}
 \end{table}
-\end{comment}
 
 \pagebreak
 

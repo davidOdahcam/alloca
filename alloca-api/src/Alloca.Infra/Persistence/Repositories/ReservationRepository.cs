@@ -9,7 +9,7 @@ namespace Alloca.Infra.Persistence.Repositories;
 public class ReservationRepository(AllocaDbContext db) : Repository<Reservation>(db), IReservationRepository
 {
     private static readonly ReservationStatus[] ActiveStatuses =
-        [ReservationStatus.Pending, ReservationStatus.Approved, ReservationStatus.InProgress];
+        [ReservationStatus.Pending, ReservationStatus.Approved];
 
     public Task<int> CountActiveByUserAsync(Guid userId, DateTime nowUtc, CancellationToken ct = default)
         => Set.CountAsync(r =>
@@ -39,12 +39,6 @@ public class ReservationRepository(AllocaDbContext db) : Repository<Reservation>
             && ActiveStatuses.Contains(r.Status)
             && r.Period.StartUtc < endUtc && startUtc < r.Period.EndUtc, ct);
     }
-
-    public async Task<IReadOnlyList<Reservation>> ListApprovedPastGraceAsync(DateTime cutoffUtc, CancellationToken ct = default)
-        => await Set.Where(r => r.Status == ReservationStatus.Approved && r.Period.StartUtc < cutoffUtc).ToListAsync(ct);
-
-    public async Task<IReadOnlyList<Reservation>> ListInProgressPastEndAsync(DateTime nowUtc, CancellationToken ct = default)
-        => await Set.Where(r => r.Status == ReservationStatus.InProgress && r.Period.EndUtc <= nowUtc).ToListAsync(ct);
 
     public async Task<IReadOnlyList<Guid>> ListConflictingRoomIdsAsync(IEnumerable<Guid> roomIds, DateTime startUtc, DateTime endUtc, CancellationToken ct = default)
     {
@@ -82,7 +76,7 @@ public class ReservationRepository(AllocaDbContext db) : Repository<Reservation>
                 r.ResourceType == ResourceType.Room ? room!.ExternalId : desk!.ExternalId,
                 r.ResourceType == ResourceType.Room ? room!.Name : desk!.Name,
                 r.PavilionId, pav.Name, r.Period.StartUtc, r.Period.EndUtc,
-                r.Status, r.Notes, r.DecisionReason, r.CheckedInAt, r.CreatedAt);
+                r.Status, r.Notes, r.DecisionReason, r.CreatedAt);
 
         return await query.ToListAsync(ct);
     }
@@ -105,7 +99,7 @@ public class ReservationRepository(AllocaDbContext db) : Repository<Reservation>
                 r.ResourceType == ResourceType.Room ? room!.ExternalId : desk!.ExternalId,
                 r.ResourceType == ResourceType.Room ? room!.Name : desk!.Name,
                 r.PavilionId, pav.Name, r.Period.StartUtc, r.Period.EndUtc,
-                r.Status, r.Notes, r.DecisionReason, r.CheckedInAt, r.CreatedAt);
+                r.Status, r.Notes, r.DecisionReason, r.CreatedAt);
 
         return await query.ToListAsync(ct);
     }

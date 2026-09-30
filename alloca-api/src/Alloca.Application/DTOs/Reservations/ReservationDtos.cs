@@ -11,8 +11,6 @@ public record CreateReservationRequest(
 
 public record CreateReservationResponse(Guid Id);
 
-public record CheckInRequest(string ScannedExternalId);
-
 public record ReservationResponse(
     Guid Id,
     ResourceType ResourceType,
@@ -27,5 +25,4 @@ public record ReservationResponse(
     ReservationStatus Status,
     string? Notes,
     string? DecisionReason,
-    DateTime? CheckedInAt,
     DateTime CreatedAt);

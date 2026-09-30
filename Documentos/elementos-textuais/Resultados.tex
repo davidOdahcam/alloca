@@ -1,24 +1,180 @@
-\chapter{Resultados}\label{chp:AP_Results}
+\chapter{Resultados}\label{chp:RESULTADOS}
 
-Texto
+Este capítulo apresenta os resultados obtidos com o desenvolvimento do sistema, descrevendo a implementação realizada, demonstrando as principais funcionalidades por meio de telas da aplicação, relatando os testes conduzidos e, por fim, confrontando os resultados com os objetivos estabelecidos no Capítulo~\ref{chp:INTRO}.
+
 \section{Implementação do Sistema}\label{sec:implementacao}
 % Descreva aqui o sistema desenvolvido, módulos principais e funcionalidades.
 % Inclua imagens ou diagramas de telas se necessário.
+
+O sistema foi implementado conforme a arquitetura descrita no Capítulo~\ref{chp:METODOLOGIA}, resultando em uma aplicação \textit{web} funcional composta por uma interface Angular e uma API em ASP.NET Core apoiada em banco de dados SQL Server. A solução contempla os módulos de autenticação, consulta de disponibilidade e visualização de plantas baixas, reserva de recursos, aprovação e moderação por gestores, bloqueios administrativos, gestão de usuários e acompanhamento por meio de painel (\textit{dashboard}) e histórico.
+
+O acesso ao sistema é diferenciado por perfil de usuário. Os membros da comunidade acadêmica realizam reservas de forma autônoma; os gestores de pavilhão moderam as solicitações e administram bloqueios; e os administradores gerenciam usuários e a configuração geral. A tela inicial de autenticação é apresentada na Figura~\ref{fig:tela-login}.
+
+\begin{figure}[H]
+  \centering
+  \framebox[0.7\textwidth]{\rule{0pt}{7cm}}% PLACEHOLDER — substituir pela linha \includegraphics abaixo
+  % \includegraphics[width=0.7\textwidth]{imagens/resultados/tela-login.png}
+  \caption{Tela de autenticação do sistema.}
+  \label{fig:tela-login}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{figure}
 
 \section{Demonstração das Funcionalidades}\label{sec:demonstracao}
 % Mostre como o sistema funciona na prática.
 % Exemplos: reserva de mesas, salas e auditórios.
 % Inclua figuras, fluxogramas ou telas da interface.
 
+\subsection{Consulta de disponibilidade e reserva}\label{subsec:demo-reserva}
+
+O fluxo central do sistema é a reserva de recursos. Após autenticar-se, o usuário seleciona o pavimento, a data e o intervalo de horário desejados e visualiza, sobre a planta baixa, a ocupação em tempo real: os recursos disponíveis são destacados em verde e os indisponíveis são atenuados. A Figura~\ref{fig:mapa-consulta} apresenta a tela de consulta com a planta baixa de um pavimento.
+
+\begin{figure}[H]
+  \centering
+  \framebox[0.9\textwidth]{\rule{0pt}{8cm}}% PLACEHOLDER — substituir pela linha \includegraphics abaixo
+  % \includegraphics[width=0.9\textwidth]{imagens/resultados/mapa-consulta.png}
+  \caption{Consulta de disponibilidade sobre a planta baixa do pavimento.}
+  \label{fig:mapa-consulta}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{figure}
+
+Ao selecionar um recurso disponível, o sistema exibe um resumo da reserva para confirmação, contendo a identificação do recurso, a data, a capacidade e as orientações de uso, incluindo as consequências do não comparecimento. A Figura~\ref{fig:modal-confirmacao} ilustra essa etapa.
+
+\begin{figure}[H]
+  \centering
+  \framebox[0.6\textwidth]{\rule{0pt}{6cm}}% PLACEHOLDER — substituir pela linha \includegraphics abaixo
+  % \includegraphics[width=0.6\textwidth]{imagens/resultados/modal-confirmacao.png}
+  \caption{Confirmação de reserva de um recurso.}
+  \label{fig:modal-confirmacao}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{figure}
+
+\subsection{Acompanhamento das reservas e check-in}\label{subsec:demo-minhas-reservas}
+
+Após efetuar uma reserva, o usuário acompanha sua situação na área de reservas, na qual é possível cancelar solicitações e realizar o \textit{check-in} por meio de \textit{QR Code} dentro da janela de tolerância. A Figura~\ref{fig:minhas-reservas} apresenta essa listagem.
+
+\begin{figure}[H]
+  \centering
+  \framebox[0.9\textwidth]{\rule{0pt}{6cm}}% PLACEHOLDER — substituir pela linha \includegraphics abaixo
+  % \includegraphics[width=0.9\textwidth]{imagens/resultados/minhas-reservas.png}
+  \caption{Acompanhamento das reservas do usuário.}
+  \label{fig:minhas-reservas}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{figure}
+
+\subsection{Aprovação e moderação pelo gestor}\label{subsec:demo-aprovacao}
+
+As reservas seguem um fluxo de aprovação sob responsabilidade do gestor do pavilhão, que pode aprovar ou rejeitar solicitações e, quando necessário, revogar reservas já aprovadas. A Figura~\ref{fig:aprovacoes} apresenta a tela de moderação.
+
+\begin{figure}[H]
+  \centering
+  \framebox[0.9\textwidth]{\rule{0pt}{6cm}}% PLACEHOLDER — substituir pela linha \includegraphics abaixo
+  % \includegraphics[width=0.9\textwidth]{imagens/resultados/aprovacoes.png}
+  \caption{Fila de aprovação de reservas do gestor.}
+  \label{fig:aprovacoes}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{figure}
+
+\subsection{Painel e histórico}\label{subsec:demo-dashboard}
+
+O sistema disponibiliza ainda um painel com indicadores de uso dos espaços e um histórico das reservas, apoiando o acompanhamento gerencial. A Figura~\ref{fig:dashboard} apresenta o painel.
+
+\begin{figure}[H]
+  \centering
+  \framebox[0.9\textwidth]{\rule{0pt}{7cm}}% PLACEHOLDER — substituir pela linha \includegraphics abaixo
+  % \includegraphics[width=0.9\textwidth]{imagens/resultados/dashboard.png}
+  \caption{Painel de indicadores de uso dos espaços.}
+  \label{fig:dashboard}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{figure}
+
 \section{Testes e Validação}\label{sec:testes}
 % Resultados dos testes funcionais e de usabilidade.
 % Inclua métricas, tabelas ou gráficos de desempenho e satisfação dos usuários.
+
+A validação do sistema foi conduzida conforme o planejamento descrito na Seção~\ref{sec:testesValidacao}. Os testes funcionais verificaram o comportamento das principais operações, incluindo os fluxos de exceção. O Quadro~\ref{quadro:testes-funcionais} sintetiza os casos de teste executados e seus resultados.
+
+\begin{table}[H]
+  \centering
+  \caption{Casos de teste funcionais e resultados.}
+  \label{quadro:testes-funcionais}
+  \begin{tabular}{|p{1.6cm}|p{6cm}|p{4.5cm}|}
+    \hline
+    \textbf{Caso} & \textbf{Cenário} & \textbf{Resultado esperado} \\
+    \hline
+    CT-01 & Autenticação com credenciais válidas & Acesso concedido \\
+    \hline
+    CT-02 & Reserva de recurso disponível & Reserva registrada como pendente \\
+    \hline
+    CT-03 & Reserva em horário já ocupado & Operação bloqueada \\
+    \hline
+    CT-04 & Aprovação de reserva pelo gestor & Reserva aprovada \\
+    \hline
+    CT-05 & \textit{Check-in} dentro da janela de tolerância & Reserva em andamento \\
+    \hline
+    % TODO: complementar com os demais casos de teste executados.
+  \end{tabular}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{table}
+
+Os testes de usabilidade avaliaram a clareza e a facilidade de uso da interface junto aos usuários. Os indicadores coletados e a percepção dos participantes são apresentados no Quadro~\ref{quadro:testes-usabilidade}. % TODO: preencher com os dados obtidos após a aplicação dos testes de usabilidade.
+
+\begin{table}[H]
+  \centering
+  \caption{Resultados dos testes de usabilidade.}
+  \label{quadro:testes-usabilidade}
+  \begin{tabular}{|p{8cm}|p{3.5cm}|}
+    \hline
+    \textbf{Critério avaliado} & \textbf{Resultado} \\
+    \hline
+    Facilidade de uso & --- \\
+    \hline
+    Clareza da visualização das plantas baixas & --- \\
+    \hline
+    Percepção de redução de conflitos & --- \\
+    \hline
+    Satisfação geral & --- \\
+    \hline
+  \end{tabular}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{table}
 
 \section{Comparação com os Objetivos}\label{sec:comparacao}
 % Explique como o sistema atingiu o objetivo geral e os objetivos específicos.
 % Destaque o que foi alcançado.
 
+Confrontando os resultados com os objetivos específicos definidos na Seção~\ref{sec:OB_Específicos}, verifica-se que o sistema desenvolvido atendeu às metas estabelecidas. O Quadro~\ref{quadro:objetivos} relaciona cada objetivo específico ao respectivo resultado alcançado.
+
+\begin{table}[H]
+  \centering
+  \caption{Relação entre objetivos específicos e resultados alcançados.}
+  \label{quadro:objetivos}
+  \begin{tabular}{|p{7.5cm}|p{4cm}|}
+    \hline
+    \textbf{Objetivo específico} & \textbf{Situação} \\
+    \hline
+    Modelar o domínio de reservas de espaços acadêmicos & Atendido \\
+    \hline
+    Desenvolver interface com visualização das plantas baixas & Atendido \\
+    \hline
+    Permitir o agendamento e o gerenciamento de reservas & Atendido \\
+    \hline
+    Implementar a verificação de disponibilidade & Atendido \\
+    \hline
+    Disponibilizar fluxo de aprovação e moderação & Atendido \\
+    \hline
+    Prover \textit{check-in} e política de penalidades & Atendido \\
+    \hline
+    Garantir usabilidade, acessibilidade e múltiplos idiomas & Atendido \\
+    \hline
+  \end{tabular}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{table}
+
 \section{Discussão dos Resultados}\label{sec:discussao}
 % Comente pontos fortes, limitações e melhorias futuras.
 % Analise os resultados em relação ao contexto acadêmico e tecnológico.
+
+Entre os pontos fortes do sistema destaca-se a visualização interativa baseada nas plantas baixas reais, que aproxima a experiência digital do ambiente físico e reduz o esforço do usuário para localizar e reservar um recurso. A adoção de uma arquitetura em camadas favoreceu a organização e a manutenção do código, enquanto o fluxo de aprovação e a política de penalidades contribuem para o uso responsável dos espaços.
+
+Como limitações, observa-se que a fidelidade da visualização depende da disponibilidade e da atualização das plantas baixas oficiais, e que a validação com usuários, embora planejada, ainda demanda ampliação para conclusões mais abrangentes. Tais limitações, contudo, não comprometem os resultados obtidos e apontam caminhos para o aprimoramento da solução, discutidos no Capítulo~\ref{chp:CONCLUSAO}.
 \pagebreak

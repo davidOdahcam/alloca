@@ -20,5 +20,4 @@ public record ReservationView(
     ReservationStatus Status,
     string? Notes,
     string? DecisionReason,
-    DateTime? CheckedInAt,
     DateTime CreatedAt);

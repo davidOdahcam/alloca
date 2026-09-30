@@ -2,7 +2,7 @@
 
 Frontend web do **Alloca** — SPA construída com **Angular 21**, **PrimeNG**, **Tailwind** e **Bootstrap**.
 
-> Para visão geral do produto, consulte o [README raiz](../README.md). Para arquitetura geral, veja [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md).
+> Para visão geral do produto, consulte o [README raiz](../README.md). Para arquitetura geral, veja [`docs/PROJETO.md`](../docs/PROJETO.md).
 
 ---
 

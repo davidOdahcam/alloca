@@ -6,8 +6,5 @@ public enum ReservationStatus
     Approved = 1,
     Rejected = 2,
     CancelledByUser = 3,
-    RevokedByManager = 4,
-    InProgress = 5,
-    Completed = 6,
-    NoShow = 7
+    RevokedByManager = 4
 }

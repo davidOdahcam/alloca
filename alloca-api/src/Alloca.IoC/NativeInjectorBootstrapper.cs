@@ -1,8 +1,9 @@
 ﻿using System.Text.Json.Serialization;
+using Alloca.IoC.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Alloca.IoC.Config;
+namespace Alloca.IoC;
 
 public static class NativeInjectorBootStrapper
 {
@@ -11,7 +12,6 @@ public static class NativeInjectorBootStrapper
         services.AddApplicationConfig();
         services.AddInfrastructureConfig(configuration);
         services.AddAuthConfig(configuration);
-        services.AddHangfireConfig(configuration);
         services.AddOpenApiConfig();
         services.AddCorsConfig();
         services.AddLocalizationConfig();

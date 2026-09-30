@@ -2,10 +2,10 @@ import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { PrimeNG } from 'primeng/config';
 
-export type IdiomaSuportado = 'pt-BR' | 'en-US';
+export type IdiomaSuportado = 'pt-BR';
 
 const STORAGE_KEY = 'app:language';
-const IDIOMAS: IdiomaSuportado[] = ['pt-BR', 'en-US'];
+const IDIOMAS: IdiomaSuportado[] = ['pt-BR'];
 const PADRAO: IdiomaSuportado = 'pt-BR';
 
 export function lerIdiomaAtual(): IdiomaSuportado {

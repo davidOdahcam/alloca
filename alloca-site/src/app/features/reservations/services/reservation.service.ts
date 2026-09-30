@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '@env/environment';
-import { CheckInRequest, CreateReservationRequest, CreateReservationResponse, Reservation } from '@features/reservations/models/reservation.model';
+import { CreateReservationRequest, CreateReservationResponse, Reservation } from '@features/reservations/models/reservation.model';
 
 @Injectable({ providedIn: 'root' })
 export class ReservationService {
@@ -19,13 +19,5 @@ export class ReservationService {
 
     cancel(id: string): Observable<void> {
         return this.http.post<void>(`${this.base}/${id}/cancel`, {});
-    }
-
-    checkIn(id: string, req: CheckInRequest): Observable<void> {
-        return this.http.post<void>(`${this.base}/${id}/checkin`, req);
-    }
-
-    qrCode(id: string): Observable<Blob> {
-        return this.http.get(`${this.base}/${id}/qrcode`, { responseType: 'blob' });
     }
 }

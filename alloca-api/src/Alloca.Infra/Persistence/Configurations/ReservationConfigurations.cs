@@ -45,26 +45,3 @@ public class BlockConfiguration : IEntityTypeConfiguration<Block>
         b.HasIndex(x => new { x.TargetType, x.TargetId });
     }
 }
-
-public class UserStrikeConfiguration : IEntityTypeConfiguration<UserStrike>
-{
-    public void Configure(EntityTypeBuilder<UserStrike> b)
-    {
-        b.ToTable("UserStrikes");
-        b.HasKey(x => x.Id);
-        b.HasIndex(x => x.UserId);
-        b.HasIndex(x => x.ExpiresAt);
-    }
-}
-
-public class UserSuspensionConfiguration : IEntityTypeConfiguration<UserSuspension>
-{
-    public void Configure(EntityTypeBuilder<UserSuspension> b)
-    {
-        b.ToTable("UserSuspensions");
-        b.HasKey(x => x.Id);
-        b.Property(x => x.Reason).HasMaxLength(500).IsRequired();
-        b.HasIndex(x => x.UserId);
-        b.HasIndex(x => new { x.StartsAt, x.EndsAt });
-    }
-}

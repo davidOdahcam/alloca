@@ -1,4 +1,4 @@
-\chapter{Metodologia}\label{chp:AP_Results}
+\chapter{Metodologia}\label{chp:METODOLOGIA}
 
 %Use diagramas de arquitetura (ex.: fluxos de dados, containers Docker).
 
@@ -11,6 +11,18 @@
 
 %Exemplo: pesquisa aplicada com desenvolvimento de protótipo de sistema para reserva de ambientes acadêmicos.
 
+Este trabalho caracteriza-se como uma pesquisa aplicada de natureza tecnológica, orientada ao desenvolvimento de um sistema funcional que atenda a um problema concreto: a gestão e a reserva de espaços físicos no ambiente acadêmico. Quanto aos objetivos, a pesquisa é descritiva e exploratória, pois investiga o processo atual de utilização dos espaços e propõe uma solução informatizada; quanto aos procedimentos, adota o método de desenvolvimento de \textit{software}, no qual o artefato produzido — o sistema \textit{web} — constitui o principal resultado do trabalho.
+
+O desenvolvimento seguiu uma abordagem iterativa e incremental, na qual as funcionalidades foram planejadas, implementadas e refinadas em ciclos sucessivos. A gestão das tarefas foi conduzida com o apoio da ferramenta Trello, organizando as atividades em um quadro no formato \textit{Kanban}, o que permitiu acompanhar visualmente o andamento de cada item, da concepção à conclusão. A Figura~\ref{fig:trello} apresenta o quadro utilizado.
+
+\begin{figure}[H]
+  \centering
+  \framebox[0.85\textwidth]{\rule{0pt}{6cm}}% PLACEHOLDER — substituir pela linha \includegraphics abaixo
+  % \includegraphics[width=0.85\textwidth]{imagens/trello-kanban.png}
+  \caption{Quadro de tarefas no formato \textit{Kanban} (Trello).}
+  \label{fig:trello}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{figure}
 
 \section{Levantamento de Requisitos}\label{sec:requisitos}
 %Descreva como você identificou as necessidades da comunidade acadêmica.
@@ -26,48 +38,125 @@ O questionário combina perguntas objetivas e abertas, permitindo tanto a obten�
   \item Sugestões e melhorias: opiniões abertas sobre funcionalidades essenciais e formas de otimizar o sistema.
 \end{itemize}
 
-A aplicação do questionário tem o potencial de identificar requisitos funcionais e não funcionais do sistema, bem como alinhar o desenvolvimento da interface e das funcionalidades às reais necessidades da comunidade acadêmica. Os dados coletados serão analisados e utilizados como base para o projeto do sistema, garantindo que a solução proposta seja eficiente, prática e adequada ao contexto da universidade.
+A aplicação do questionário tem o potencial de identificar requisitos funcionais e não funcionais do sistema, bem como alinhar o desenvolvimento da interface e das funcionalidades às reais necessidades da comunidade acadêmica. Os dados coletados serão analisados e utilizados como base para o projeto do sistema, garantindo que a solução proposta seja eficiente, prática e adequada ao contexto da universidade. Os requisitos consolidados são apresentados no Quadro~\ref{quadro:requisitos}.
+
+\begin{table}[H]
+  \centering
+  \caption{Requisitos funcionais e não funcionais do sistema.}
+  \label{quadro:requisitos}
+  \begin{tabular}{|p{2.2cm}|p{9.5cm}|}
+    \hline
+    \textbf{Identificador} & \textbf{Descrição} \\
+    \hline
+    RF-01 & Autenticar usuários e diferenciar o acesso por perfil \\
+    \hline
+    RF-02 & Consultar a disponibilidade de recursos por pavimento, data e horário \\
+    \hline
+    RF-03 & Registrar reservas de salas e mesas \\
+    \hline
+    RF-04 & Submeter reservas a aprovação de gestores \\
+    \hline
+    RF-05 & Realizar \textit{check-in} de comparecimento \\
+    \hline
+    RNF-01 & Apresentar interface responsiva e acessível \\
+    \hline
+    RNF-02 & Suportar múltiplos idiomas \\
+    \hline
+    % TODO: complementar os requisitos após a análise do questionário.
+  \end{tabular}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{table}
 
 \section{Arquitetura do Sistema}\label{sec:arquitetura}
 %Apresente diagrama de arquitetura (Front-end, Back-end, Banco de dados).
-%Explique a escolha de tecnologias: Angular (front-end), PHP (back-end), MySQL (banco de dados), Docker (containerização).
-%Mostre como cada componente se comunica (ex.: Angular → PHP → MySQL).
+%Mostre como cada componente se comunica.
+
+O sistema foi estruturado em uma arquitetura cliente-servidor, composta por três elementos principais: uma aplicação \textit{front-end}, responsável pela interface com o usuário; uma \textit{Application Programming Interface} (API) \textit{back-end}, responsável pelas regras de negócio e pela persistência; e um Sistema Gerenciador de Banco de Dados (SGBD), responsável pelo armazenamento das informações. A comunicação entre o \textit{front-end} e o \textit{back-end} ocorre por meio de requisições HTTP no estilo \textit{Representational State Transfer} (REST), trafegando dados no formato \textit{JavaScript Object Notation} (JSON), enquanto o \textit{back-end} acessa o banco de dados por meio de um mapeamento objeto-relacional. O fluxo geral pode ser resumido como Angular~$\rightarrow$~API~ASP.NET~$\rightarrow$~SQL~Server.
+
+A Figura~\ref{fig:arquitetura} apresenta a arquitetura em camadas do sistema e a comunicação entre seus componentes.
+
+\begin{figure}[H]
+  \centering
+  \framebox[0.85\textwidth]{\rule{0pt}{7cm}}% PLACEHOLDER — substituir pela linha \includegraphics abaixo
+  % \includegraphics[width=0.85\textwidth]{imagens/arquitetura.png}
+  \caption{Arquitetura em camadas do sistema.}
+  \label{fig:arquitetura}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{figure}
+
+Internamente, o \textit{back-end} foi organizado segundo os princípios da \textit{Clean Architecture}, na qual as responsabilidades são segregadas em camadas concêntricas e as dependências apontam sempre em direção ao núcleo de domínio. % TODO: \cite{ref-clean-architecture}
+Essa organização se materializa em projetos independentes: a camada de \textit{Domain} concentra as entidades e as regras de negócio, sem dependências de infraestrutura; a camada de \textit{Application} coordena os casos de uso, expondo serviços, objetos de transferência de dados (\textit{Data Transfer Objects} — DTOs) e validações; a camada de \textit{Infra} implementa o acesso a dados e os serviços externos; a camada de \textit{API} expõe os pontos de acesso (\textit{endpoints}) HTTP; e as camadas de \textit{IoC} (\textit{Inversion of Control}) e \textit{CrossCutting} concentram, respectivamente, a configuração de injeção de dependências e as preocupações transversais. Tarefas recorrentes de segundo plano foram isoladas em projetos próprios dedicados ao agendamento e à execução de rotinas.
+
+A escolha das tecnologias foi orientada pela robustez, pela produtividade e pela aderência aos objetivos do trabalho. O \textit{front-end} foi desenvolvido em Angular, \textit{framework} maduro para a construção de aplicações de página única (\textit{Single-Page Applications} — SPA); o \textit{back-end} foi construído sobre a plataforma .NET com ASP.NET Core, que oferece desempenho elevado e um ecossistema consolidado; e o armazenamento utiliza o SGBD relacional Microsoft SQL Server. A conteinerização com Docker padronizou o ambiente de banco de dados entre as máquinas de desenvolvimento.
 
 \section{Desenvolvimento do Sistema}\label{sec:desenvolvimento}
 \subsection{Front-end (Angular)}\label{subsec:angular}
 %Componentes, rotas, interface de visualização das plantas baixas.
 %Interação com o usuário (reserva de mesas, salas, auditorios).
 
+A interface do usuário foi desenvolvida com o \textit{framework} Angular, adotando componentes autônomos (\textit{standalone}) e o modelo de reatividade baseado em \textit{signals}. % TODO: \cite{ref-angular}
+A camada de apresentação foi organizada em três agrupamentos: \textit{core}, que reúne a infraestrutura transversal (autenticação, interceptadores HTTP, internacionalização e \textit{layout}); \textit{shared}, que concentra os componentes reutilizáveis, entre eles o mapa de planta baixa; e \textit{features}, que agrupa os domínios funcionais, como reservas, pavilhões, aprovações, bloqueios, usuários e histórico.
+
+O roteamento foi segmentado por perfil de usuário, de modo que cada papel acessa apenas as funcionalidades pertinentes. O acesso às rotas é controlado por guardas (\textit{guards}) que verificam a autenticação e o papel do usuário antes de permitir a navegação. A comunicação com o \textit{back-end} é centralizada em serviços HTTP e complementada por interceptadores que anexam automaticamente o \textit{token} de autenticação às requisições, informam o idioma corrente e tratam os erros de forma padronizada, apresentando mensagens traduzidas ao usuário.
+
+A partir da interface, o usuário seleciona o pavimento, a data e o intervalo de horário desejados e visualiza, sobre a planta baixa, quais recursos estão disponíveis. Ao escolher uma mesa ou sala livre, é apresentado um resumo da reserva para confirmação, incluindo as orientações de uso e as consequências do não comparecimento.
+
 \subsection{Back-end (.NET)}\label{subsec:dotnet}
 %APIs e endpoints para gerenciamento de reservas.
 %Validação de dados, autenticação de usuários.
 
-\subsection{Banco de Dados (MySQL)}\label{subsec:mysql}
+O \textit{back-end} foi implementado como uma API REST em ASP.NET Core, expondo pontos de acesso para autenticação, gestão de pavilhões, reservas, aprovações e usuários. As requisições recebidas são convertidas em DTOs, validadas e encaminhadas aos serviços de aplicação, que orquestram as regras de negócio definidas na camada de domínio. A validação de dados de entrada foi realizada de forma declarativa com a biblioteca FluentValidation, garantindo respostas consistentes diante de dados inválidos.
+
+A autenticação baseia-se em \textit{tokens} no padrão \textit{JSON Web Token} (JWT), emitidos no \textit{login} e verificados a cada requisição subsequente; a autorização é feita por papéis (\textit{Admin}, \textit{PavilionManager} e \textit{Member}), restringindo o acesso a cada operação conforme o perfil. As senhas são armazenadas de forma segura, protegidas por um algoritmo de derivação de chave.
+
+Uma parcela relevante das regras de negócio reside no próprio modelo de domínio, em especial o ciclo de vida das reservas, que transita entre os estados \textit{pendente}, \textit{aprovada}, \textit{em andamento}, \textit{concluída}, além dos desfechos de rejeição, cancelamento, revogação e não comparecimento. A confirmação de presença é feita por meio de \textit{check-in} com \textit{Quick Response Code} (QR Code), válido dentro de uma janela de tolerância. As transições automáticas de estado — como a marcação de não comparecimento e a conclusão de reservas encerradas — são conduzidas por rotinas recorrentes de segundo plano, executadas periodicamente com o apoio da biblioteca Hangfire. A reincidência em não comparecimentos aciona uma política de penalidades, que registra ocorrências e pode suspender temporariamente o usuário.
+
+\subsection{Banco de Dados (SQL Server)}\label{subsec:sqlserver}
 %Estrutura de tabelas, relacionamentos, integridade de dados.
+
+A persistência utiliza o SGBD relacional Microsoft SQL Server, acessado por meio do mapeamento objeto-relacional provido pelo Entity Framework Core (EF Core). A modelagem reflete a hierarquia física dos espaços — pavilhões que contêm andares, que por sua vez contêm salas e mesas — além das entidades de reserva, bloqueio, usuário e dos registros de penalidades. A evolução do esquema é controlada por \textit{migrations}, aplicadas automaticamente na inicialização da API, o que assegura que o banco esteja sempre consistente com o modelo. Uma carga inicial de dados (\textit{seed}) popula o ambiente de desenvolvimento com usuários e espaços de exemplo. A integridade dos dados é garantida por chaves e relacionamentos definidos no mapeamento, e as datas são persistidas e trafegadas de forma padronizada em \textit{Coordinated Universal Time} (UTC).
 
 \subsection{Docker}\label{subsec:docker}
 %Containerização do ambiente de desenvolvimento e produção.
 %Benefícios de portabilidade e padronização.
 
+Para padronizar o ambiente de execução, o SGBD foi disponibilizado por meio de um contêiner Docker, orquestrado com o Docker Compose. % TODO: \cite{ref-docker}
+Essa abordagem elimina a necessidade de instalação manual do banco de dados em cada máquina, garante que todos os ambientes utilizem a mesma versão do SQL Server e favorece a portabilidade e a reprodutibilidade do ambiente de desenvolvimento.
 
 \section{Interface de Visualização dos Espaços}\label{sec:interface}
 %Explique como você representou as plantas baixas de forma fiel.
 %Métodos de renderização (2D/3D, grid, mapas interativos).
-%Integração entre front-end e dados do banco de dados.
 
-\subsection{Sub-tópico}\label{subsec:landsat}
+A representação fiel dos ambientes constitui um dos diferenciais do sistema e foi viabilizada pelo uso das plantas baixas oficiais cedidas pela Coordenadoria de Projetos de Engenharia e Arquitetura (COPEA). A partir desses documentos, os pavimentos foram redesenhados no \textit{software} Adobe Illustrator e exportados no formato vetorial \textit{Scalable Vector Graphics} (SVG), preservando as dimensões e a disposição real dos espaços.
+
+\subsection{Normalização dos vetores}\label{subsec:normalizacao}
+
+O SVG exportado por ferramentas gráficas não é, por si só, adequado à interação: os elementos não carregam identificação semântica que permita associá-los aos recursos do sistema. Para contornar essa limitação, os arquivos passaram por um processo de normalização, no qual \textit{scripts} desenvolvidos para esta finalidade reorganizaram e padronizaram a estrutura do vetor. Nesse processo, cada elemento relevante recebeu atributos semânticos que o identificam — como o tipo de componente (sala ou mesa), o código do recurso e o papel de cada subelemento (piso, mesa, cadeira, entre outros) —, tornando o vetor apto a ser manipulado programaticamente.
+
+\subsection{Renderização e interatividade}\label{subsec:renderizacao}
+
+No \textit{front-end}, o SVG normalizado é carregado dinamicamente e inserido na página, sendo então percorrido para localizar os elementos que representam salas e mesas. Cada recurso é confrontado com os dados de disponibilidade retornados pela API para o pavimento, a data e o horário selecionados, recebendo uma classe de estilo que o pinta de acordo com sua situação: os recursos disponíveis são destacados em verde, enquanto os indisponíveis são atenuados. A interação é tratada por delegação de eventos, de modo que um único ouvinte captura os cliques sobre a planta e identifica o elemento acionado; ao selecionar um recurso livre, o sistema emite o evento correspondente e apresenta a confirmação da reserva. O mapa oferece ainda recursos de \textit{zoom} e deslocamento (\textit{pan}), além de dicas de contexto (\textit{tooltips}) e suporte à navegação por teclado, contribuindo para a usabilidade e a acessibilidade da interface. A Figura~\ref{fig:planta-interativa} apresenta a planta baixa renderizada com a indicação de disponibilidade dos recursos.
+
+\begin{figure}[H]
+  \centering
+  \framebox[0.9\textwidth]{\rule{0pt}{8cm}}% PLACEHOLDER — substituir pela linha \includegraphics abaixo
+  % \includegraphics[width=0.9\textwidth]{imagens/planta-interativa.png}
+  \caption{Planta baixa interativa com indicação de disponibilidade dos recursos.}
+  \label{fig:planta-interativa}\\
+  {\footnotesize Fonte: Autoria própria.}
+\end{figure}
 
 \section{Testes e Validação}\label{sec:testesValidacao}
 %Testes funcionais: reserva de mesas, salas e auditorios.
 %Testes de usabilidade: interface intuitiva e responsiva.
 %Testes de integração: front-end, back-end e banco funcionando corretamente.
 
-\subsection{Sub-tópico}\label{subsec:landsat}
+A validação do sistema foi planejada em três frentes complementares. Os testes funcionais verificam se as principais operações — autenticação, consulta de disponibilidade, criação, aprovação, cancelamento e \textit{check-in} de reservas — comportam-se conforme o esperado, inclusive nos fluxos de exceção, como tentativas de reserva em horários já ocupados. Os testes de integração asseguram que o \textit{front-end}, o \textit{back-end} e o banco de dados operem de forma coordenada, validando o percurso completo de uma requisição, da interface até a persistência. Por fim, os testes de usabilidade avaliam a clareza e a facilidade de uso da interface, com atenção especial à visualização das plantas baixas. % TODO: descrever os resultados desses testes no Capítulo de Resultados, após a aplicação junto aos usuários.
 
 \section{Ferramentas e Ambientes de Desenvolvimento}\label{sec:ferramentas}
-%Softwares utilizados (VS Code, MySQL Workbench, Docker Desktop, Git, etc.).
+%Softwares utilizados e ambientes.
 
-%Ambientes (desenvolvimento local, testes, produção).
+O desenvolvimento apoiou-se em um conjunto de ferramentas de mercado. A edição de código foi realizada no Visual Studio Code; o versionamento do código-fonte utilizou o Git; e a gestão das tarefas foi conduzida no Trello, com um quadro no formato \textit{Kanban}. O desenho e a vetorização das plantas baixas foram feitos no Adobe Illustrator, e o banco de dados foi executado em contêiner por meio do Docker. O trabalho foi conduzido em ambiente de desenvolvimento local, no qual a API e a aplicação \textit{web} são executadas em conjunto com o SGBD conteinerizado, reproduzindo as condições necessárias à validação das funcionalidades.
 
 \pagebreak
 

@@ -14,8 +14,6 @@ public class AllocaDbContext(DbContextOptions<AllocaDbContext> options) : DbCont
     public DbSet<PavilionManager> PavilionManagers => Set<PavilionManager>();
     public DbSet<Reservation> Reservations => Set<Reservation>();
     public DbSet<Block> Blocks => Set<Block>();
-    public DbSet<UserStrike> UserStrikes => Set<UserStrike>();
-    public DbSet<UserSuspension> UserSuspensions => Set<UserSuspension>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

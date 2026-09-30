@@ -1,9 +1,8 @@
 import { Routes } from '@angular/router';
 import { roleGuard } from '@core/auth/guards/role.guard';
-import { featureGuard } from '@core/feature-flags/guards/feature.guard';
 
 export default [
-    { path: '', pathMatch: 'full', loadComponent: () => import('@features/dashboard/pages/dashboard/dashboard.page').then((m) => m.DashboardPage), title: 'Painel' },
+    { path: '', pathMatch: 'full', loadComponent: () => import('@features/approvals/pages/approvals/approvals.page').then((m) => m.ApprovalsPage), title: 'Pedidos' },
     {
         path: 'approvals',
         title: 'Pedidos',
@@ -20,15 +19,9 @@ export default [
         loadComponent: () => import('@features/blocks/pages/block-create/block-create.page').then((m) => m.BlockCreatePage)
     },
     {
-        path: 'history',
-        title: 'Histórico',
-        canMatch: [featureGuard('managerHistory')],
-        loadComponent: () => import('@features/history/pages/history/history.page').then((m) => m.HistoryPage)
-    },
-    {
         path: 'users',
         title: 'Usuários',
-        canMatch: [roleGuard(['Admin']), featureGuard('managerUsers')],
+        canMatch: [roleGuard(['Admin'])],
         loadComponent: () => import('@features/users/pages/users/users.page').then((m) => m.UsersPage)
     }
 ] as Routes;

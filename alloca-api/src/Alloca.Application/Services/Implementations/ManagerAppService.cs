@@ -47,5 +47,5 @@ public class ManagerAppService(
     private static ReservationResponse ToResponse(ReservationView v) =>
         new(v.Id, v.ResourceType, v.RoomId, v.DeskId, v.ResourceExternalId, v.ResourceName,
             v.PavilionId, v.PavilionName, v.StartUtc, v.EndUtc, v.Status, v.Notes,
-            v.DecisionReason, v.CheckedInAt, v.CreatedAt);
+            v.DecisionReason, v.CreatedAt);
 }

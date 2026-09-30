@@ -21,7 +21,7 @@ import { PageHero } from '@shared/components/page-hero/page-hero';
 import { Loader } from '@shared/components/loader/loader';
 import { EmptyState } from '@shared/components/empty-state/empty-state';
 
-const STATUS_PROXIMAS: ReservationStatus[] = ['Approved', 'InProgress'];
+const STATUS_PROXIMAS: ReservationStatus[] = ['Approved'];
 
 @Component({
     selector: 'app-my-reservations',
@@ -84,9 +84,6 @@ const STATUS_PROXIMAS: ReservationStatus[] = ['Approved', 'InProgress'];
                         </div>
 
                         <div class="proxima-card__acoes">
-                            @if (canShowQr(r)) {
-                                <p-button [label]="'reservations.myList.showQr' | translate" icon="pi pi-qrcode" (onClick)="openQr(r)" />
-                            }
                             @if (canCancel(r)) {
                                 <p-button
                                     [label]="'reservations.myList.cancelReservation' | translate"
@@ -154,9 +151,6 @@ const STATUS_PROXIMAS: ReservationStatus[] = ['Approved', 'InProgress'];
                             </td>
                             <td><app-reservation-status-tag [status]="r.status" /></td>
                             <td class="text-right whitespace-nowrap">
-                                @if (canShowQr(r)) {
-                                    <p-button icon="pi pi-qrcode" [text]="true" [rounded]="true" [pTooltip]="'reservations.myList.qrTooltip' | translate" [ariaLabel]="'reservations.myList.showQr' | translate" (onClick)="openQr(r)" />
-                                }
                                 @if (canCancel(r)) {
                                     <p-button
                                         icon="pi pi-times"
@@ -175,17 +169,6 @@ const STATUS_PROXIMAS: ReservationStatus[] = ['Approved', 'InProgress'];
                 </p-table>
             }
         </ng-template>
-
-        <p-dialog [visible]="!!qrUrl()" (visibleChange)="$event || closeQr()" [modal]="true" [closable]="true" [style]="{ width: '24rem' }" [header]="'reservations.myList.qrTitle' | translate">
-            @if (qrUrl(); as url) {
-                <div class="flex flex-col items-center gap-2">
-                    <img [src]="url" alt="QR Code" style="width: 100%; max-width: 280px;" />
-                    <p class="text-muted-color text-sm m-0 text-center">
-                        {{ 'reservations.myList.qrInstruction' | translate }}
-                    </p>
-                </div>
-            }
-        </p-dialog>
     `,
     styles: [
         `
@@ -299,7 +282,6 @@ export class MyReservationsPage {
 
     readonly loading = signal(true);
     readonly reservations = signal<Reservation[]>([]);
-    readonly qrUrl = signal<string | null>(null);
 
     readonly opcoesStatus = RESERVATION_STATUSES.map((status) => ({ label: STATUS_LABEL[status], value: status }));
 
@@ -315,8 +297,6 @@ export class MyReservationsPage {
         const candidatos = this.reservations()
             .filter((r) => STATUS_PROXIMAS.includes(r.status))
             .sort((a, b) => +new Date(a.startUtc) - +new Date(b.startUtc));
-        const ativa = candidatos.find((r) => r.status === 'InProgress');
-        if (ativa) return ativa;
         return candidatos[0] ?? null;
     });
 
@@ -335,7 +315,6 @@ export class MyReservationsPage {
     }
 
     contagemRegressiva(r: Reservation): string {
-        if (r.status === 'InProgress') return this.translate.instant('reservations.myList.countdown.inProgress');
         const ms = new Date(r.startUtc).getTime() - Date.now();
         if (ms <= 0) return this.translate.instant('reservations.myList.countdown.now');
         const min = Math.round(ms / 60000);
@@ -364,10 +343,6 @@ export class MyReservationsPage {
 
     canCancel(r: Reservation): boolean {
         return r.status === 'Pending' || r.status === 'Approved';
-    }
-
-    canShowQr(r: Reservation): boolean {
-        return r.status === 'Approved' || r.status === 'InProgress';
     }
 
     podeCancelarAgora(r: Reservation): boolean {
@@ -409,23 +384,5 @@ export class MyReservationsPage {
                 });
             }
         });
-    }
-
-    openQr(r: Reservation): void {
-        this.api.qrCode(r.id).subscribe({
-            next: (blob) => this.qrUrl.set(URL.createObjectURL(blob)),
-            error: () =>
-                this.toast.add({
-                    severity: 'error',
-                    summary: this.translate.instant('common.labels.error'),
-                    detail: this.translate.instant('reservations.myList.qrError')
-                })
-        });
-    }
-
-    closeQr(): void {
-        const url = this.qrUrl();
-        if (url) URL.revokeObjectURL(url);
-        this.qrUrl.set(null);
     }
 }

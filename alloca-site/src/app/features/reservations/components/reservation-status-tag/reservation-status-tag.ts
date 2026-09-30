@@ -10,23 +10,17 @@ export const STATUS_LABEL: Record<ReservationStatus, string> = {
     Approved: 'Aprovada',
     Rejected: 'Recusada',
     CancelledByUser: 'Cancelada',
-    RevokedByManager: 'Revogada',
-    InProgress: 'Em andamento',
-    Completed: 'Concluída',
-    NoShow: 'Não compareceu'
+    RevokedByManager: 'Revogada'
 };
 
-export const RESERVATION_STATUSES: ReservationStatus[] = ['Pending', 'Approved', 'InProgress', 'Completed', 'NoShow', 'Rejected', 'CancelledByUser', 'RevokedByManager'];
+export const RESERVATION_STATUSES: ReservationStatus[] = ['Pending', 'Approved', 'Rejected', 'CancelledByUser', 'RevokedByManager'];
 
 const STATUS_SEVERITY: Record<ReservationStatus, Severity> = {
     Pending: 'warn',
     Approved: 'success',
     Rejected: 'danger',
     CancelledByUser: 'secondary',
-    RevokedByManager: 'danger',
-    InProgress: 'info',
-    Completed: 'secondary',
-    NoShow: 'danger'
+    RevokedByManager: 'danger'
 };
 
 @Component({

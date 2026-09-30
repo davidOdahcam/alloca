@@ -1,6 +1,6 @@
 import { ResourceType } from '@features/pavilions/models/pavilion.model';
 
-export type ReservationStatus = 'Pending' | 'Approved' | 'Rejected' | 'CancelledByUser' | 'RevokedByManager' | 'InProgress' | 'Completed' | 'NoShow';
+export type ReservationStatus = 'Pending' | 'Approved' | 'Rejected' | 'CancelledByUser' | 'RevokedByManager';
 
 export interface Reservation {
     id: string;
@@ -16,7 +16,6 @@ export interface Reservation {
     status: ReservationStatus;
     notes: string | null;
     decisionReason: string | null;
-    checkedInAt: string | null;
     createdAt: string;
 }
 
@@ -30,8 +29,4 @@ export interface CreateReservationRequest {
 
 export interface CreateReservationResponse {
     id: string;
-}
-
-export interface CheckInRequest {
-    scannedExternalId: string;
 }

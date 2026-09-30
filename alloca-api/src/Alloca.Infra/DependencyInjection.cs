@@ -32,7 +32,6 @@ public static class DependencyInjection
         services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
         services.AddSingleton<IPasswordHasher, Pbkdf2PasswordHasher>();
         services.AddSingleton<IJwtTokenService, JwtTokenService>();
-        services.AddSingleton<IQrCodeService, QrCodeService>();
 
         // Unit of Work + Repositories
         services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -43,8 +42,6 @@ public static class DependencyInjection
         services.AddScoped<IDeskRepository, DeskRepository>();
         services.AddScoped<IReservationRepository, ReservationRepository>();
         services.AddScoped<IBlockRepository, BlockRepository>();
-        services.AddScoped<IUserStrikeRepository, UserStrikeRepository>();
-        services.AddScoped<IUserSuspensionRepository, UserSuspensionRepository>();
 
         // Domain services (regras de negócio)
         services.AddScoped<IAuthService, AuthService>();
@@ -53,7 +50,6 @@ public static class DependencyInjection
         services.AddScoped<IManagerService, ManagerService>();
         services.AddScoped<IBlockService, BlockService>();
         services.AddScoped<IPavilionService, PavilionService>();
-        services.AddScoped<IReservationLifecycleService, ReservationLifecycleService>();
 
         return services;
     }

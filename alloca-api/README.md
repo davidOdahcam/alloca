@@ -2,7 +2,7 @@
 
 Backend REST do **Alloca**, construído em **ASP.NET Core 10** seguindo **Clean Architecture**.
 
-> Para visão geral do produto, consulte o [README raiz](../README.md). Para a referência completa de endpoints, consulte [`docs/API.md`](../docs/API.md).
+> Para visão geral do produto, consulte o [README raiz](../README.md). Para a referência completa de endpoints, consulte [`docs/BACKEND.md`](../docs/BACKEND.md).
 
 ---
 
@@ -72,7 +72,7 @@ alloca-api/
     └── Alloca.CrossCutting/    # Utilitários neutros
 ```
 
-A regra de dependência aponta sempre para o **`Alloca.Domain`**. Detalhes em [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md).
+A regra de dependência aponta sempre para o **`Alloca.Domain`**. Detalhes em [`docs/BACKEND.md`](../docs/BACKEND.md).
 
 ---
 
@@ -151,7 +151,7 @@ dotnet watch --project src/Alloca.API
 }
 ```
 
-Em produção, sobrescreva via variáveis de ambiente (formato `Secao__Chave`). Detalhes em [`docs/DEPLOYMENT.md`](../docs/DEPLOYMENT.md).
+Em produção, sobrescreva via variáveis de ambiente (formato `Secao__Chave`). Detalhes em [`docs/BACKEND.md`](../docs/BACKEND.md).
 
 ---
 

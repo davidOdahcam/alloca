@@ -27,18 +27,4 @@ public class ReservationsController(IReservationAppService reservations) : Contr
         await reservations.CancelAsync(id, ct);
         return NoContent();
     }
-
-    [HttpPost("{id:guid}/checkin")]
-    public async Task<IActionResult> CheckIn(Guid id, [FromBody] CheckInRequest request, CancellationToken ct)
-    {
-        await reservations.CheckInAsync(id, request, ct);
-        return NoContent();
-    }
-
-    [HttpGet("{id:guid}/qrcode")]
-    public async Task<IActionResult> QrCode(Guid id, CancellationToken ct)
-    {
-        var (png, _) = await reservations.GetQrCodeAsync(id, ct);
-        return File(png, "image/png");
-    }
 }

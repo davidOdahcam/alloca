@@ -76,7 +76,7 @@ O sistema é composto por dois projetos independentes:
                         └───────────────┘
 ```
 
-Detalhes em [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
+Detalhes em [`docs/PROJETO.md`](./docs/PROJETO.md).
 
 ---
 
@@ -193,7 +193,7 @@ npm start
 
 A SPA fica disponível em `http://localhost:4200`.
 
-Mais detalhes em [`docs/DEVELOPMENT.md`](./docs/DEVELOPMENT.md).
+Mais detalhes em [`docs/BACKEND.md`](./docs/BACKEND.md).
 
 ---
 
@@ -215,11 +215,12 @@ Após o primeiro boot, os seguintes usuários estarão disponíveis para teste:
 
 | Documento | Conteúdo |
 |-----------|----------|
-| [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) | Visão geral arquitetural, camadas, fluxos |
-| [`docs/API.md`](./docs/API.md) | Referência completa dos endpoints REST |
-| [`docs/DOMAIN.md`](./docs/DOMAIN.md) | Entidades, enums e regras de negócio |
-| [`docs/DEVELOPMENT.md`](./docs/DEVELOPMENT.md) | Setup local, debug, ferramentas |
-| [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) | Variáveis de ambiente, build e deploy |
+| [`docs/PROJETO.md`](./docs/PROJETO.md) | Visão geral, objetivos, escopo, requisitos, domínio e arquitetura |
+| [`docs/FRONTEND.md`](./docs/FRONTEND.md) | Angular + PrimeNG (Sakai) e a planta interativa em SVG |
+| [`docs/BACKEND.md`](./docs/BACKEND.md) | API ASP.NET Core, camadas, endpoints e persistência |
+| [`docs/TAREFAS.md`](./docs/TAREFAS.md) | Épicos e tarefas (Trello) |
+| [`alloca-api/README.md`](./alloca-api/README.md) | Documentação específica da API |
+| [`alloca-site/README.md`](./alloca-site/README.md) | Documentação específica do frontend |
 | [`alloca-api/README.md`](./alloca-api/README.md) | Documentação específica da API |
 | [`alloca-site/README.md`](./alloca-site/README.md) | Documentação específica do frontend |
 | [`alloca-site/docs/i18n-conventions.md`](./alloca-site/docs/i18n-conventions.md) | Convenções de internacionalização |

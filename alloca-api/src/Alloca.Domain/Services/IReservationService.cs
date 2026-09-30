@@ -13,7 +13,5 @@ public interface IReservationService
 {
     Task<Reservation> CreateAsync(Guid userId, ResourceType resourceType, Guid resourceId, TimeRange period, string? notes, DateTime nowUtc, CancellationToken ct = default);
     Task CancelAsync(Guid reservationId, Guid userId, DateTime nowUtc, CancellationToken ct = default);
-    Task CheckInAsync(Guid reservationId, Guid userId, string scannedExternalId, DateTime nowUtc, CancellationToken ct = default);
-    Task<string> GetQrPayloadAsync(Guid reservationId, Guid userId, CancellationToken ct = default);
     Task<IReadOnlyList<ReservationView>> ListByUserAsync(Guid userId, CancellationToken ct = default);
 }

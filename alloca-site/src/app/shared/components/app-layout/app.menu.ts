@@ -6,7 +6,6 @@ import { MenuItem } from 'primeng/api';
 import { AppMenuitem } from './app.menuitem';
 import { AuthService } from '@core/auth/auth.service';
 import { LanguageService } from '@core/i18n/language.service';
-import { environment } from '@env/environment';
 
 @Component({
     selector: 'app-menu',
@@ -57,7 +56,6 @@ export class AppMenu {
 
     private managerMenu(isAdmin: boolean): MenuItem[] {
         const operacao: MenuItem[] = [
-            { label: this.t('menu.dashboard'), icon: 'pi pi-fw pi-chart-bar', routerLink: ['/manager'] },
             {
                 label: this.t('menu.approvals'),
                 icon: 'pi pi-fw pi-inbox',
@@ -66,13 +64,9 @@ export class AppMenu {
             { label: this.t('menu.blocks'), icon: 'pi pi-fw pi-ban', routerLink: ['/manager/blocks'] }
         ];
 
-        if (environment.features.managerHistory) {
-            operacao.push({ label: this.t('menu.history'), icon: 'pi pi-fw pi-history', routerLink: ['/manager/history'] });
-        }
-
         const grupos: MenuItem[] = [{ label: this.t('menu.operations'), items: operacao }];
 
-        if (isAdmin && environment.features.managerUsers) {
+        if (isAdmin) {
             grupos.push({
                 label: this.t('menu.administration'),
                 items: [{ label: this.t('menu.users'), icon: 'pi pi-fw pi-users', routerLink: ['/manager/users'] }]

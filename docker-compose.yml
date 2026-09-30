@@ -24,5 +24,54 @@ services:
       retries: 10
       start_period: 30s
 
+  api:
+    build:
+      context: ./alloca-api
+      dockerfile: Dockerfile
+    container_name: alloca-api
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ConnectionStrings__AllocaDb: "Server=sqlserver,1433;Database=AllocaDb;User Id=sa;Password=${MSSQL_SA_PASSWORD:-Alloca@Dev123!};TrustServerCertificate=True;MultipleActiveResultSets=true"
+      Jwt__Secret: "${JWT_SECRET:-CHANGE-ME-DEV-ONLY-PLEASE-USE-A-LONG-RANDOM-SECRET-32B+}"
+      Jwt__Issuer: "Alloca"
+      Jwt__Audience: "Alloca"
+    ports:
+      - "5112:8080"
+    restart: unless-stopped
+
+  site:
+    build:
+      context: ./alloca-site
+      dockerfile: Dockerfile
+    container_name: alloca-site
+    depends_on:
+      - api
+    ports:
+      - "4200:80"
+    restart: unless-stopped
+
+  db-seed:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: alloca-db-seed
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      api:
+        condition: service_started
+    environment:
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD:-Alloca@Dev123!}"
+    volumes:
+      - ./seed.sql:/sql/seed.sql:ro
+      - ./BCP01.sql:/sql/BCP01.sql:ro
+      - ./BCP02.sql:/sql/BCP02.sql:ro
+      - ./scripts/seed-db.sh:/scripts/seed-db.sh:ro
+    # Remove CRs (compatibilidade Windows) e executa o script de seed.
+    entrypoint: ["/bin/bash", "-c", "tr -d '\\r' < /scripts/seed-db.sh | bash -s"]
+    restart: "no"
+
 volumes:
   alloca-sqlserver-data:

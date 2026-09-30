@@ -177,8 +177,7 @@ export class AppTopbar {
     readonly idiomaAtual = computed(() => this.language.atual());
 
     readonly opcoesIdioma: { label: string; value: IdiomaSuportado }[] = [
-        { label: 'Português (Brasil)', value: 'pt-BR' },
-        { label: 'English (US)', value: 'en-US' }
+        { label: 'Português (Brasil)', value: 'pt-BR' }
     ];
 
     definirTema(escuro: boolean): void {

@@ -19,9 +19,6 @@ public class Reservation : Entity
     public Guid? DecidedByUserId { get; private set; }
     public string? DecisionReason { get; private set; }
 
-    public DateTime? CheckedInAt { get; private set; }
-    public DateTime? CompletedAt { get; private set; }
-
     private Reservation() { }
 
     private Reservation(Guid userId, Guid pavilionId, ResourceType type, Guid? roomId, Guid? deskId, TimeRange period, string? notes)
@@ -43,7 +40,7 @@ public class Reservation : Entity
         => new(userId, pavilionId, ResourceType.Desk, null, deskId, period, notes);
 
     public bool IsActive =>
-        Status is ReservationStatus.Pending or ReservationStatus.Approved or ReservationStatus.InProgress;
+        Status is ReservationStatus.Pending or ReservationStatus.Approved;
 
     public void Approve(Guid managerUserId)
     {
@@ -67,8 +64,8 @@ public class Reservation : Entity
 
     public void Revoke(Guid managerUserId, string reason)
     {
-        if (Status is not ReservationStatus.Approved and not ReservationStatus.InProgress)
-            throw new DomainException("Apenas reservas aprovadas ou em andamento podem ser revogadas.");
+        if (Status is not ReservationStatus.Approved)
+            throw new DomainException("Apenas reservas aprovadas podem ser revogadas.");
         if (string.IsNullOrWhiteSpace(reason)) throw new DomainException("Informe o motivo da revogação.");
         Status = ReservationStatus.RevokedByManager;
         DecidedAt = DateTime.UtcNow;
@@ -90,36 +87,6 @@ public class Reservation : Entity
         if (Period.StartUtc - nowUtc < TimeSpan.FromHours(minHoursBeforeStart))
             throw new DomainException($"Prazo para cancelamento encerrado ({minHoursBeforeStart}h antes do início).");
         Status = ReservationStatus.CancelledByUser;
-        Touch();
-    }
-
-    public void CheckIn(DateTime nowUtc, int graceMinutes)
-    {
-        if (Status != ReservationStatus.Approved)
-            throw new DomainException("Apenas reservas aprovadas permitem check-in.");
-        var earliest = Period.StartUtc.AddMinutes(-15);
-        var latest = Period.StartUtc.AddMinutes(graceMinutes);
-        if (nowUtc < earliest || nowUtc > latest)
-            throw new DomainException("Fora da janela de check-in.");
-        CheckedInAt = nowUtc;
-        Status = ReservationStatus.InProgress;
-        Touch();
-    }
-
-    public void MarkNoShow(DateTime nowUtc, int graceMinutes)
-    {
-        if (Status != ReservationStatus.Approved) return;
-        if (nowUtc <= Period.StartUtc.AddMinutes(graceMinutes)) return;
-        Status = ReservationStatus.NoShow;
-        Touch();
-    }
-
-    public void MarkCompleted(DateTime nowUtc)
-    {
-        if (Status != ReservationStatus.InProgress) return;
-        if (nowUtc < Period.EndUtc) return;
-        Status = ReservationStatus.Completed;
-        CompletedAt = nowUtc;
         Touch();
     }
 

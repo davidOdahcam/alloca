@@ -248,13 +248,6 @@ const DURATION_BASE: { value: number; labelKey: string }[] = [
                                 <p>{{ 'reservations.reserve.dialog.managerApproval.description' | translate }}</p>
                             </div>
                         </div>
-                        <div class="reserva-aviso reserva-aviso--warn">
-                            <i class="pi pi-qrcode"></i>
-                            <div>
-                                <strong>{{ 'reservations.reserve.dialog.checkIn.title' | translate }}</strong>
-                                <p>{{ 'reservations.reserve.dialog.checkIn.description' | translate }}</p>
-                            </div>
-                        </div>
                         <div class="reserva-aviso reserva-aviso--muted">
                             <i class="pi pi-ban"></i>
                             <div>

@@ -65,8 +65,6 @@ namespace Alloca.Infra.Persistence.Migrations
                     DecidedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DecidedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     DecisionReason = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    CheckedInAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CompletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -91,41 +89,6 @@ namespace Alloca.Infra.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserStrikes",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ReservationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IssuedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserStrikes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserSuspensions",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StartsAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndsAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Reason = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    IssuedByUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserSuspensions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -236,6 +199,7 @@ namespace Alloca.Infra.Persistence.Migrations
                     RoomId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ExternalId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    IsReservable = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -336,26 +300,6 @@ namespace Alloca.Infra.Persistence.Migrations
                 table: "Users",
                 column: "Email",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserStrikes_ExpiresAt",
-                table: "UserStrikes",
-                column: "ExpiresAt");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserStrikes_UserId",
-                table: "UserStrikes",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserSuspensions_StartsAt_EndsAt",
-                table: "UserSuspensions",
-                columns: new[] { "StartsAt", "EndsAt" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserSuspensions_UserId",
-                table: "UserSuspensions",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -375,12 +319,6 @@ namespace Alloca.Infra.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reservations");
-
-            migrationBuilder.DropTable(
-                name: "UserStrikes");
-
-            migrationBuilder.DropTable(
-                name: "UserSuspensions");
 
             migrationBuilder.DropTable(
                 name: "Rooms");

@@ -11,7 +11,5 @@ export default [
         path: 'reservations',
         title: 'Minhas reservas',
         loadComponent: () => import('@features/reservations/pages/my-reservations/my-reservations.page').then((m) => m.MyReservationsPage)
-    },
-
-    { path: 'checkin', pathMatch: 'full', redirectTo: 'reservations' }
+    }
 ] as Routes;

@@ -19,7 +19,6 @@ public static class ErrorCodes
     public const string UserInvalidRole = "user.invalid_role";
     public const string UserCannotDemoteSelf = "user.cannot_demote_self";
     public const string UserCannotDeactivateSelf = "user.cannot_deactivate_self";
-    public const string UserSuspended = "user.suspended";
 
     // Pavilhões / andares / salas / mesas
     public const string PavilionNotFound = "pavilion.not_found";
@@ -43,7 +42,6 @@ public static class ErrorCodes
     public const string ReservationResourceBlocked = "reservation.resource_blocked";
     public const string ReservationConflict = "reservation.conflict";
     public const string ReservationOwnerOnly = "reservation.owner_only";
-    public const string ReservationCheckInWrongQr = "reservation.checkin.wrong_qr";
     public const string ReservationBusinessRule = "reservation.business_rule";
 
     // Bloqueios
